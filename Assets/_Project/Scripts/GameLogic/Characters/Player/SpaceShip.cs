@@ -11,9 +11,8 @@ namespace Player
 
         [SerializeField] private ShootingLaser _shootingLaser;
 
-        private void Awake()
+        protected override void Initialization()
         {
-            base.Awake();
             _rigidbody = GetComponent<Rigidbody2D>();
         }
     }

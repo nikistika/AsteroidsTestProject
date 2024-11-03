@@ -31,8 +31,7 @@ namespace Factories
         protected override void ActionGetObject(UFO obj)
         {
             obj.gameObject.SetActive(true);
-            obj.gameObject.transform.position = GetRandomSpawnPosition();
-            obj.Move();
+            obj.gameObject.transform.position = GetRandomSpawnPosition(); 
         }
     }
 }

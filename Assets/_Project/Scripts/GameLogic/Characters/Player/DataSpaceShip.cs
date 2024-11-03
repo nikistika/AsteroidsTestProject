@@ -6,7 +6,6 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class DataSpaceShip : MonoBehaviour
     {
-        
         public event Action<int> OnScoreChanged;
 
         private Rigidbody2D _rigidbody;
@@ -22,7 +21,7 @@ namespace Player
         public void AddScore(int score)
         {
             CurrentScore += score;
-            OnScoreChanged.Invoke(CurrentScore);
+            OnScoreChanged?.Invoke(CurrentScore);
         }
 
         public Vector2 GetCoordinates()
@@ -42,7 +41,5 @@ namespace Player
             Vector2 speed = _rigidbody.velocity;
             return speed;
         }
-        
-        
     }
 }

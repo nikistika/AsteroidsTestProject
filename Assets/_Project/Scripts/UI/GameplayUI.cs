@@ -1,3 +1,4 @@
+using GameLogic;
 using Player;
 using Shooting;
 using TMPro;
@@ -14,6 +15,7 @@ namespace UI
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
         
+        [SerializeField] private GameOver _gameOver;
         [SerializeField] private TMP_Text _scoreTMP;
         [SerializeField] private TMP_Text _laserCountTMP;
         [SerializeField] private TMP_Text _coordinatesTMP;
@@ -31,6 +33,7 @@ namespace UI
             _shootingLaser.OnEditLaserCount += EditLaserCount;
             _shootingLaser.OnLaserCooldown += LaserCooldown;
             _dataSpaceShip.OnScoreChanged += AddScore;
+            _gameOver.OnGameOver += GameOver;
             
             AddScore(0);
             _maxLaserCount = _shootingLaser.MaxLaserCount;
@@ -42,27 +45,36 @@ namespace UI
             DisplayDataAboutCharacter();
         }
 
-        public void AddScore(int score)
+        private void AddScore(int score)
         {
             _scoreTMP.text = $"Score: {score}";
         }
 
-        public void EditLaserCount(int laserCount)
+        private void EditLaserCount(int laserCount)
         {
             _laserCountText = $"Laser: {laserCount}/{_maxLaserCount}";
             _laserCountTMP.text = _laserCountText;
         }
 
-        public void LaserCooldown(float currentCooldown, float maxCooldown)
+        private void LaserCooldown(float currentCooldown, float maxCooldown)
         {
             _laserCountTMP.text = $"{_laserCountText} ({currentCooldown}/{maxCooldown})";
         }
 
-        public void DisplayDataAboutCharacter()
+        private void DisplayDataAboutCharacter()
         {
             _coordinatesTMP.text = $"Coordinates: {_dataSpaceShip.GetCoordinates()}";
             _rotationTMP.text = $"Rotation: {_dataSpaceShip.GetRotation()}";
             _speedTMP.text = $"Speed: {_dataSpaceShip.GetSpeed()}";
+        }
+
+        private void GameOver()
+        {
+            _shootingLaser.OnEditLaserCount -= EditLaserCount;
+            _shootingLaser.OnLaserCooldown -= LaserCooldown;
+            _dataSpaceShip.OnScoreChanged -= AddScore;
+            _gameOver.OnGameOver -= GameOver;
+
         }
     }
 }

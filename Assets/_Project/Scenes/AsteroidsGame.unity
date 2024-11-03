@@ -711,6 +711,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e66a28a53a35c4387507b60fa4fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameOver: {fileID: 0}
   _scoreTMP: {fileID: 1330110202}
   _laserCountTMP: {fileID: 218799331}
   _coordinatesTMP: {fileID: 2005562705}
@@ -1056,6 +1057,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1205883578}
+  - component: {fileID: 1205883581}
+  - component: {fileID: 1205883580}
   - component: {fileID: 1205883579}
   m_Layer: 0
   m_Name: SpawnManagers
@@ -1088,7 +1091,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1205883577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24bec5b5fa0086747a08537ac9f255d9, type: 3}
+  m_Script: {fileID: 11500000, guid: dcf2b9ab530f449697d5731f5bc95325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOver: {fileID: 1278875013}
+  _asteroidFactory: {fileID: 752357151}
+  _respawnAsteroidRange: 3
+--- !u!114 &1205883580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205883577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb0cc350a7da40889c097ad66b58f333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _gameOver: {fileID: 1278875013}
@@ -1097,7 +1115,20 @@ MonoBehaviour:
   _ufoFactory: {fileID: 752357152}
   _gameplayUI: {fileID: 669028224}
   _spaceShip: {fileID: 4759089236649671140, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
-  _respawnAsteroidRange: 1
+--- !u!114 &1205883581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1205883577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd449f49cf6e4d529dca25f4edc37abe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _gameOver: {fileID: 1278875013}
+  _ufoFactory: {fileID: 752357152}
   _minRespawnUFORange: 5
   _maxRespawnUFORange: 10
 --- !u!1 &1278875011

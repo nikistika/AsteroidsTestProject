@@ -7,33 +7,27 @@ using Random = UnityEngine.Random;
 
 namespace Characters
 {
-    public class Asteroid : Enemy
+    public class Asteroid : Character
     {
-        
         public event Action<int, Asteroid> OnGetFragments;
         public event Action<Asteroid> OnReturnAsteroid;
         
         private bool _flagParent = true;
-
-        [SerializeField] private int _scoreKill = 5;
+        private DataSpaceShip _dataSpaceShip;
+        private GameOver _gameOver;
         
+        [SerializeField] private int _scoreKill = 5;
+        [SerializeField] private int _speed = 1;
+
         public void Construct(DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
         }
 
-        private void Awake()
-        {
-            base.Awake();
-            _rigidbody = GetComponent<Rigidbody2D>();
-            RandomScale();
-        }
-
         private void Start()
         {
             _gameOver.OnGameOver += GameOver;
-            
         }
 
         private void FixedUpdate()
@@ -44,13 +38,13 @@ namespace Characters
         public void Move()
         {
             if (transform.position.y > _halfHeightCamera)
-                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
+                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f) * _speed;
             else if (transform.position.y < -_halfHeightCamera)
-                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
+                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f)  * _speed;
             else if (transform.position.x > _halfWidthCamera)
-                _rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
+                _rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f))  * _speed;
             else if (transform.position.x < -_halfWidthCamera)
-                _rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
+                _rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f))  * _speed;
         }
 
         public void IsObjectParent(bool isObjectParent)
@@ -60,7 +54,8 @@ namespace Characters
 
         public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
-            if (fragmentNumber == 1) fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
+            if (fragmentNumber == 1) 
+                fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
             else if (fragmentNumber == 2)
                 fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
             else if (fragmentNumber == 3)
@@ -68,7 +63,13 @@ namespace Characters
             else if (fragmentNumber == 4)
                 fragmentAsteroid._rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
         }
-
+        
+        
+        protected override void Initialization()
+        {
+            _rigidbody = GetComponent<Rigidbody2D>();
+            RandomScale();
+        }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
@@ -85,10 +86,7 @@ namespace Characters
                 
                 _dataSpaceShip.AddScore(_scoreKill);
                 
-                if (OnReturnAsteroid != null)
-                {
-                    OnReturnAsteroid.Invoke(this);
-                }
+                OnReturnAsteroid?.Invoke(this);
             }
 
             if (collision.GetComponent<SpaceShip>())
@@ -112,7 +110,6 @@ namespace Characters
             }
         }
 
-
         private void Crushing()
         {
             OnGetFragments?.Invoke(4, this);
@@ -120,6 +117,7 @@ namespace Characters
 
         private void GameOver()
         {
+            _gameOver.OnGameOver -= GameOver;
             _rigidbody.velocity = Vector2.zero;
         }
     }

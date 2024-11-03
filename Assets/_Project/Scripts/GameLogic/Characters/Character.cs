@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace Characters
 {
@@ -15,6 +16,8 @@ namespace Characters
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
+
+            Initialization();
         }
 
         private void FixedUpdate()
@@ -44,5 +47,7 @@ namespace Characters
                 _rigidbody.MovePosition(new Vector2(_halfWidthCamera, gameObject.transform.position.y));
             }
         }
+
+        protected abstract void Initialization();
     }
 }

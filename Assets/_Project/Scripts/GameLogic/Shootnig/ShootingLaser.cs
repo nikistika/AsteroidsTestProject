@@ -46,13 +46,13 @@ namespace Shooting
         private void AddLaserCount(int count)
         {
             LaserCount += count;
-            OnEditLaserCount.Invoke(LaserCount);
+            OnEditLaserCount?.Invoke(LaserCount);
         }
 
         private void RemoveLaserCount(int count)
         {
             LaserCount -= count;
-            OnEditLaserCount.Invoke(LaserCount);
+            OnEditLaserCount?.Invoke(LaserCount);
         }
 
         private IEnumerator ShotDuration()
@@ -68,7 +68,7 @@ namespace Shooting
             _laserCooldownActive = true;
             for (float timer = _laserCooldown; timer > 0; timer--)
             {
-                OnLaserCooldown.Invoke(timer, _laserCooldown);
+                OnLaserCooldown?.Invoke(timer, _laserCooldown);
                 yield return _waitLaserCooldown;
             }
 
