@@ -1,0 +1,70 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.Pool;
+
+namespace GameLogic
+{
+    public class Shooting : MonoBehaviour
+    {
+        
+        private bool _shotToggle;
+        
+        [SerializeField] private Missile _missilePrefab;
+        [SerializeField] private int _poolSize = 10;
+        [SerializeField] private int _maxPoolSize;
+        [SerializeField] private float _delayShotTimes = 1;
+
+        private ObjectPool<Missile> _missilePool;
+
+        private void Awake()
+        {
+            PoolInitialization();
+        }
+
+        public void Shot()
+        {
+            if (!_shotToggle)
+            {
+                StartCoroutine(DelayShot());
+                var missile = _missilePool.Get();
+            }
+        }
+
+        private IEnumerator DelayShot()
+        {
+            _shotToggle = true;
+            yield return new WaitForSeconds(_delayShotTimes);
+            _shotToggle = false;
+        }
+
+        private void PoolInitialization()
+        {
+            _missilePool = new ObjectPool<Missile>(
+                createFunc: () =>
+                {
+                    var missile = Instantiate(_missilePrefab, gameObject.transform, true);
+                    missile.transform.position = transform.position;
+
+                    missile.Construct(_missilePool);
+
+                    return missile;
+                }, // Функция создания объекта
+                actionOnGet: (obj) =>
+                {
+                    obj.gameObject.SetActive(true);
+                    obj.transform.position = transform.position;
+                    obj.FlyForward();
+                }, // Действие при выдаче объекта
+                actionOnRelease: (obj) => {
+                    obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                    obj.gameObject.SetActive(false);
+                }, // Действие при возврате в пул
+                actionOnDestroy: (obj) => Destroy(obj), // Действие при удалении объекта
+                collectionCheck: false, // Проверять ли повторное добавление объекта в пул
+                defaultCapacity: _poolSize, // Начальный размер пула
+                maxSize: _maxPoolSize // Максимальный размер пула
+            );
+        }
+    }
+}
