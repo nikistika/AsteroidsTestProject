@@ -26,7 +26,7 @@ public class Missile : MonoBehaviour
 
     private void Start()
     {
-        FlyForward();
+        Move();
     }
 
     private void Update()
@@ -34,7 +34,7 @@ public class Missile : MonoBehaviour
         GoingAbroad();
     }
 
-    public void FlyForward()
+    public void Move()
     {
         _rigidbody.velocity = transform.parent.up * _speed;
     }

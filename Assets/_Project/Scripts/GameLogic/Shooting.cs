@@ -27,7 +27,7 @@ namespace GameLogic
             if (!_shotToggle)
             {
                 StartCoroutine(DelayShot());
-                var missile = _missilePool.Get();
+                _missilePool.Get();
             }
         }
 
@@ -54,7 +54,7 @@ namespace GameLogic
                 {
                     obj.gameObject.SetActive(true);
                     obj.transform.position = transform.position;
-                    obj.FlyForward();
+                    obj.Move();
                 }, // Действие при выдаче объекта
                 actionOnRelease: (obj) => {
                     obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
