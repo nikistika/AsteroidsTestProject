@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
 using Random = UnityEngine.Random;
@@ -10,11 +11,15 @@ public class Asteroid : MonoBehaviour
     private float _halfWidthCamera;
     private Camera _camera;
     private Rigidbody2D _rigidbody2D;
+    private GameplayUI _gameplayUI;
     private ObjectPool<Asteroid> _asteroidPool;
 
-    public void Construct(ObjectPool<Asteroid> asteroidPool)
+    [SerializeField] private int _scoreKill = 5;
+    
+    public void Construct(ObjectPool<Asteroid> asteroidPool, GameplayUI gameplayUI)
     {
         _asteroidPool = asteroidPool;
+        _gameplayUI = gameplayUI;
     }
     
     private void Awake()
@@ -32,6 +37,23 @@ public class Asteroid : MonoBehaviour
         GoingAbroad();
     }
 
+    public void Move()
+    {
+        if(transform.position.y > _halfHeightCamera) _rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
+        else if(transform.position.y < - _halfHeightCamera) _rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
+        else if(transform.position.x > _halfWidthCamera) _rigidbody2D.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
+        else if(transform.position.x < - _halfWidthCamera) _rigidbody2D.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
+    }
+    
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Missile>())
+        {
+            _gameplayUI.AddScore(_scoreKill);
+            _asteroidPool.Release(this);
+        }
+    }
+    
     private void RandomScale()
     {
         int randomIndex = Random.Range(0, 3);
@@ -45,14 +67,6 @@ public class Asteroid : MonoBehaviour
                 transform.localScale = new Vector3(Random.Range(1f, 2f), Random.Range(1f, 2f), 1);
                 break;
         }
-    }
-    
-    public void Move()
-    {
-        if(transform.position.y > _halfHeightCamera) _rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
-        else if(transform.position.y < - _halfHeightCamera) _rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
-        else if(transform.position.x > _halfWidthCamera) _rigidbody2D.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
-        else if(transform.position.x < - _halfWidthCamera) _rigidbody2D.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
     }
     
     private void GoingAbroad()

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2001977868199330328}
   - component: {fileID: 4346990742585005512}
   - component: {fileID: 6125672097654975787}
-  - component: {fileID: 8008634055332590724}
   - component: {fileID: 2838026535934526891}
   - component: {fileID: 6736039432354620115}
+  - component: {fileID: 554886008481359930}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Untagged
@@ -30,7 +30,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2502153312653533073}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.0526, y: 2.0526, z: 2.0526}
   m_ConstrainProportionsScale: 0
@@ -150,8 +150,40 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &8008634055332590724
-BoxCollider2D:
+--- !u!114 &2838026535934526891
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502153312653533073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf091ef27581dfc44a3944dffcaf4a73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedMove: 70
+  _speedRotate: 3
+  _restartPanel: {fileID: 0}
+  _gameplayUI: {fileID: 0}
+--- !u!114 &6736039432354620115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502153312653533073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75e2a437123447a1b1c0ce94c1fe9c9e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _missilePrefab: {fileID: 6730024081266783, guid: d8f6dd3f95cc5264aa047d2642c6b985, type: 3}
+  _poolSize: 10
+  _maxPoolSize: 20
+  _delayShotTimes: 0.5
+--- !u!58 &554886008481359930
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -183,45 +215,5 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.3, y: 0.25}
-    newSize: {x: 0.3, y: 0.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.25}
-  m_EdgeRadius: 0
---- !u!114 &2838026535934526891
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2502153312653533073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bf091ef27581dfc44a3944dffcaf4a73, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _speedMove: 80
-  _speedRotate: 0.2
---- !u!114 &6736039432354620115
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2502153312653533073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75e2a437123447a1b1c0ce94c1fe9c9e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _missilePrefab: {fileID: 6730024081266783, guid: d8f6dd3f95cc5264aa047d2642c6b985, type: 3}
-  _poolSize: 10
-  _maxPoolSize: 20
-  _delayShotTimes: 0.5
+  m_Radius: 0.14999999

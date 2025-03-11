@@ -5,8 +5,7 @@ namespace GameLogic
 {
     public class SpaceShip : MonoBehaviour
     {
-        [SerializeField] private float _speedMove;
-        [SerializeField] private float _speedRotate;
+
         private Rigidbody2D _rigidbody;
         private Camera _camera;
 
@@ -14,6 +13,11 @@ namespace GameLogic
         private float _halfWidthCamera;
 
         private Shooting _shooting;
+        
+        [SerializeField] private float _speedMove = 70f;
+        [SerializeField] private float _speedRotate = 2f;
+        [SerializeField] private RestartPanel _restartPanel;
+        [SerializeField] private GameplayUI _gameplayUI;
 
         private void Awake()
         {
@@ -24,12 +28,20 @@ namespace GameLogic
             _shooting = gameObject.GetComponent<Shooting>();
         }
 
-        void Update()
+        private void Update()
         {
             Move();
             GoingAbroad();
         }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.GetComponent<Asteroid>())
+            {
+                _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
+            }
+        }
+        
         private void Move()
         {
             if (Input.GetKey(KeyCode.W))
@@ -39,12 +51,12 @@ namespace GameLogic
 
             if (Input.GetKey(KeyCode.D))
             {
-                _rigidbody.AddTorque(-_speedRotate * Time.deltaTime, ForceMode2D.Impulse);
+                _rigidbody.MoveRotation(_rigidbody.rotation - _speedRotate);
             }
 
             if (Input.GetKey(KeyCode.A))
             {
-                _rigidbody.AddTorque(_speedRotate * Time.deltaTime, ForceMode2D.Impulse);
+                _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
             }
 
             if (Input.GetKey(KeyCode.Space))

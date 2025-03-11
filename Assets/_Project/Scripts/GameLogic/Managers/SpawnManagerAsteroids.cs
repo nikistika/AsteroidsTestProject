@@ -11,7 +11,8 @@ public class SpawnManagerAsteroids : MonoBehaviour
     private float _halfWidthCamera;
     private Camera _camera;
     private bool _gameOver;
-
+    
+    [SerializeField] private GameplayUI gameplayUI;
     [SerializeField] private Asteroid _asteroid;
     [SerializeField] private float _respawnRange = 3;
     [SerializeField] private int _poolSize = 10;
@@ -61,7 +62,7 @@ public class SpawnManagerAsteroids : MonoBehaviour
             createFunc: () =>
             {
                 var asteroid = Instantiate(_asteroid);
-                asteroid.Construct(_asteroidPool);
+                asteroid.Construct(_asteroidPool, gameplayUI);
                 asteroid.gameObject.transform.position = getRandomSpawnPosition();
                 return asteroid;
             },  // Функция создания объекта

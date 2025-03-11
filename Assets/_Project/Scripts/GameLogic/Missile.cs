@@ -39,6 +39,14 @@ public class Missile : MonoBehaviour
         _rigidbody.velocity = transform.parent.up * _speed;
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.GetComponent<Asteroid>())
+        {
+            _missilePool.Release(this);
+        }
+    }
+    
     private void GoingAbroad()
     {
         if (gameObject.transform.position.y > _halfHeightCamera ||
