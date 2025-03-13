@@ -5,19 +5,19 @@ namespace GameLogic
 {
     public class SpaceShip : MonoBehaviour
     {
-
         private Rigidbody2D _rigidbody;
         private Camera _camera;
 
         private float _halfHeightCamera;
         private float _halfWidthCamera;
 
-        private Shooting _shooting;
-        
+        private ShootingMissile _shootingMissile;
+
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private RestartPanel _restartPanel;
         [SerializeField] private GameplayUI _gameplayUI;
+        [SerializeField] private ShootingLaser _shootingLaser;
 
         private void Awake()
         {
@@ -25,45 +25,49 @@ namespace GameLogic
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-            _shooting = gameObject.GetComponent<Shooting>();
+            _shootingMissile = gameObject.GetComponent<ShootingMissile>();
         }
 
         private void Update()
         {
-            Move();
+            Input();
             GoingAbroad();
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Asteroid>())
+            if (collision.GetComponent<Asteroid>() && !transform.IsChildOf(transform))
             {
                 _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
             }
         }
-        
-        private void Move()
+
+        private void Input()
         {
-            if (Input.GetKey(KeyCode.W))
+            if (UnityEngine.Input.GetKey(KeyCode.W))
             {
                 _rigidbody.AddRelativeForce(Vector2.up * (_speedMove * Time.deltaTime), ForceMode2D.Force);
             }
 
-            if (Input.GetKey(KeyCode.D))
+            if (UnityEngine.Input.GetKey(KeyCode.D))
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation - _speedRotate);
             }
 
-            if (Input.GetKey(KeyCode.A))
+            if (UnityEngine.Input.GetKey(KeyCode.A))
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
             }
 
-            if (Input.GetKey(KeyCode.Space))
+            if (UnityEngine.Input.GetKey(KeyCode.Space))
             {
-                Shooting();
+                ShootingMissile();
             }
-            
+
+            if (UnityEngine.Input.GetKey(KeyCode.G))
+            {
+                ShootingLaser();
+            }
         }
 
         private void GoingAbroad()
@@ -89,10 +93,14 @@ namespace GameLogic
             }
         }
 
-        private void Shooting()
+        private void ShootingMissile()
         {
-            _shooting.Shot();
+            _shootingMissile.ShotMissile();
         }
-        
+
+        private void ShootingLaser()
+        {
+            _shootingLaser.Shot();
+        }
     }
 }

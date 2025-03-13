@@ -655,7 +655,6 @@ GameObject:
   - component: {fileID: 218799329}
   - component: {fileID: 218799332}
   - component: {fileID: 218799331}
-  - component: {fileID: 218799330}
   m_Layer: 0
   m_Name: LaserText
   m_TagString: Untagged
@@ -679,23 +678,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -112.4075, y: -274.95}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -62.22262, y: -274.95}
+  m_SizeDelta: {x: 187.0697, y: 17.88}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &218799330
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 218799328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &218799331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -943,7 +928,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e66a28a53a35c4387507b60fa4fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreText: {fileID: 1330110202}
+  _scoreTMP: {fileID: 1330110202}
+  _laserCountTMP: {fileID: 218799331}
 --- !u!1 &753832294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1405,7 +1391,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameplayUI: {fileID: 669028224}
   _asteroid: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
-  _respawnRange: 0.5
+  _respawnRange: 1.5
   _poolSize: 10
   _maxPoolSize: 20
 --- !u!1 &1330110199
@@ -1960,10 +1946,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 912813668}
     m_Modifications:
-    - target: {fileID: 554886008481359930, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2502153312653533073, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
       propertyPath: m_Name
       value: Space Ship
@@ -1976,6 +1958,10 @@ PrefabInstance:
       propertyPath: _restartPanel
       value: 
       objectReference: {fileID: 175322544}
+    - target: {fileID: 3699338401841994569, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
+      propertyPath: _gameplayUI
+      value: 
+      objectReference: {fileID: 669028224}
     - target: {fileID: 6689623489765878657, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2054,6 +2040,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6689623489765878657, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7163616426749682268, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

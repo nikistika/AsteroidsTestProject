@@ -5,7 +5,7 @@ using UnityEngine.Pool;
 
 namespace GameLogic
 {
-    public class Shooting : MonoBehaviour
+    public class ShootingMissile : MonoBehaviour
     {
         
         private bool _shotToggle;
@@ -14,6 +14,7 @@ namespace GameLogic
         [SerializeField] private int _poolSize = 10;
         [SerializeField] private int _maxPoolSize;
         [SerializeField] private float _delayShotTimes = 1;
+        
 
         private ObjectPool<Missile> _missilePool;
 
@@ -22,13 +23,18 @@ namespace GameLogic
             PoolInitialization();
         }
 
-        public void Shot()
+        public void ShotMissile()
         {
             if (!_shotToggle)
             {
                 StartCoroutine(DelayShot());
                 _missilePool.Get();
             }
+        }
+
+        public void ShotLaser()
+        {
+            
         }
 
         private IEnumerator DelayShot()

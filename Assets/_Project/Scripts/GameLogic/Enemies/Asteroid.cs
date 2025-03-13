@@ -1,4 +1,5 @@
 using System;
+using GameLogic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -47,7 +48,7 @@ public class Asteroid : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Missile>())
+        if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
         {
             _gameplayUI.AddScore(_scoreKill);
             _asteroidPool.Release(this);
