@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Shooting;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace GameLogic
+namespace Shooting
 {
     public class ShootingMissile : MonoBehaviour
     {

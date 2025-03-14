@@ -1,21 +1,15 @@
-using System.Collections;
+using Shooting;
+using UI;
 using UnityEngine;
 
-namespace GameLogic
+namespace Characters
 {
-    public class SpaceShip : MonoBehaviour
+    public class SpaceShip : Character
     {
-        private Rigidbody2D _rigidbody;
-        private Camera _camera;
-
-        private float _halfHeightCamera;
-        private float _halfWidthCamera;
-
         private ShootingMissile _shootingMissile;
 
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
-        [SerializeField] private RestartPanel _restartPanel;
         [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private ShootingLaser _shootingLaser;
 
@@ -30,33 +24,34 @@ namespace GameLogic
 
         private void Update()
         {
-            Input();
+            Move();
             GoingAbroad();
+            ShowedDataInUI();
         }
 
-        private void Input()
+        public override void Move()
         {
-            if (UnityEngine.Input.GetKey(KeyCode.W))
+            if (Input.GetKey(KeyCode.W))
             {
                 _rigidbody.AddRelativeForce(Vector2.up * (_speedMove * Time.deltaTime), ForceMode2D.Force);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.D))
+            if (Input.GetKey(KeyCode.D))
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation - _speedRotate);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.A))
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.Space))
+            if (Input.GetKey(KeyCode.Space))
             {
                 ShootingMissile();
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.G))
+            if (Input.GetKey(KeyCode.G))
             {
                 ShootingLaser();
             }
@@ -93,6 +88,20 @@ namespace GameLogic
         private void ShootingLaser()
         {
             _shootingLaser.Shot();
+        }
+
+        private void ShowedDataInUI()
+        {
+            Vector2 coordinates = transform.position;
+            string coordinatesText = coordinates.ToString();
+            Vector2 rotation = transform.rotation.eulerAngles;
+            string rotationText = rotation.ToString();
+            Vector2 speed = _rigidbody.velocity;
+            string speedText = speed.ToString();
+
+
+            Debug.Log($"coordinates: {coordinatesText}, rotation: {rotationText}, speed: {speedText}");
+            _gameplayUI.DisplayDataAboutCharacter(coordinatesText, rotationText, speedText);
         }
     }
 }

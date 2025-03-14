@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GameLogic
+namespace Shooting
 {
     public class Laser: MonoBehaviour
     {

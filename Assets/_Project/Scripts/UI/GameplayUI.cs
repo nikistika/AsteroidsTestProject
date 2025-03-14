@@ -1,59 +1,66 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class GameplayUI : MonoBehaviour
+namespace UI
 {
-
-    public int CurrentScore { get; private set; }
-    private int _laserCount;
-    private int _maxLaserCount;
-    private bool _flagMaxLaserCount;
-    private string _laserCountText;
-    
-    [SerializeField] private TMP_Text _scoreTMP;
-    [SerializeField] private TMP_Text _laserCountTMP;
-
-    private void Start()
+    public class GameplayUI : MonoBehaviour
     {
-        AddScore(0);
-    }
+        public int CurrentScore { get; private set; }
+        private int _laserCount;
+        private int _maxLaserCount;
+        private bool _flagMaxLaserCount;
+        private string _laserCountText;
 
-    public void InstallMaxLaserCount(int maxLaserCount)
-    {
-        if (!_flagMaxLaserCount)
+        [SerializeField] private TMP_Text _scoreTMP;
+        [SerializeField] private TMP_Text _laserCountTMP;
+        [SerializeField] private TMP_Text _coordinatesTMP;
+        [SerializeField] private TMP_Text _rotationTMP;
+        [SerializeField] private TMP_Text _speedTMP;
+
+        private void Start()
         {
-            _maxLaserCount = maxLaserCount;
-            _flagMaxLaserCount = true;
+            AddScore(0);
+        }
+
+        public void InstallMaxLaserCount(int maxLaserCount)
+        {
+            if (!_flagMaxLaserCount)
+            {
+                _maxLaserCount = maxLaserCount;
+                _flagMaxLaserCount = true;
+            }
+        }
+
+        public void AddScore(int score)
+        {
+            CurrentScore += score;
+            _scoreTMP.text = $"Score: {CurrentScore}";
+        }
+
+        public void AddLaserCount(int count)
+        {
+            _laserCount += count;
+            _laserCountText = $"Laser: {_laserCount}/{_maxLaserCount}";
+            _laserCountTMP.text = _laserCountText;
+        }
+
+        public void RemoveLaserCount(int count)
+        {
+            _laserCount -= count;
+            _laserCountText = $"Laser: {_laserCount}/{_maxLaserCount}";
+            _laserCountTMP.text = _laserCountText;
+        }
+
+        public void LaserCooldown(float currentCooldown, float maxCooldown)
+        {
+            _laserCountTMP.text = $"{_laserCountText} ({currentCooldown}/{maxCooldown})";
+        }
+
+        public void DisplayDataAboutCharacter(string coordinates, string rotation, string speed)
+        {
+            _coordinatesTMP.text = $"Coordinates: {coordinates}";
+            _rotationTMP.text = $"Rotation: {rotation}";
+            _speedTMP.text = $"Speed: {speed}";
         }
     }
-    
-    public void AddScore(int score)
-    {
-        CurrentScore += score;
-        _scoreTMP.text = $"Score: {CurrentScore}";
-    }
-
-    public void AddLaserCount(int count)
-    {
-        _laserCount += count;
-        _laserCountText = $"Laser: {_laserCount}/{_maxLaserCount}";
-        _laserCountTMP.text = _laserCountText;
-    }
-
-    public void RemoveLaserCount(int count)
-    {
-        _laserCount-= count;
-        _laserCountText = $"Laser: {_laserCount}/{_maxLaserCount}";
-        _laserCountTMP.text = _laserCountText;
-        Debug.Log("RemoveLaserCount");
-    }
-
-    public void LaserCooldown(float currentCooldown, float maxCooldown)
-    {
-        _laserCountTMP.text = $"{_laserCountText} ({currentCooldown}/{maxCooldown})";
-    }
-    
 }
