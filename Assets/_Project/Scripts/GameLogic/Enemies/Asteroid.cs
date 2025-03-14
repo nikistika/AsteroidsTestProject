@@ -13,14 +13,17 @@ public class Asteroid : MonoBehaviour
     private Camera _camera;
     private Rigidbody2D _rigidbody2D;
     private GameplayUI _gameplayUI;
+    private RestartPanel _restartPanel;
     private ObjectPool<Asteroid> _asteroidPool;
+    private bool _flagPerent = true;
 
     [SerializeField] private int _scoreKill = 5;
     
-    public void Construct(ObjectPool<Asteroid> asteroidPool, GameplayUI gameplayUI)
+    public void Construct(ObjectPool<Asteroid> asteroidPool, GameplayUI gameplayUI, RestartPanel restartPanel)
     {
         _asteroidPool = asteroidPool;
         _gameplayUI = gameplayUI;
+        _restartPanel = restartPanel;
     }
     
     private void Awake()
@@ -45,13 +48,34 @@ public class Asteroid : MonoBehaviour
         else if(transform.position.x > _halfWidthCamera) _rigidbody2D.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
         else if(transform.position.x < - _halfWidthCamera) _rigidbody2D.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
     }
-    
+
+    public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
+    {
+        if (fragmentNumber == 1) fragmentAsteroid._rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
+        else if (fragmentNumber == 2) fragmentAsteroid._rigidbody2D.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
+        else if (fragmentNumber == 3) fragmentAsteroid._rigidbody2D.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
+        else if (fragmentNumber == 4) fragmentAsteroid._rigidbody2D.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
+    }
+
+    public void IsObjectParent (bool isObjectParent)
+    {
+        _flagPerent = isObjectParent;
+    }
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
         {
+
+            if (_flagPerent) Crushing();
             _gameplayUI.AddScore(_scoreKill);
             _asteroidPool.Release(this);
+        }
+
+        if (collision.GetComponent<SpaceShip>())
+        {
+            _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
         }
     }
     
@@ -80,5 +104,19 @@ public class Asteroid : MonoBehaviour
             _asteroidPool.Release(this);
         }
     }
-    
+
+    private void Crushing()
+    {
+        for (int i = 1; i <= 4; i++)
+        {
+            var fragment = _asteroidPool.Get();
+            fragment._flagPerent = false;
+            fragment.transform.position = transform.position;
+            fragment.transform.localScale = transform.localScale / 2;
+            fragment.MoveFragment(i, fragment);
+
+        }
+    }
+
+
 }

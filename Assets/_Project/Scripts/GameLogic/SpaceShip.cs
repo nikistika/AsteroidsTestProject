@@ -34,14 +34,6 @@ namespace GameLogic
             GoingAbroad();
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
-        {
-            if (collision.GetComponent<Asteroid>() && !transform.IsChildOf(transform))
-            {
-                _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
-            }
-        }
-
         private void Input()
         {
             if (UnityEngine.Input.GetKey(KeyCode.W))

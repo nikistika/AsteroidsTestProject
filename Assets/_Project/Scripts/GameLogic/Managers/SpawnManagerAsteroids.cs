@@ -7,14 +7,19 @@ public class SpawnManagerAsteroids : MonoBehaviour
 {
     
     private ObjectPool<Asteroid> _asteroidPool;
+    private ObjectPool<UFO> _ufoPool;
     private float _halfHeightCamera;
     private float _halfWidthCamera;
     private Camera _camera;
     private bool _gameOver;
-    
+
+    [SerializeField] private RestartPanel _respawnPanel;
     [SerializeField] private GameplayUI gameplayUI;
     [SerializeField] private Asteroid _asteroid;
-    [SerializeField] private float _respawnRange = 3;
+    [SerializeField] private UFO _ufo;
+    [SerializeField] private float _respawnAsteroidRange = 3;
+    [SerializeField] private float _minRespawnUFORange = 5;
+    [SerializeField] private float _maxRespawnUFORange = 10;
     [SerializeField] private int _poolSize = 10;
     [SerializeField] private int _maxPoolSize = 20;
     
@@ -23,18 +28,25 @@ public class SpawnManagerAsteroids : MonoBehaviour
         _camera = Camera.main;
         _halfHeightCamera = _camera.orthographicSize;
         _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-        PoolInitialization();
+        AsteroidPoolInitialization();
+        UFOPoolInitialization();
     }
 
     private void Start()
     {
         StartCoroutine(SpawnAsteroidsCoroutine());
+        StartCoroutine(SpawnUFOCoroutine());
     }
 
 
     private void SpawnAsteroid()
     {
         _asteroidPool.Get();
+    }
+
+    private void SpawnUFO()
+    {
+        _ufoPool.Get();
     }
 
     private Vector2 getRandomSpawnPosition()
@@ -56,15 +68,44 @@ public class SpawnManagerAsteroids : MonoBehaviour
         return new Vector2(0, 0);
     }
     
-    private void PoolInitialization()
+    private void AsteroidPoolInitialization()
     {
         _asteroidPool = new ObjectPool<Asteroid>(
             createFunc: () =>
             {
                 var asteroid = Instantiate(_asteroid);
-                asteroid.Construct(_asteroidPool, gameplayUI);
+                asteroid.Construct(_asteroidPool, gameplayUI, _respawnPanel);
                 asteroid.gameObject.transform.position = getRandomSpawnPosition();
                 return asteroid;
+            },  // Функция создания объекта
+            actionOnGet: (obj) =>
+            {
+                obj.gameObject.SetActive(true);
+                obj.gameObject.transform.position = getRandomSpawnPosition();
+                obj.Move();
+                obj.IsObjectParent(true);
+            },   // Действие при выдаче объекта
+            actionOnRelease: (obj) =>
+            {
+                obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                obj.gameObject.SetActive(false);
+            }, // Действие при возврате в пул
+            actionOnDestroy: (obj) => Destroy(obj),   // Действие при удалении объекта
+            collectionCheck: false, // Проверять ли повторное добавление объекта в пул
+            defaultCapacity: _poolSize, // Начальный размер пула
+            maxSize: _maxPoolSize // Максимальный размер пула
+        );
+    }
+
+    private void UFOPoolInitialization()
+    {
+        _ufoPool = new ObjectPool<UFO>(
+            createFunc: () =>
+            {
+                var UFO = Instantiate(_ufo);
+                UFO.Construct(_ufoPool, gameplayUI, _respawnPanel);
+                UFO.gameObject.transform.position = getRandomSpawnPosition();
+                return UFO;
             },  // Функция создания объекта
             actionOnGet: (obj) =>
             {
@@ -89,9 +130,19 @@ public class SpawnManagerAsteroids : MonoBehaviour
         while (!_gameOver)
         {
             SpawnAsteroid();
-            yield return new WaitForSeconds(_respawnRange);
+            yield return new WaitForSeconds(_respawnAsteroidRange);
         }
-        
     }
+
+        private IEnumerator SpawnUFOCoroutine()
+    {
+        while (!_gameOver)
+        {
+            SpawnUFO();
+            yield return new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
+        }
+    }
+
+
 
 }
