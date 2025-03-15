@@ -8,10 +8,14 @@ namespace Shooting
     {
         private bool _laserActive;
         private bool _laserCooldownActive;
-
+        private WaitForSeconds _waitLaserDuration;
+        private WaitForSeconds _waitLaserDelay;
+        private WaitForSeconds _waitLaserCooldown = new (1);
+        
+        
         [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private Laser _laserObject;
-        [SerializeField] private float _laserTime = 1;
+        [SerializeField] private float _laserDuration = 1;
         [SerializeField] private float _laserDelay = 1;
         [SerializeField] private float _laserCooldown = 15;
         [SerializeField] private int _maxLaserCount = 3;
@@ -21,6 +25,9 @@ namespace Shooting
         {
             _gameplayUI.InstallMaxLaserCount(_maxLaserCount);
             _gameplayUI.AddLaserCount(_laserCount);
+
+            _waitLaserDuration = new(_laserDuration);
+            _waitLaserDelay = new(_laserDelay);
         }
 
         public void Shot()
@@ -49,9 +56,9 @@ namespace Shooting
 
         private IEnumerator ShotDuration()
         {
-            yield return new WaitForSeconds(_laserTime);
+            yield return _waitLaserDuration;
             _laserObject.gameObject.SetActive(false);
-            yield return new WaitForSeconds(_laserDelay);
+            yield return _waitLaserDelay;
             _laserActive = false;
         }
 
@@ -61,7 +68,7 @@ namespace Shooting
             for (float timer = _laserCooldown; timer > 0; timer--)
             {
                 _gameplayUI.LaserCooldown(timer, _laserCooldown);
-                yield return new WaitForSeconds(1);
+                yield return _waitLaserCooldown;
             }
 
             AddLaserCount(1);

@@ -1,6 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
-using Shooting;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -10,18 +8,18 @@ namespace Shooting
     {
         
         private bool _shotToggle;
+        private ObjectPool<Missile> _missilePool;
+        private WaitForSeconds _waitDelayShotTimes;
         
         [SerializeField] private Missile _missilePrefab;
         [SerializeField] private int _poolSize = 10;
         [SerializeField] private int _maxPoolSize;
         [SerializeField] private float _delayShotTimes = 1;
         
-
-        private ObjectPool<Missile> _missilePool;
-
         private void Awake()
         {
             PoolInitialization();
+            _waitDelayShotTimes = new WaitForSeconds(_delayShotTimes);
         }
 
         public void ShotMissile()
@@ -32,16 +30,12 @@ namespace Shooting
                 _missilePool.Get();
             }
         }
-
-        public void ShotLaser()
-        {
-            
-        }
+        
 
         private IEnumerator DelayShot()
         {
             _shotToggle = true;
-            yield return new WaitForSeconds(_delayShotTimes);
+            yield return _waitDelayShotTimes;
             _shotToggle = false;
         }
 

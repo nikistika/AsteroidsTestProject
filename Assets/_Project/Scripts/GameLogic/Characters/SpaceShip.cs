@@ -99,8 +99,6 @@ namespace Characters
             Vector2 speed = _rigidbody.velocity;
             string speedText = speed.ToString();
 
-
-            Debug.Log($"coordinates: {coordinatesText}, rotation: {rotationText}, speed: {speedText}");
             _gameplayUI.DisplayDataAboutCharacter(coordinatesText, rotationText, speedText);
         }
     }
