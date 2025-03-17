@@ -1305,6 +1305,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
+--- !u!114 &1025685056 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7357927805528793665, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
+  m_PrefabInstance: {fileID: 1900831592127155464}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 787adae255904c08902dc97e00b56843, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1205883577
 GameObject:
   m_ObjectHideFlags: 0
@@ -1350,7 +1361,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _respawnPanel: {fileID: 175322544}
-  gameplayUI: {fileID: 669028224}
+  _gameplayUI: {fileID: 669028224}
   _asteroid: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
   _ufo: {fileID: 3395255367656053016, guid: de5576463dbcec940b6d92821ec78325, type: 3}
   _respawnAsteroidRange: 3
@@ -1910,6 +1921,10 @@ PrefabInstance:
       propertyPath: _gameplayUI
       value: 
       objectReference: {fileID: 669028224}
+    - target: {fileID: 3699338401841994569, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
+      propertyPath: _laserObject
+      value: 
+      objectReference: {fileID: 1025685056}
     - target: {fileID: 6322853724292137695, guid: 76f927c8a30d5484fb2c57b64783fb42, type: 3}
       propertyPath: m_SortingOrder
       value: 1
