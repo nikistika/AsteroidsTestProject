@@ -13,24 +13,24 @@ namespace Shooting
         private WaitForSeconds _waitLaserDelay;
         private WaitForSeconds _waitLaserCooldown = new (1);
         
-        [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
         [SerializeField] private float _laserDelay = 1;
         [SerializeField] private float _laserCooldown = 15;
         
         [field:SerializeField] public int MaxLaserCount { get; private set; } = 3;
-        [field:SerializeField] public int LaserCount { get; private set; } = 3;
+        [field:SerializeField] public int LaserCount { get; private set; }
 
-        public Action<int> OnAddLaserCount;
+        public Action<int> OnEditLaserCount;
+        // public Action<int> OnRemoveLaserCount;
+        public Action<float, float> OnLaserCooldown;
         
         private void Awake()
         {
-            // _gameplayUI.InstallMaxLaserCount(MaxLaserCount);
-            // _gameplayUI.AddLaserCount(LaserCount);
-
             _waitLaserDuration = new(_laserDuration);
             _waitLaserDelay = new(_laserDelay);
+            LaserCount = MaxLaserCount;
+
         }
 
         public void Shot()
@@ -45,17 +45,16 @@ namespace Shooting
             }
         }
 
-        public void AddLaserCount(int count)
+        private void AddLaserCount(int count)
         {
             LaserCount += count;
-            // _gameplayUI.AddLaserCount(count);
-            OnAddLaserCount.Invoke(count);
+            OnEditLaserCount.Invoke(LaserCount);
         }
 
-        public void RemoveLaserCount(int count)
+        private void RemoveLaserCount(int count)
         {
             LaserCount -= count;
-            _gameplayUI.RemoveLaserCount(count);
+            OnEditLaserCount.Invoke(LaserCount);
         }
 
         private IEnumerator ShotDuration()
@@ -71,7 +70,7 @@ namespace Shooting
             _laserCooldownActive = true;
             for (float timer = _laserCooldown; timer > 0; timer--)
             {
-                _gameplayUI.LaserCooldown(timer, _laserCooldown);
+                OnLaserCooldown.Invoke(timer, _laserCooldown);
                 yield return _waitLaserCooldown;
             }
 

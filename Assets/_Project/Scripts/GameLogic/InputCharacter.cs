@@ -1,16 +1,12 @@
-using System;
 using Characters;
-using Shooting;
 using UnityEngine;
 
 namespace GameLogic
 {
-    
     public class InputCharacter : MonoBehaviour
     {
-        
         private Rigidbody2D _rigidbody;
-        
+
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private SpaceShip _spaceShip;
@@ -52,6 +48,5 @@ namespace GameLogic
                 _spaceShip.ShootingLaser();
             }
         }
-        
     }
 }

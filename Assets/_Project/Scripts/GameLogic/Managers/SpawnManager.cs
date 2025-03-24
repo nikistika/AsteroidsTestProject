@@ -1,7 +1,6 @@
 using System.Collections;
 using Characters;
 using GameLogic;
-using UI;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -22,6 +21,7 @@ namespace Managers
         [SerializeField] private DataSpaceShip _dataSpaceShip;
         [SerializeField] private Asteroid _asteroid;
         [SerializeField] private UFO _ufo;
+        [SerializeField] private SpaceShip _spaseShip;
         [SerializeField] private float _respawnAsteroidRange = 3;
         [SerializeField] private float _minRespawnUFORange = 5;
         [SerializeField] private float _maxRespawnUFORange = 10;
@@ -29,10 +29,10 @@ namespace Managers
         [SerializeField] private int _maxPoolSizeAsteroids = 50;
         [SerializeField] private int _poolSizeUFO = 5;
         [SerializeField] private int _maxPoolSizeUFO = 10;
-        [SerializeField] private SpaceShip _spaseShip;
 
         private void Awake()
         {
+            Debug.Log("SpawnManager: Awake()");
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
@@ -138,9 +138,9 @@ namespace Managers
 
         private IEnumerator SpawnAsteroidsCoroutine()
         {
-            while (!_gameOver)
+            while (true)
             {
-                
+                Debug.Log("SpawnManager: SpawnAsteroidsCoroutine()");
                 SpawnAsteroid();
                 yield return _waitRespawnAsteroidRange;
             }
@@ -148,8 +148,10 @@ namespace Managers
 
         private IEnumerator SpawnUFOCoroutine()
         {
-            while (!_gameOver)
+            while (true)
             {
+                Debug.Log("SpawnManager: SpawnAsteroidsCoroutine()");
+
                 SpawnUFO();
                 yield return _waitRespawnUFORange;
             }

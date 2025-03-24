@@ -24,7 +24,6 @@ namespace Characters
             _gameOver = gameOver;
             _spaceShip = spaseShip;
             
-            Debug.Log($"_spaceShip: {_spaceShip}");
         }
 
         private void Awake()
@@ -44,7 +43,6 @@ namespace Characters
         public void Move()
         {
             Vector3 direction = (_spaceShip.transform.position - transform.position).normalized;
-            Debug.Log($"direction: {direction}");
 
             transform.Translate(direction * (_speed * Time.deltaTime));
         }

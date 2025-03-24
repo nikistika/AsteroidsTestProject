@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace GameLogic
@@ -8,6 +9,7 @@ namespace GameLogic
 
         public int CurrentScore { get; private set; }
         
+        public Action<int> OnScoreChanged;
         
         private void Awake()
         {
@@ -18,6 +20,7 @@ namespace GameLogic
         public void AddScore(int score)
         {
             CurrentScore += score;
+            OnScoreChanged.Invoke(CurrentScore);
         }
 
         public Vector2 GetCoordinates()

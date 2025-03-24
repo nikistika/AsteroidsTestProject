@@ -12,7 +12,7 @@ namespace GameLogic
         
         public void EndGame()
         {
-            gameObject.SetActive(true);
+            _restartPanel.gameObject.SetActive(true);
             _restartPanel.ActivateRestartPanel(_data.CurrentScore);
         }
         
