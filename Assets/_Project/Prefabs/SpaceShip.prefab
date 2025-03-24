@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 2838026535934526891}
   - component: {fileID: 6736039432354620115}
   - component: {fileID: 554886008481359930}
+  - component: {fileID: 4616376931498499197}
+  - component: {fileID: 7577271200104973372}
   m_Layer: 0
   m_Name: SpaceShip
   m_TagString: Untagged
@@ -163,10 +165,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf091ef27581dfc44a3944dffcaf4a73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _speedMove: 70
-  _speedRotate: 3
-  _restartPanel: {fileID: 0}
-  _gameplayUI: {fileID: 0}
   _shootingLaser: {fileID: 3699338401841994569}
 --- !u!114 &6736039432354620115
 MonoBehaviour:
@@ -219,6 +217,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.14999999
+--- !u!114 &4616376931498499197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502153312653533073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 287832a9b6514989953368b5e2b819a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _speedMove: 70
+  _speedRotate: 2
+  _spaceShip: {fileID: 2838026535934526891}
+--- !u!114 &7577271200104973372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502153312653533073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55ed7ddba2904c76bd0aa701776d46d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4225012221649256660
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,12 +294,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameplayUI: {fileID: 0}
-  _laserObject: {fileID: 7163616426749682268}
-  _laserTime: 0.5
+  _laserObject: {fileID: 7357927805528793665}
+  _laserDuration: 1
   _laserDelay: 1
   _laserCooldown: 5
-  _maxLaserCount: 3
-  _laserCount: 3
+  <MaxLaserCount>k__BackingField: 3
+  <LaserCount>k__BackingField: 3
 --- !u!1 &7163616426749682268
 GameObject:
   m_ObjectHideFlags: 0
@@ -353,7 +378,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -653689762, guid: f9b33802d58e36141922a974786a77c7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

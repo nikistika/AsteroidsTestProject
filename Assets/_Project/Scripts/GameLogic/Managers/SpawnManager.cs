@@ -1,22 +1,25 @@
 using System.Collections;
 using Characters;
+using GameLogic;
 using UI;
 using UnityEngine;
 using UnityEngine.Pool;
 
 namespace Managers
 {
-    public class SpawnManagerAsteroids : MonoBehaviour
+    public class SpawnManager : MonoBehaviour
     {
         private ObjectPool<Asteroid> _asteroidPool;
         private ObjectPool<UFO> _ufoPool;
         private float _halfHeightCamera;
         private float _halfWidthCamera;
         private Camera _camera;
-        private bool _gameOver;
+        private bool _flagGameOver;
+        private WaitForSeconds _waitRespawnAsteroidRange;
+        private WaitForSeconds _waitRespawnUFORange;
 
-        [SerializeField] private RestartPanel _respawnPanel;
-        [SerializeField] private GameplayUI _gameplayUI;
+        [SerializeField] private GameOver _gameOver;
+        [SerializeField] private DataSpaceShip _dataSpaceShip;
         [SerializeField] private Asteroid _asteroid;
         [SerializeField] private UFO _ufo;
         [SerializeField] private float _respawnAsteroidRange = 3;
@@ -35,6 +38,9 @@ namespace Managers
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
             AsteroidPoolInitialization();
             UFOPoolInitialization();
+            
+            _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
+            _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
         }
 
         private void Start()
@@ -54,7 +60,7 @@ namespace Managers
             _ufoPool.Get();
         }
 
-        private Vector2 getRandomSpawnPosition()
+        private Vector2 GetRandomSpawnPosition()
         {
             var randomIndex = Random.Range(1, 5);
 
@@ -79,26 +85,26 @@ namespace Managers
                 createFunc: () =>
                 {
                     var asteroid = Instantiate(_asteroid);
-                    asteroid.Construct(_asteroidPool, _gameplayUI, _respawnPanel);
-                    asteroid.gameObject.transform.position = getRandomSpawnPosition();
+                    asteroid.Construct(_asteroidPool, _dataSpaceShip, _gameOver);
+                    asteroid.gameObject.transform.position = GetRandomSpawnPosition();
                     return asteroid;
-                }, // Функция создания объекта
+                },
                 actionOnGet: (obj) =>
                 {
                     obj.gameObject.SetActive(true);
-                    obj.gameObject.transform.position = getRandomSpawnPosition();
+                    obj.gameObject.transform.position = GetRandomSpawnPosition();
                     obj.Move();
                     obj.IsObjectParent(true);
-                }, // Действие при выдаче объекта
+                },
                 actionOnRelease: (obj) =>
                 {
                     obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     obj.gameObject.SetActive(false);
-                }, // Действие при возврате в пул
-                actionOnDestroy: (obj) => Destroy(obj), // Действие при удалении объекта
-                collectionCheck: false, // Проверять ли повторное добавление объекта в пул
-                defaultCapacity: _poolSizeAsteroids, // Начальный размер пула
-                maxSize: _maxPoolSizeAsteroids // Максимальный размер пула
+                },
+                actionOnDestroy: (obj) => Destroy(obj),
+                collectionCheck: false,
+                defaultCapacity: _poolSizeAsteroids,
+                maxSize: _maxPoolSizeAsteroids
             );
         }
 
@@ -108,25 +114,25 @@ namespace Managers
                 createFunc: () =>
                 {
                     var UFO = Instantiate(_ufo);
-                    UFO.Construct(_ufoPool, _gameplayUI, _respawnPanel, _spaseShip);
-                    UFO.gameObject.transform.position = getRandomSpawnPosition();
+                    UFO.Construct(_ufoPool, _dataSpaceShip, _gameOver, _spaseShip);
+                    UFO.gameObject.transform.position = GetRandomSpawnPosition();
                     return UFO;
-                }, // Функция создания объекта
+                },
                 actionOnGet: (obj) =>
                 {
                     obj.gameObject.SetActive(true);
-                    obj.gameObject.transform.position = getRandomSpawnPosition();
+                    obj.gameObject.transform.position = GetRandomSpawnPosition();
                     obj.Move();
-                }, // Действие при выдаче объекта
+                },
                 actionOnRelease: (obj) =>
                 {
                     obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     obj.gameObject.SetActive(false);
-                }, // Действие при возврате в пул
-                actionOnDestroy: (obj) => Destroy(obj), // Действие при удалении объекта
-                collectionCheck: false, // Проверять ли повторное добавление объекта в пул
-                defaultCapacity: _poolSizeUFO, // Начальный размер пула
-                maxSize: _maxPoolSizeUFO // Максимальный размер пула
+                },
+                actionOnDestroy: (obj) => Destroy(obj),
+                collectionCheck: false,
+                defaultCapacity: _poolSizeUFO,
+                maxSize: _maxPoolSizeUFO
             );
         }
 
@@ -134,8 +140,9 @@ namespace Managers
         {
             while (!_gameOver)
             {
+                
                 SpawnAsteroid();
-                yield return new WaitForSeconds(_respawnAsteroidRange);
+                yield return _waitRespawnAsteroidRange;
             }
         }
 
@@ -144,7 +151,7 @@ namespace Managers
             while (!_gameOver)
             {
                 SpawnUFO();
-                yield return new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
+                yield return _waitRespawnUFORange;
             }
         }
     }

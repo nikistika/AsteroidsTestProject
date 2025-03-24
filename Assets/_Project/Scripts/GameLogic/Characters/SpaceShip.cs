@@ -8,9 +8,6 @@ namespace Characters
     {
         private ShootingMissile _shootingMissile;
 
-        [SerializeField] private float _speedMove = 70f;
-        [SerializeField] private float _speedRotate = 2f;
-        [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private ShootingLaser _shootingLaser;
 
         private void Awake()
@@ -24,37 +21,8 @@ namespace Characters
 
         private void Update()
         {
-            Move();
             GoingAbroad();
-            ShowedDataInUI();
-        }
-
-        public override void Move()
-        {
-            if (Input.GetKey(KeyCode.W))
-            {
-                _rigidbody.AddRelativeForce(Vector2.up * (_speedMove * Time.deltaTime), ForceMode2D.Force);
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                _rigidbody.MoveRotation(_rigidbody.rotation - _speedRotate);
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
-            }
-
-            if (Input.GetKey(KeyCode.Space))
-            {
-                ShootingMissile();
-            }
-
-            if (Input.GetKey(KeyCode.G))
-            {
-                ShootingLaser();
-            }
+            // ShowedDataInUI();
         }
 
         private void GoingAbroad()
@@ -80,26 +48,26 @@ namespace Characters
             }
         }
 
-        private void ShootingMissile()
+        public void ShootingMissile()
         {
             _shootingMissile.ShotMissile();
         }
 
-        private void ShootingLaser()
+        public void ShootingLaser()
         {
             _shootingLaser.Shot();
         }
 
-        private void ShowedDataInUI()
-        {
-            Vector2 coordinates = transform.position;
-            string coordinatesText = coordinates.ToString();
-            Vector2 rotation = transform.rotation.eulerAngles;
-            string rotationText = rotation.ToString();
-            Vector2 speed = _rigidbody.velocity;
-            string speedText = speed.ToString();
-
-            _gameplayUI.DisplayDataAboutCharacter(coordinatesText, rotationText, speedText);
-        }
+        // private void ShowedDataInUI()
+        // {
+        //     Vector2 coordinates = transform.position;
+        //     string coordinatesText = coordinates.ToString();
+        //     Vector2 rotation = transform.rotation.eulerAngles;
+        //     string rotationText = rotation.ToString();
+        //     Vector2 speed = _rigidbody.velocity;
+        //     string speedText = speed.ToString();
+        //
+        //     _gameplayUI.DisplayDataAboutCharacter(coordinatesText, rotationText, speedText);
+        // }
     }
 }

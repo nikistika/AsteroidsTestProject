@@ -12,7 +12,6 @@ namespace UI
         {
             Time.timeScale = 0;
             _scoreText.text = $"Score: {score}";
-            gameObject.SetActive(true);
         }
 
         public void RestartGame()

@@ -8,7 +8,5 @@ namespace Characters
         protected float _halfHeightCamera;
         protected float _halfWidthCamera;
         protected Rigidbody2D _rigidbody;
-
-        public abstract void Move();
     }
 }

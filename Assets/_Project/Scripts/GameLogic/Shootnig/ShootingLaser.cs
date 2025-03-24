@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UI;
 using UnityEngine;
@@ -12,19 +13,21 @@ namespace Shooting
         private WaitForSeconds _waitLaserDelay;
         private WaitForSeconds _waitLaserCooldown = new (1);
         
-        
         [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
         [SerializeField] private float _laserDelay = 1;
         [SerializeField] private float _laserCooldown = 15;
-        [SerializeField] private int _maxLaserCount = 3;
-        [SerializeField] private int _laserCount = 3;
+        
+        [field:SerializeField] public int MaxLaserCount { get; private set; } = 3;
+        [field:SerializeField] public int LaserCount { get; private set; } = 3;
 
+        public Action<int> OnAddLaserCount;
+        
         private void Awake()
         {
-            _gameplayUI.InstallMaxLaserCount(_maxLaserCount);
-            _gameplayUI.AddLaserCount(_laserCount);
+            // _gameplayUI.InstallMaxLaserCount(MaxLaserCount);
+            // _gameplayUI.AddLaserCount(LaserCount);
 
             _waitLaserDuration = new(_laserDuration);
             _waitLaserDelay = new(_laserDelay);
@@ -32,7 +35,7 @@ namespace Shooting
 
         public void Shot()
         {
-            if (!_laserActive && _laserCount > 0)
+            if (!_laserActive && LaserCount > 0)
             {
                 RemoveLaserCount(1);
                 if (_laserCooldownActive == false) StartCoroutine(ShotCooldown());
@@ -44,13 +47,14 @@ namespace Shooting
 
         public void AddLaserCount(int count)
         {
-            _laserCount += count;
-            _gameplayUI.AddLaserCount(count);
+            LaserCount += count;
+            // _gameplayUI.AddLaserCount(count);
+            OnAddLaserCount.Invoke(count);
         }
 
         public void RemoveLaserCount(int count)
         {
-            _laserCount -= count;
+            LaserCount -= count;
             _gameplayUI.RemoveLaserCount(count);
         }
 
@@ -72,7 +76,7 @@ namespace Shooting
             }
 
             AddLaserCount(1);
-            if (_laserCount < _maxLaserCount) StartCoroutine(ShotCooldown());
+            if (LaserCount < MaxLaserCount) StartCoroutine(ShotCooldown());
             _laserCooldownActive = false;
         }
     }

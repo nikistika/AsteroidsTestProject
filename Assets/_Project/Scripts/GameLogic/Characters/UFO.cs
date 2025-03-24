@@ -1,3 +1,4 @@
+using GameLogic;
 using Shooting;
 using UI;
 using UnityEngine;
@@ -14,13 +15,16 @@ namespace Characters
         [SerializeField] private int _speed = 1;
 
 
-        public void Construct(ObjectPool<UFO> ufoPool, GameplayUI gameplayUI, RestartPanel restartPanel,
+        public void Construct(ObjectPool<UFO> ufoPool, DataSpaceShip dataSpaceShip, GameOver gameOver,
             SpaceShip spaseShip)
         {
+            
             _ufoPool = ufoPool;
-            _gameplayUI = gameplayUI;
-            _restartPanel = restartPanel;
+            _dataSpaceShip = dataSpaceShip;
+            _gameOver = gameOver;
             _spaceShip = spaseShip;
+            
+            Debug.Log($"_spaceShip: {_spaceShip}");
         }
 
         private void Awake()
@@ -29,6 +33,7 @@ namespace Characters
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
+            
         }
 
         private void Update()
@@ -36,9 +41,11 @@ namespace Characters
             Move();
         }
 
-        public override void Move()
+        public void Move()
         {
             Vector3 direction = (_spaceShip.transform.position - transform.position).normalized;
+            Debug.Log($"direction: {direction}");
+
             transform.Translate(direction * (_speed * Time.deltaTime));
         }
 
@@ -46,13 +53,13 @@ namespace Characters
         {
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
-                _gameplayUI.AddScore(_scoreKill);
+                _dataSpaceShip.AddScore(_scoreKill);
                 _ufoPool.Release(this);
             }
 
             if (collision.GetComponent<SpaceShip>())
             {
-                _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
+                _gameOver.EndGame();
             }
         }
     }

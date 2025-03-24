@@ -50,21 +50,21 @@ namespace Shooting
                     missile.Construct(_missilePool);
 
                     return missile;
-                }, // Функция создания объекта
+                }, 
                 actionOnGet: (obj) =>
                 {
                     obj.gameObject.SetActive(true);
                     obj.transform.position = transform.position;
                     obj.Move();
-                }, // Действие при выдаче объекта
+                },
                 actionOnRelease: (obj) => {
                     obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                     obj.gameObject.SetActive(false);
-                }, // Действие при возврате в пул
-                actionOnDestroy: (obj) => Destroy(obj), // Действие при удалении объекта
-                collectionCheck: false, // Проверять ли повторное добавление объекта в пул
-                defaultCapacity: _poolSize, // Начальный размер пула
-                maxSize: _maxPoolSize // Максимальный размер пула
+                },
+                actionOnDestroy: (obj) => Destroy(obj),
+                collectionCheck: false, 
+                defaultCapacity: _poolSize,
+                maxSize: _maxPoolSize
             );
         }
     }

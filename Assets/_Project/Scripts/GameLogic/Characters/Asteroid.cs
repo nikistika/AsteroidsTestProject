@@ -1,3 +1,4 @@
+using GameLogic;
 using Shooting;
 using UI;
 using UnityEngine;
@@ -13,11 +14,11 @@ namespace Characters
 
         [SerializeField] private int _scoreKill = 5;
 
-        public void Construct(ObjectPool<Asteroid> asteroidPool, GameplayUI gameplayUI, RestartPanel restartPanel)
+        public void Construct(ObjectPool<Asteroid> asteroidPool, DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _asteroidPool = asteroidPool;
-            _gameplayUI = gameplayUI;
-            _restartPanel = restartPanel;
+            _dataSpaceShip = dataSpaceShip;
+            _gameOver = gameOver;
         }
 
         private void Awake()
@@ -35,7 +36,7 @@ namespace Characters
             GoingAbroad();
         }
 
-        public override void Move()
+        public void Move()
         {
             if (transform.position.y > _halfHeightCamera)
                 _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
@@ -71,13 +72,13 @@ namespace Characters
                 if (_flagParent) Crushing();
                 else if (!_flagParent) transform.localScale *= 2;
 
-                _gameplayUI.AddScore(_scoreKill);
+                _dataSpaceShip.AddScore(_scoreKill);
                 _asteroidPool.Release(this);
             }
 
             if (collision.GetComponent<SpaceShip>())
             {
-                _restartPanel.ActivateRestartPanel(_gameplayUI.CurrentScore);
+                _gameOver.EndGame();
             }
         }
 
