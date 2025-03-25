@@ -18,7 +18,8 @@ namespace Characters
         public void Construct(ObjectPool<UFO> ufoPool, DataSpaceShip dataSpaceShip, GameOver gameOver,
             SpaceShip spaseShip)
         {
-            
+            base.Awake();
+
             _ufoPool = ufoPool;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
@@ -35,16 +36,15 @@ namespace Characters
             
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             Move();
         }
 
         public void Move()
         {
-            Vector3 direction = (_spaceShip.transform.position - transform.position).normalized;
-
-            transform.Translate(direction * (_speed * Time.deltaTime));
+            Vector2 direction = (_spaceShip.transform.position - transform.position).normalized;
+            _rigidbody.velocity = direction * _speed;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)

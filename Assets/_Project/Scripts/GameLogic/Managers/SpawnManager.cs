@@ -32,7 +32,6 @@ namespace Managers
 
         private void Awake()
         {
-            Debug.Log("SpawnManager: Awake()");
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
@@ -140,7 +139,6 @@ namespace Managers
         {
             while (true)
             {
-                Debug.Log("SpawnManager: SpawnAsteroidsCoroutine()");
                 SpawnAsteroid();
                 yield return _waitRespawnAsteroidRange;
             }
@@ -150,7 +148,6 @@ namespace Managers
         {
             while (true)
             {
-                Debug.Log("SpawnManager: SpawnAsteroidsCoroutine()");
 
                 SpawnUFO();
                 yield return _waitRespawnUFORange;

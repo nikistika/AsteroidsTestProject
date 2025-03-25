@@ -23,11 +23,8 @@ namespace Characters
 
         private void Awake()
         {
+            base.Awake();
             _rigidbody = GetComponent<Rigidbody2D>();
-            _camera = Camera.main;
-            _halfHeightCamera = _camera.orthographicSize;
-            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-
             RandomScale();
         }
 
