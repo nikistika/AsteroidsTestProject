@@ -23,11 +23,8 @@ namespace UI
         private void Awake()
         {
             _shootingLaser.OnEditLaserCount += EditLaserCount;
-            // _shootingLaser.OnRemoveLaserCount += RemoveLaserCount;
             _shootingLaser.OnLaserCooldown += LaserCooldown;
-
             _dataSpaceShip.OnScoreChanged += AddScore;
-            // InstallMaxLaserCount();
         }
         
         private void Start()
@@ -42,12 +39,6 @@ namespace UI
             DisplayDataAboutCharacter();
         }
 
-        // private int InstallMaxLaserCount()
-        // {
-        //     return _maxLaserCount = _shootingLaser.MaxLaserCount;
-        //     
-        // }
-
         public void AddScore(int score)
         {
             _scoreTMP.text = $"Score: {score}";
@@ -58,12 +49,6 @@ namespace UI
             _laserCountText = $"Laser: {laserCount}/{_maxLaserCount}";
             _laserCountTMP.text = _laserCountText;
         }
-
-        // public void RemoveLaserCount(int count)
-        // {
-        //     _laserCountText = $"Laser: {_laserCount}/{_maxLaserCount}";
-        //     _laserCountTMP.text = _laserCountText;
-        // }
 
         public void LaserCooldown(float currentCooldown, float maxCooldown)
         {

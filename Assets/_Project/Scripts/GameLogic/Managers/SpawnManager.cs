@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using Characters;
 using GameLogic;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -16,6 +18,7 @@ namespace Managers
         private bool _flagGameOver;
         private WaitForSeconds _waitRespawnAsteroidRange;
         private WaitForSeconds _waitRespawnUFORange;
+        
 
         [SerializeField] private GameOver _gameOver;
         [SerializeField] private DataSpaceShip _dataSpaceShip;
@@ -29,7 +32,11 @@ namespace Managers
         [SerializeField] private int _maxPoolSizeAsteroids = 50;
         [SerializeField] private int _poolSizeUFO = 5;
         [SerializeField] private int _maxPoolSizeUFO = 10;
-
+        
+        public Action<Asteroid> OnReturnAsteroid;
+        public Func<Asteroid> OnGetAsteroid;
+        public Action<UFO> OnReturnUFO;
+        
         private void Awake()
         {
             _camera = Camera.main;
@@ -40,6 +47,11 @@ namespace Managers
             
             _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
             _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
+            
+            OnReturnAsteroid += ReturnAsteroid;
+            OnGetAsteroid += GetAsteroidFromPool;
+            OnReturnUFO += ReturnUFO;
+            _gameOver.OnGameOver += GameOver;
         }
 
         private void Start()
@@ -84,7 +96,7 @@ namespace Managers
                 createFunc: () =>
                 {
                     var asteroid = Instantiate(_asteroid);
-                    asteroid.Construct(_asteroidPool, _dataSpaceShip, _gameOver);
+                    asteroid.Construct(this, _dataSpaceShip, _gameOver);
                     asteroid.gameObject.transform.position = GetRandomSpawnPosition();
                     return asteroid;
                 },
@@ -113,7 +125,7 @@ namespace Managers
                 createFunc: () =>
                 {
                     var UFO = Instantiate(_ufo);
-                    UFO.Construct(_ufoPool, _dataSpaceShip, _gameOver, _spaseShip);
+                    UFO.Construct(this, _dataSpaceShip, _gameOver, _spaseShip);
                     UFO.gameObject.transform.position = GetRandomSpawnPosition();
                     return UFO;
                 },
@@ -135,9 +147,24 @@ namespace Managers
             );
         }
 
+        private void ReturnAsteroid(Asteroid asteroid)
+        {
+            _asteroidPool.Release(asteroid);
+        }
+
+        private Asteroid GetAsteroidFromPool()
+        {
+            return _asteroidPool.Get();
+        }
+        
+        private void ReturnUFO(UFO ufo)
+        {
+            _ufoPool.Release(ufo);
+        }
+        
         private IEnumerator SpawnAsteroidsCoroutine()
         {
-            while (true)
+            while (!_flagGameOver)
             {
                 SpawnAsteroid();
                 yield return _waitRespawnAsteroidRange;
@@ -146,12 +173,17 @@ namespace Managers
 
         private IEnumerator SpawnUFOCoroutine()
         {
-            while (true)
+            while (!_flagGameOver)
             {
 
                 SpawnUFO();
                 yield return _waitRespawnUFORange;
             }
+        }
+
+        private void GameOver()
+        {
+            _flagGameOver = true;
         }
     }
 }

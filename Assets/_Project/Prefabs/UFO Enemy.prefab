@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreKill: 10
-  _speed: 100
+  _speed: 5
 --- !u!70 &1020523353175193945
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

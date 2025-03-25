@@ -1,4 +1,5 @@
 using GameLogic;
+using Managers;
 using UI;
 
 namespace Characters
@@ -7,5 +8,6 @@ namespace Characters
     {
         protected DataSpaceShip _dataSpaceShip;
         protected GameOver _gameOver;
+        protected SpawnManager _spawnManager;
     }
 }

@@ -10,13 +10,11 @@ namespace UI
 
         public void ActivateRestartPanel(int score)
         {
-            Time.timeScale = 0;
             _scoreText.text = $"Score: {score}";
         }
 
         public void RestartGame()
         {
-            Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }

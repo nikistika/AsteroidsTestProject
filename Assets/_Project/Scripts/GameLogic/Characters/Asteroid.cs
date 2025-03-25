@@ -1,22 +1,20 @@
 using GameLogic;
+using Managers;
 using Shooting;
-using UI;
 using UnityEngine;
-using UnityEngine.Pool;
 using Random = UnityEngine.Random;
 
 namespace Characters
 {
     public class Asteroid : Enemy
     {
-        private ObjectPool<Asteroid> _asteroidPool;
         private bool _flagParent = true;
 
         [SerializeField] private int _scoreKill = 5;
 
-        public void Construct(ObjectPool<Asteroid> asteroidPool, DataSpaceShip dataSpaceShip, GameOver gameOver)
+        public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
-            _asteroidPool = asteroidPool;
+            _spawnManager = spawnManager;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
         }
@@ -28,7 +26,12 @@ namespace Characters
             RandomScale();
         }
 
-        private void Update()
+        private void Start()
+        {
+            _gameOver.OnGameOver += GameOver;
+        }
+
+        private void FixedUpdate()
         {
             GoingAbroad();
         }
@@ -45,7 +48,7 @@ namespace Characters
                 _rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
         }
 
-        public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
+        private void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
             if (fragmentNumber == 1) fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
             else if (fragmentNumber == 2)
@@ -66,11 +69,17 @@ namespace Characters
         {
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
-                if (_flagParent) Crushing();
-                else if (!_flagParent) transform.localScale *= 2;
+                if (_flagParent)
+                {
+                    Crushing();
+                }
+                else if (!_flagParent)
+                {
+                    transform.localScale *= 2;
+                }
 
                 _dataSpaceShip.AddScore(_scoreKill);
-                _asteroidPool.Release(this);
+                _spawnManager.OnReturnAsteroid.Invoke(this);
             }
 
             if (collision.GetComponent<SpaceShip>())
@@ -94,28 +103,22 @@ namespace Characters
             }
         }
 
-        private void GoingAbroad()
-        {
-            if (gameObject.transform.position.y > _halfHeightCamera + 1 ||
-                gameObject.transform.position.y < -_halfHeightCamera - 1 ||
-                gameObject.transform.position.x > _halfWidthCamera + 1 ||
-                gameObject.transform.position.x < -_halfWidthCamera - 1)
-            {
-                if (!_flagParent) transform.localScale *= 2;
-                _asteroidPool.Release(this);
-            }
-        }
 
         private void Crushing()
         {
             for (int i = 1; i <= 4; i++)
             {
-                var fragment = _asteroidPool.Get();
+                var fragment = _spawnManager.OnGetAsteroid();
                 fragment.IsObjectParent(false);
                 fragment.transform.position = transform.position;
                 fragment.transform.localScale = transform.localScale / 2;
                 fragment.MoveFragment(i, fragment);
             }
+        }
+
+        private void GameOver()
+        {
+            _rigidbody.velocity = Vector2.zero;
         }
     }
 }

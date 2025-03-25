@@ -21,7 +21,7 @@ namespace Characters
             GoingAbroad();
         }
 
-        private void GoingAbroad()
+        protected void GoingAbroad()
         {
             if (gameObject.transform.position.y > _halfHeightCamera)
             {

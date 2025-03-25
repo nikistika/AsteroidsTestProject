@@ -1,30 +1,30 @@
+using System;
 using GameLogic;
+using Managers;
 using Shooting;
-using UI;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Characters
 {
     public class UFO : Enemy
     {
-        private ObjectPool<UFO> _ufoPool;
         private SpaceShip _spaceShip;
-
+        private bool _flagGameOver = false;
+        
         [SerializeField] private int _scoreKill = 10;
         [SerializeField] private int _speed = 1;
 
 
-        public void Construct(ObjectPool<UFO> ufoPool, DataSpaceShip dataSpaceShip, GameOver gameOver,
+        public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver,
             SpaceShip spaseShip)
         {
             base.Awake();
 
-            _ufoPool = ufoPool;
+            _spawnManager = spawnManager;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
             _spaceShip = spaseShip;
-            
+
         }
 
         private void Awake()
@@ -36,9 +36,17 @@ namespace Characters
             
         }
 
+        private void Start()
+        {
+            _gameOver.OnGameOver += GameOver;
+        }
+
         private void FixedUpdate()
         {
-            Move();
+            if (!_flagGameOver)
+            {
+                Move();
+            }
         }
 
         public void Move()
@@ -52,13 +60,19 @@ namespace Characters
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
                 _dataSpaceShip.AddScore(_scoreKill);
-                _ufoPool.Release(this);
+                _spawnManager.OnReturnUFO.Invoke(this);
             }
 
             if (collision.GetComponent<SpaceShip>())
             {
                 _gameOver.EndGame();
             }
+        }
+        
+        private void GameOver()
+        {
+            _flagGameOver = true;
+            _rigidbody.velocity = Vector2.zero;
         }
     }
 }
