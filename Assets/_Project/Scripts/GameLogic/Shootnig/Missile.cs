@@ -1,6 +1,5 @@
 using Characters;
 using UnityEngine;
-using UnityEngine.Pool;
 
 namespace Shooting
 {
@@ -10,13 +9,13 @@ namespace Shooting
         private float _halfWidthCamera;
         private Camera _camera;
         private Rigidbody2D _rigidbody;
-        private ObjectPool<Missile> _missilePool;
+        private ShootingMissile _shootingMissile;
 
         [SerializeField] private float _speed = 3;
 
-        public void Construct(ObjectPool<Missile> missilePool)
+        public void Construct(ShootingMissile shootingMissile)
         {
-            _missilePool = missilePool;
+            _shootingMissile = shootingMissile;
         }
 
         private void Awake()
@@ -32,7 +31,7 @@ namespace Shooting
             Move();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             GoingAbroad();
         }
@@ -46,7 +45,7 @@ namespace Shooting
         {
             if (collision.GetComponent<Asteroid>() || collision.GetComponent<UFO>())
             {
-                _missilePool.Release(this);
+                _shootingMissile.OnReturnMissileToPool.Invoke(this);
             }
         }
 
@@ -57,7 +56,7 @@ namespace Shooting
                 gameObject.transform.position.x > _halfWidthCamera ||
                 gameObject.transform.position.x < -_halfWidthCamera)
             {
-                _missilePool.Release(this);
+                _shootingMissile.OnReturnMissileToPool.Invoke(this);
             }
         }
     }

@@ -1,8 +1,8 @@
 using Shooting;
-using UI;
 using UnityEngine;
+using Character = Characters.Character;
 
-namespace Characters
+namespace Player
 {
     public class SpaceShip : Character
     {
@@ -14,20 +14,6 @@ namespace Characters
         {
             base.Awake();
             _rigidbody = GetComponent<Rigidbody2D>();
-
-            _shootingMissile = gameObject.GetComponent<ShootingMissile>();
-        }
-
-
-
-        public void ShootingMissile()
-        {
-            _shootingMissile.ShotMissile();
-        }
-
-        public void ShootingLaser()
-        {
-            _shootingLaser.Shot();
         }
     }
 }

@@ -1,6 +1,6 @@
 using GameLogic;
 using Managers;
-using UI;
+using Player;
 
 namespace Characters
 {

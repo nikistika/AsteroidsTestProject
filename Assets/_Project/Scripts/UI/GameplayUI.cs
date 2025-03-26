@@ -1,4 +1,4 @@
-using GameLogic;
+using Player;
 using Shooting;
 using TMPro;
 using UnityEngine;
@@ -7,7 +7,6 @@ namespace UI
 {
     public class GameplayUI : MonoBehaviour
     {
-
         private int _maxLaserCount;
 
         private string _laserCountText;
@@ -26,7 +25,7 @@ namespace UI
             _shootingLaser.OnLaserCooldown += LaserCooldown;
             _dataSpaceShip.OnScoreChanged += AddScore;
         }
-        
+
         private void Start()
         {
             AddScore(0);

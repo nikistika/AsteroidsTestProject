@@ -1,15 +1,16 @@
 using System;
 using UnityEngine;
 
-namespace GameLogic
+namespace Player
 {
     public class DataSpaceShip : MonoBehaviour
     {
+        
+        public Action<int> OnScoreChanged;
+
         private Rigidbody2D _rigidbody;
 
         public int CurrentScore { get; private set; }
-        
-        public Action<int> OnScoreChanged;
         
         private void Awake()
         {

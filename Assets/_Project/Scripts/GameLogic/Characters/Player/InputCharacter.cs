@@ -1,16 +1,18 @@
-using Characters;
+using GameLogic;
+using Shooting;
 using UnityEngine;
 
-namespace GameLogic
+namespace Player
 {
     public class InputCharacter : MonoBehaviour
     {
         private Rigidbody2D _rigidbody;
-        private bool _flagGameOver = false;
-        
+        private bool _flagGameOver;
+
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
-        [SerializeField] private SpaceShip _spaceShip;
+        [SerializeField] private ShootingMissile _shootingMissile;
+        [SerializeField] private ShootingLaser _shootingLaser;
         [SerializeField] private GameOver _gameOver;
 
         private void Awake()
@@ -19,7 +21,7 @@ namespace GameLogic
             _gameOver.OnGameOver += GameOver;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (!_flagGameOver)
             {
@@ -29,7 +31,6 @@ namespace GameLogic
 
         private void Input()
         {
-            
             if (UnityEngine.Input.GetKey(KeyCode.W))
             {
                 _rigidbody.AddRelativeForce(Vector2.up * (_speedMove * Time.deltaTime), ForceMode2D.Force);
@@ -47,12 +48,12 @@ namespace GameLogic
 
             if (UnityEngine.Input.GetKey(KeyCode.Space))
             {
-                _spaceShip.ShootingMissile();
+                _shootingMissile.Shot();
             }
 
             if (UnityEngine.Input.GetKey(KeyCode.G))
             {
-                _spaceShip.ShootingLaser();
+                _shootingLaser.Shot();
             }
         }
 

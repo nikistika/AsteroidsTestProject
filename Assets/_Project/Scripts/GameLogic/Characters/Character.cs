@@ -23,22 +23,22 @@ namespace Characters
 
         protected void GoingAbroad()
         {
-            if (gameObject.transform.position.y > _halfHeightCamera)
+            if (gameObject.transform.position.y > _halfHeightCamera + 0.5f)
             {
                 _rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, -_halfHeightCamera));
             }
 
-            if (gameObject.transform.position.y < -_halfHeightCamera)
+            if (gameObject.transform.position.y < -_halfHeightCamera - 0.5f)
             {
                 _rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, _halfHeightCamera));
             }
 
-            if (gameObject.transform.position.x > _halfWidthCamera)
+            if (gameObject.transform.position.x > _halfWidthCamera + 0.5f)
             {
                 _rigidbody.MovePosition(new Vector2(-_halfWidthCamera, gameObject.transform.position.y));
             }
 
-            if (gameObject.transform.position.x < -_halfWidthCamera)
+            if (gameObject.transform.position.x < -_halfWidthCamera - 0.5f)
             {
                 _rigidbody.MovePosition(new Vector2(_halfWidthCamera, gameObject.transform.position.y));
             }

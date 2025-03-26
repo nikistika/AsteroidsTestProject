@@ -1,38 +1,45 @@
-using Characters;
-using System.Collections;
-using System.Collections.Generic;
+using GameLogic;
+using Managers;
+using Player;
 using UnityEngine;
 
-public abstract class AbstractEnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
+namespace Factories
 {
-
-    private float _halfHeightCamera;
-    private float _halfWidthCamera;
-    private Camera _camera;
-
-    protected void Awake()
+    public abstract class AbstractEnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
-        _camera = Camera.main;
-        _halfHeightCamera = _camera.orthographicSize;
-        _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-    }
+        private float _halfHeightCamera;
+        private float _halfWidthCamera;
+        private Camera _camera;
 
-    protected Vector2 GetRandomSpawnPosition()
-    {
-        var randomIndex = Random.Range(1, 5);
+        [SerializeField] protected SpawnManager _spawnManager;
+        [SerializeField] protected DataSpaceShip _dataSpaceShip;
+        [SerializeField] protected GameOver _gameOver;
 
-        switch (randomIndex)
+        protected void Awake()
         {
-            case 1:
-                return new Vector2(Random.Range(-_halfWidthCamera, _halfWidthCamera), _halfHeightCamera + 0.5f);
-            case 2:
-                return new Vector2(Random.Range(-_halfWidthCamera, _halfWidthCamera), -_halfHeightCamera - 0.5f);
-            case 3:
-                return new Vector2(_halfWidthCamera + 0.5f, Random.Range(-_halfHeightCamera, _halfHeightCamera));
-            case 4:
-                return new Vector2(-_halfWidthCamera - 0.5f, Random.Range(-_halfHeightCamera, _halfHeightCamera));
+            base.Awake();
+            _camera = Camera.main;
+            _halfHeightCamera = _camera.orthographicSize;
+            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
         }
 
-        return new Vector2(0, 0);
+        protected Vector2 GetRandomSpawnPosition()
+        {
+            var randomIndex = Random.Range(1, 5);
+
+            switch (randomIndex)
+            {
+                case 1:
+                    return new Vector2(Random.Range(-_halfWidthCamera, _halfWidthCamera), _halfHeightCamera + 0.5f);
+                case 2:
+                    return new Vector2(Random.Range(-_halfWidthCamera, _halfWidthCamera), -_halfHeightCamera - 0.5f);
+                case 3:
+                    return new Vector2(_halfWidthCamera + 0.5f, Random.Range(-_halfHeightCamera, _halfHeightCamera));
+                case 4:
+                    return new Vector2(-_halfWidthCamera - 0.5f, Random.Range(-_halfHeightCamera, _halfHeightCamera));
+            }
+
+            return new Vector2(0, 0);
+        }
     }
 }

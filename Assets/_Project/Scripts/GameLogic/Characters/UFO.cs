@@ -1,6 +1,6 @@
-using System;
 using GameLogic;
 using Managers;
+using Player;
 using Shooting;
 using UnityEngine;
 
@@ -9,12 +9,11 @@ namespace Characters
     public class UFO : Enemy
     {
         private SpaceShip _spaceShip;
-        private bool _flagGameOver = false;
-        
+        private bool _flagGameOver;
+
         [SerializeField] private int _scoreKill = 10;
         [SerializeField] private int _speed = 1;
-
-
+        
         public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver,
             SpaceShip spaseShip)
         {
@@ -24,7 +23,6 @@ namespace Characters
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
             _spaceShip = spaseShip;
-
         }
 
         private void Awake()
@@ -33,7 +31,6 @@ namespace Characters
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-            
         }
 
         private void Start()
@@ -68,7 +65,7 @@ namespace Characters
                 _gameOver.EndGame();
             }
         }
-        
+
         private void GameOver()
         {
             _flagGameOver = true;

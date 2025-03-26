@@ -1,5 +1,6 @@
 using GameLogic;
 using Managers;
+using Player;
 using Shooting;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -48,6 +49,11 @@ namespace Characters
                 _rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
         }
 
+        public void IsObjectParent(bool isObjectParent)
+        {
+            _flagParent = isObjectParent;
+        }
+
         private void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
             if (fragmentNumber == 1) fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
@@ -57,11 +63,6 @@ namespace Characters
                 fragmentAsteroid._rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
             else if (fragmentNumber == 4)
                 fragmentAsteroid._rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
-        }
-
-        public void IsObjectParent(bool isObjectParent)
-        {
-            _flagParent = isObjectParent;
         }
 
 
