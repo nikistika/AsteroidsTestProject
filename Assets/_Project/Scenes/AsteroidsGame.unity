@@ -930,6 +930,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 752357150}
+  - component: {fileID: 752357151}
   m_Layer: 0
   m_Name: Factory
   m_TagString: Untagged
@@ -952,6 +953,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 188828672}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &752357151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 752357149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9cc3d2ae425e04b88bfe30d89e5ed6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefab: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
+  _defaultPoolSize: 10
+  _maxPoolSize: 30
+  _spawnManager: {fileID: 1205883579}
+  _dataSpaceShip: {fileID: 2052191136}
+  _gameOver: {fileID: 188828673}
 --- !u!1 &753832294
 GameObject:
   m_ObjectHideFlags: 0
@@ -1401,6 +1420,7 @@ MonoBehaviour:
   _asteroid: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
   _ufo: {fileID: 3395255367656053016, guid: de5576463dbcec940b6d92821ec78325, type: 3}
   _spaseShip: {fileID: 1735482491}
+  _asteroidFactory: {fileID: 752357151}
   _respawnAsteroidRange: 3
   _minRespawnUFORange: 5
   _maxRespawnUFORange: 10

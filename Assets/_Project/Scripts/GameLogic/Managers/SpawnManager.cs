@@ -10,7 +10,7 @@ namespace Managers
 {
     public class SpawnManager : MonoBehaviour
     {
-        private ObjectPool<Asteroid> _asteroidPool;
+        //private ObjectPool<Asteroid> _asteroidPool;
         private ObjectPool<UFO> _ufoPool;
         private float _halfHeightCamera;
         private float _halfWidthCamera;
@@ -25,6 +25,7 @@ namespace Managers
         [SerializeField] private Asteroid _asteroid;
         [SerializeField] private UFO _ufo;
         [SerializeField] private SpaceShip _spaseShip;
+        [SerializeField] private AsteroidFactory _asteroidFactory;
         [SerializeField] private float _respawnAsteroidRange = 3;
         [SerializeField] private float _minRespawnUFORange = 5;
         [SerializeField] private float _maxRespawnUFORange = 10;
@@ -42,14 +43,14 @@ namespace Managers
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
             _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-            AsteroidPoolInitialization();
+            //AsteroidPoolInitialization();
             UFOPoolInitialization();
             
             _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
             _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
             
             OnReturnAsteroid += ReturnAsteroid;
-            OnGetAsteroid += GetAsteroidFromPool;
+            OnGetAsteroid += SpawnAsteroid;
             OnReturnUFO += ReturnUFO;
             _gameOver.OnGameOver += GameOver;
         }
@@ -61,9 +62,10 @@ namespace Managers
         }
 
 
-        private void SpawnAsteroid()
+        private Asteroid SpawnAsteroid()
         {
-            _asteroidPool.Get();
+            Debug.Log("SpawnManager: SpawnAsteroid()");
+            return _asteroidFactory.SpawnObject();
         }
 
         private void SpawnUFO()
@@ -90,34 +92,34 @@ namespace Managers
             return new Vector2(0, 0);
         }
 
-        private void AsteroidPoolInitialization()
-        {
-            _asteroidPool = new ObjectPool<Asteroid>(
-                createFunc: () =>
-                {
-                    var asteroid = Instantiate(_asteroid);
-                    asteroid.Construct(this, _dataSpaceShip, _gameOver);
-                    asteroid.gameObject.transform.position = GetRandomSpawnPosition();
-                    return asteroid;
-                },
-                actionOnGet: (obj) =>
-                {
-                    obj.gameObject.SetActive(true);
-                    obj.gameObject.transform.position = GetRandomSpawnPosition();
-                    obj.Move();
-                    obj.IsObjectParent(true);
-                },
-                actionOnRelease: (obj) =>
-                {
-                    obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    obj.gameObject.SetActive(false);
-                },
-                actionOnDestroy: (obj) => Destroy(obj),
-                collectionCheck: false,
-                defaultCapacity: _poolSizeAsteroids,
-                maxSize: _maxPoolSizeAsteroids
-            );
-        }
+        //private void AsteroidPoolInitialization()
+        //{
+        //    _asteroidPool = new ObjectPool<Asteroid>(
+        //        createFunc: () =>
+        //        {
+        //            var asteroid = Instantiate(_asteroid);
+        //            asteroid.Construct(this, _dataSpaceShip, _gameOver);
+        //            asteroid.gameObject.transform.position = GetRandomSpawnPosition();
+        //            return asteroid;
+        //        },
+        //        actionOnGet: (obj) =>
+        //        {
+        //            obj.gameObject.SetActive(true);
+        //            obj.gameObject.transform.position = GetRandomSpawnPosition();
+        //            obj.Move();
+        //            obj.IsObjectParent(true);
+        //        },
+        //        actionOnRelease: (obj) =>
+        //        {
+        //            obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        //            obj.gameObject.SetActive(false);
+        //        },
+        //        actionOnDestroy: (obj) => Destroy(obj),
+        //        collectionCheck: false,
+        //        defaultCapacity: _poolSizeAsteroids,
+        //        maxSize: _maxPoolSizeAsteroids
+        //    );
+        //}
 
         private void UFOPoolInitialization()
         {
@@ -149,14 +151,14 @@ namespace Managers
 
         private void ReturnAsteroid(Asteroid asteroid)
         {
-            _asteroidPool.Release(asteroid);
+            _asteroidFactory.ReturnObject(asteroid);
         }
 
-        private Asteroid GetAsteroidFromPool()
-        {
-            return _asteroidPool.Get();
-        }
-        
+        //private Asteroid GetAsteroidFromPool()
+        //{
+        //    return AsteroidFactory.Ge
+        //}
+
         private void ReturnUFO(UFO ufo)
         {
             _ufoPool.Release(ufo);
