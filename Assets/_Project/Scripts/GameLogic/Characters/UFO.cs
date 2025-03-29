@@ -1,3 +1,4 @@
+using System;
 using GameLogic;
 using Managers;
 using Player;
@@ -8,6 +9,9 @@ namespace Characters
 {
     public class UFO : Enemy
     {
+        
+        public event Action<UFO> OnReturnUFO;
+        
         private SpaceShip _spaceShip;
         private bool _flagGameOver;
 
@@ -19,7 +23,7 @@ namespace Characters
         {
             base.Awake();
 
-            _spawnManager = spawnManager;
+            // _spawnManager = spawnManager;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
             _spaceShip = spaseShip;
@@ -57,7 +61,7 @@ namespace Characters
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
                 _dataSpaceShip.AddScore(_scoreKill);
-                _spawnManager.OnReturnUFO.Invoke(this);
+                OnReturnUFO.Invoke(this);
             }
 
             if (collision.GetComponent<SpaceShip>())

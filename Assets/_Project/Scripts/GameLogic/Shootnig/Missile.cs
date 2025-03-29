@@ -45,7 +45,7 @@ namespace Shooting
         {
             if (collision.GetComponent<Asteroid>() || collision.GetComponent<UFO>())
             {
-                _shootingMissile.OnReturnMissileToPool.Invoke(this);
+                _shootingMissile.InvokeOnReturnMissileToPool(this);
             }
         }
 
@@ -56,7 +56,7 @@ namespace Shooting
                 gameObject.transform.position.x > _halfWidthCamera ||
                 gameObject.transform.position.x < -_halfWidthCamera)
             {
-                _shootingMissile.OnReturnMissileToPool.Invoke(this);
+                _shootingMissile.InvokeOnReturnMissileToPool(this);
             }
         }
     }

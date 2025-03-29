@@ -1,3 +1,4 @@
+using System;
 using GameLogic;
 using Managers;
 using Player;
@@ -9,10 +10,15 @@ namespace Characters
 {
     public class Asteroid : Enemy
     {
+        private SpawnManager _spawnManager;
+        
+        public event Func<Asteroid> OnGetAsteroid;
+        public event Action<Asteroid> OnReturnAsteroid;
+        
         private bool _flagParent = true;
 
         [SerializeField] private int _scoreKill = 5;
-
+        
         public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _spawnManager = spawnManager;
@@ -68,6 +74,13 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            
+            if (collision == null)
+            {
+                Debug.LogError("Collision is null in OnTriggerEnter2D");
+                return;
+            }
+            
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
                 if (_flagParent)
@@ -80,7 +93,9 @@ namespace Characters
                 }
 
                 _dataSpaceShip.AddScore(_scoreKill);
-                _spawnManager.OnReturnAsteroid.Invoke(this);
+                OnReturnAsteroid.Invoke(this);
+
+                
             }
 
             if (collision.GetComponent<SpaceShip>())
@@ -109,7 +124,7 @@ namespace Characters
         {
             for (int i = 1; i <= 4; i++)
             {
-                var fragment = _spawnManager.OnGetAsteroid();
+                var fragment = OnGetAsteroid.Invoke();
                 fragment.IsObjectParent(false);
                 fragment.transform.position = transform.position;
                 fragment.transform.localScale = transform.localScale / 2;

@@ -7,7 +7,7 @@ namespace GameLogic
 {
     public class GameOver : MonoBehaviour
     {
-        public Action OnGameOver;
+        public event Action OnGameOver;
 
         [SerializeField] private RestartPanel _restartPanel;
         [SerializeField] private DataSpaceShip _data;

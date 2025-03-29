@@ -9,6 +9,12 @@ namespace Factories
         [SerializeField] private SpaceShip _spaceShip;
         [SerializeField] private ShootingMissile _shootingMissile;
         
+        public override void ActionReleaseObject(Missile obj)
+        {
+            obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            obj.gameObject.SetActive(false);
+        }
+        
         protected override Missile ActionCreateObject()
         {
             var missile = Instantiate(_prefab, _spaceShip.gameObject.transform, true);

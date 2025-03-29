@@ -23,8 +23,7 @@ namespace Factories
                 actionOnGet: (obj) => { ActionGetObject(obj); },
                 actionOnRelease: (obj) =>
                 {
-                    obj.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                    obj.gameObject.SetActive(false);
+                    ActionReleaseObject(obj);
                 },
                 actionOnDestroy: (obj) => Destroy(obj),
                 collectionCheck: false,
@@ -32,6 +31,8 @@ namespace Factories
                 maxSize: _maxPoolSize
             );
         }
+
+        public abstract void ActionReleaseObject(T obj);
 
         public void ReturnObject(T obj)
         {

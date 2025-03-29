@@ -6,7 +6,7 @@ namespace Player
     public class DataSpaceShip : MonoBehaviour
     {
         
-        public Action<int> OnScoreChanged;
+        public event Action<int> OnScoreChanged;
 
         private Rigidbody2D _rigidbody;
 

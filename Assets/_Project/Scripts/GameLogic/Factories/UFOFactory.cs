@@ -8,6 +8,12 @@ namespace Factories
     {
         [SerializeField] private SpaceShip _spaceShip;
 
+        public override void ActionReleaseObject(UFO obj)
+        {
+            obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+            obj.gameObject.SetActive(false);
+        }
+        
         protected override UFO ActionCreateObject()
         {
             var UFO = Instantiate(_prefab);

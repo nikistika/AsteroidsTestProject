@@ -11,10 +11,6 @@ namespace Managers
     public class SpawnManager : MonoBehaviour
     {
         
-        public Action<Asteroid> OnReturnAsteroid;
-        public Func<Asteroid> OnGetAsteroid;
-        public Action<UFO> OnReturnUFO;
-        
         private bool _flagGameOver;
         private WaitForSeconds _waitRespawnAsteroidRange;
         private WaitForSeconds _waitRespawnUFORange;
@@ -32,9 +28,6 @@ namespace Managers
             _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
             _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
 
-            OnReturnAsteroid += ReturnAsteroid;
-            OnGetAsteroid += SpawnAsteroid;
-            OnReturnUFO += ReturnUFO;
             _gameOver.OnGameOver += GameOver;
         }
 
@@ -43,24 +36,32 @@ namespace Managers
             StartCoroutine(SpawnAsteroidsCoroutine());
             StartCoroutine(SpawnUFOCoroutine());
         }
-
+        
         private Asteroid SpawnAsteroid()
         {
-            return _asteroidFactory.SpawnObject();
+            Debug.Log("SpawnManager: Spawning Asteroid");
+            var asteroid = _asteroidFactory.SpawnObject();
+            asteroid.OnReturnAsteroid += ReturnAsteroid;
+            asteroid.OnGetAsteroid += SpawnAsteroid;
+            return asteroid;
         }
 
         private void SpawnUFO()
         {
-            _ufoFactory.SpawnObject();
+            var ufo = _ufoFactory.SpawnObject();
+            ufo.OnReturnUFO += ReturnUFO;
         }
 
-        private void ReturnAsteroid(Asteroid asteroid)
+        public void ReturnAsteroid(Asteroid asteroid)
         {
+            asteroid.OnReturnAsteroid -= ReturnAsteroid;
+            asteroid.OnGetAsteroid -= SpawnAsteroid;
             _asteroidFactory.ReturnObject(asteroid);
         }
 
         private void ReturnUFO(UFO ufo)
         {
+            ufo.OnReturnUFO -= ReturnUFO;
             _ufoFactory.ReturnObject(ufo);
         }
 

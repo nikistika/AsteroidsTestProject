@@ -7,7 +7,7 @@ namespace Shooting
 {
     public class ShootingMissile : MonoBehaviour
     {
-        public Action<Missile> OnReturnMissileToPool;
+        public event Action<Missile> OnReturnMissileToPool;
 
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
@@ -30,6 +30,11 @@ namespace Shooting
                 StartCoroutine(DelayShot());
                 _missileFactory.SpawnObject();
             }
+        }
+
+        public void InvokeOnReturnMissileToPool(Missile missile)
+        {
+            OnReturnMissileToPool.Invoke(missile);
         }
 
         private void ReturnMissileToPool(Missile missile)

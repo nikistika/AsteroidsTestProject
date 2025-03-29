@@ -7,8 +7,8 @@ namespace Shooting
     public class ShootingLaser : MonoBehaviour
     {
         
-        public Action<int> OnEditLaserCount;
-        public Action<float, float> OnLaserCooldown;
+        public event Action<int> OnEditLaserCount;
+        public event Action<float, float> OnLaserCooldown;
         
         private bool _laserActive;
         private bool _laserCooldownActive;
