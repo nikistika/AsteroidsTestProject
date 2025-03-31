@@ -15,7 +15,7 @@ namespace Characters
         public event Func<Asteroid> OnGetAsteroid;
         public event Action<Asteroid> OnReturnAsteroid;
         
-        public bool _flagParent = true;
+        private bool _flagParent = true;
 
         [SerializeField] private int _scoreKill = 5;
         

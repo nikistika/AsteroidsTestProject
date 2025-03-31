@@ -9,7 +9,7 @@ namespace GameLogic
     {
         public event Action OnGameOver;
 
-        [SerializeField] private RestartPanel _restartPanel;
+        [SerializeField] private UISpawnManager _uiSpawnManager;
         private DataSpaceShip _dataSpaceShip;
 
         public void Construct(DataSpaceShip dataSpaceShip)
@@ -20,8 +20,8 @@ namespace GameLogic
         public void EndGame()
         {
             OnGameOver.Invoke();
-            _restartPanel.gameObject.SetActive(true);
-            _restartPanel.ActivateRestartPanel(_dataSpaceShip.CurrentScore);
+
+            _uiSpawnManager.SpawnRestartPanel(_dataSpaceShip);
         }
     }
 }
