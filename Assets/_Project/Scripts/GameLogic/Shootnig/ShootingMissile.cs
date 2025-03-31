@@ -12,10 +12,14 @@ namespace Shooting
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
 
-        [SerializeField] private MissileFactory _missileFactory;
-        [SerializeField] private int _poolSize = 10;
-        [SerializeField] private int _maxPoolSize;
+        private MissileFactory _missileFactory;
         [SerializeField] private float _delayShotTimes = 1;
+
+        public void Construct(MissileFactory missileFactory)
+        {
+            _missileFactory = missileFactory;
+        }
+
 
         private void Awake()
         {
@@ -34,7 +38,10 @@ namespace Shooting
 
         public void InvokeOnReturnMissileToPool(Missile missile)
         {
-            OnReturnMissileToPool.Invoke(missile);
+            if (OnReturnMissileToPool != null)
+            {
+                OnReturnMissileToPool.Invoke(missile);
+            }
         }
 
         private void ReturnMissileToPool(Missile missile)
@@ -48,5 +55,6 @@ namespace Shooting
             yield return _waitDelayShotTimes;
             _shotToggle = false;
         }
+
     }
 }

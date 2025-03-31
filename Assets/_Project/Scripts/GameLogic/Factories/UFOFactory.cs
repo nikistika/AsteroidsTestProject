@@ -6,8 +6,14 @@ namespace Factories
 {
     public class UFOFactory : AbstractEnemyFactory<UFO>
     {
-        [SerializeField] private SpaceShip _spaceShip;
+        private SpaceShip _spaceShip;
 
+        public void Construct(SpaceShip spaceShip, DataSpaceShip dataSpaceShip)
+        {
+            _spaceShip = spaceShip;
+            _dataSpaceShip = dataSpaceShip;
+        }
+        
         public override void ActionReleaseObject(UFO obj)
         {
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -17,7 +23,7 @@ namespace Factories
         protected override UFO ActionCreateObject()
         {
             var UFO = Instantiate(_prefab);
-            UFO.Construct(_spawnManager, _dataSpaceShip, _gameOver, _spaceShip);
+            UFO.Construct(_dataSpaceShip, _gameOver, _spaceShip);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }

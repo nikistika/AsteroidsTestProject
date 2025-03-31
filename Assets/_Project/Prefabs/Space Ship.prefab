@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4616376931498499197}
   - component: {fileID: 7577271200104973372}
   - component: {fileID: 4759089236649671140}
+  - component: {fileID: 4922975042287902267}
   m_Layer: 0
   m_Name: Space Ship
   m_TagString: Untagged
@@ -32,12 +33,12 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2502153312653533073}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 2.0526, y: 2.0526, z: 2.0526}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4629288945679040986}
+  - {fileID: 1695386639005460797}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -165,9 +166,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75e2a437123447a1b1c0ce94c1fe9c9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _missileFactory: {fileID: 0}
-  _poolSize: 10
-  _maxPoolSize: 20
   _delayShotTimes: 0.5
 --- !u!58 &554886008481359930
 CircleCollider2D:
@@ -219,8 +217,7 @@ MonoBehaviour:
   _speedMove: 70
   _speedRotate: 2
   _shootingMissile: {fileID: 6736039432354620115}
-  _shootingLaser: {fileID: 3699338401841994569}
-  _gameOver: {fileID: 0}
+  _shootingLaser: {fileID: 4922975042287902267}
 --- !u!114 &7577271200104973372
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,51 +242,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24c2f469485546558f2afd52f031ebc8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _shootingLaser: {fileID: 3699338401841994569}
---- !u!1 &4225012221649256660
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4629288945679040986}
-  - component: {fileID: 3699338401841994569}
-  m_Layer: 0
-  m_Name: Laser
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4629288945679040986
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4225012221649256660}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1695386639005460797}
-  m_Father: {fileID: 6689623489765878657}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3699338401841994569
+  _shootingLaser: {fileID: 4922975042287902267}
+--- !u!114 &4922975042287902267
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4225012221649256660}
+  m_GameObject: {fileID: 2502153312653533073}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 48403575773f46baaa14f4432296d335, type: 3}
@@ -332,7 +292,7 @@ RectTransform:
   m_LocalScale: {x: 32.35, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 4629288945679040986}
+  m_Father: {fileID: 6689623489765878657}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

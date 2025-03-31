@@ -6,8 +6,14 @@ namespace Factories
 {
     public class MissileFactory : BaseFactory<Missile>
     {
-        [SerializeField] private SpaceShip _spaceShip;
-        [SerializeField] private ShootingMissile _shootingMissile;
+        private SpaceShip _spaceShip;
+        private ShootingMissile _shootingMissile;
+
+        public void Construct(SpaceShip spaceShip, ShootingMissile shootingMissile)
+        {
+            _spaceShip = spaceShip;
+            _shootingMissile = shootingMissile;
+        }
         
         public override void ActionReleaseObject(Missile obj)
         {

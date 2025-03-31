@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class DataSpaceShip : MonoBehaviour
     {
         
@@ -12,7 +13,7 @@ namespace Player
 
         public int CurrentScore { get; private set; }
         
-        private void Awake()
+        private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             AddScore(0);

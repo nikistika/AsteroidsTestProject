@@ -1,9 +1,12 @@
+using System;
+using Factories;
 using GameLogic;
 using Shooting;
 using UnityEngine;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class InputCharacter : MonoBehaviour
     {
         private Rigidbody2D _rigidbody;
@@ -13,11 +16,20 @@ namespace Player
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
-        [SerializeField] private GameOver _gameOver;
+        private GameOver _gameOver;
 
+        public void Construct(GameOver gameOver)
+        {
+            _gameOver = gameOver;
+        }
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+        }
+
+        private void Start()
+        {
             _gameOver.OnGameOver += GameOver;
         }
 

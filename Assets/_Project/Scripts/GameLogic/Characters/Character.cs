@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Characters
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Character : MonoBehaviour
     {
         protected Camera _camera;

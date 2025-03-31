@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Shooting
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Missile : MonoBehaviour
     {
         private float _halfHeightCamera;

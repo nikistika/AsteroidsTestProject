@@ -8,6 +8,5 @@ namespace Characters
     {
         protected DataSpaceShip _dataSpaceShip;
         protected GameOver _gameOver;
-        // protected SpawnManager _spawnManager;
     }
 }

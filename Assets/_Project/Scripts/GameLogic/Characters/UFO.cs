@@ -18,12 +18,11 @@ namespace Characters
         [SerializeField] private int _scoreKill = 10;
         [SerializeField] private int _speed = 1;
         
-        public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver,
+        public void Construct( DataSpaceShip dataSpaceShip, GameOver gameOver,
             SpaceShip spaseShip)
         {
             base.Awake();
-
-            // _spawnManager = spawnManager;
+            
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
             _spaceShip = spaseShip;

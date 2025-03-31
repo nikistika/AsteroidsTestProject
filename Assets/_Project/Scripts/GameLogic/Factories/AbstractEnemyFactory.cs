@@ -1,5 +1,4 @@
 using GameLogic;
-using Managers;
 using Player;
 using UnityEngine;
 
@@ -11,8 +10,7 @@ namespace Factories
         private float _halfWidthCamera;
         private Camera _camera;
 
-        [SerializeField] protected SpawnManager _spawnManager;
-        [SerializeField] protected DataSpaceShip _dataSpaceShip;
+        protected DataSpaceShip _dataSpaceShip;
         [SerializeField] protected GameOver _gameOver;
 
         protected void Awake()

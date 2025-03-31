@@ -15,13 +15,12 @@ namespace Characters
         public event Func<Asteroid> OnGetAsteroid;
         public event Action<Asteroid> OnReturnAsteroid;
         
-        private bool _flagParent = true;
+        public bool _flagParent = true;
 
         [SerializeField] private int _scoreKill = 5;
         
-        public void Construct(SpawnManager spawnManager, DataSpaceShip dataSpaceShip, GameOver gameOver)
+        public void Construct(DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
-            _spawnManager = spawnManager;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
         }
@@ -36,6 +35,7 @@ namespace Characters
         private void Start()
         {
             _gameOver.OnGameOver += GameOver;
+            
         }
 
         private void FixedUpdate()
@@ -74,13 +74,6 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            
-            if (collision == null)
-            {
-                Debug.LogError("Collision is null in OnTriggerEnter2D");
-                return;
-            }
-            
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
                 if (_flagParent)
@@ -91,11 +84,13 @@ namespace Characters
                 {
                     transform.localScale *= 2;
                 }
-
-                _dataSpaceShip.AddScore(_scoreKill);
-                OnReturnAsteroid.Invoke(this);
-
                 
+                _dataSpaceShip.AddScore(_scoreKill);
+                
+                if (OnReturnAsteroid != null)
+                {
+                    OnReturnAsteroid.Invoke(this);
+                }
             }
 
             if (collision.GetComponent<SpaceShip>())
@@ -122,13 +117,23 @@ namespace Characters
 
         private void Crushing()
         {
+            if (OnGetAsteroid != null)
+            {
+                Debug.Log($"На событие подписано {OnGetAsteroid.GetInvocationList().Length} слушателей.");
+            }
+            else
+            {
+                Debug.Log("На событие никто не подписан.");
+            }
+            
             for (int i = 1; i <= 4; i++)
             {
-                var fragment = OnGetAsteroid.Invoke();
-                fragment.IsObjectParent(false);
-                fragment.transform.position = transform.position;
-                fragment.transform.localScale = transform.localScale / 2;
-                fragment.MoveFragment(i, fragment);
+                
+                    var fragment = OnGetAsteroid.Invoke();
+                    fragment.IsObjectParent(false);
+                    fragment.transform.position = transform.position;
+                    fragment.transform.localScale = transform.localScale / 2;
+                    fragment.MoveFragment(i, fragment);
             }
         }
 

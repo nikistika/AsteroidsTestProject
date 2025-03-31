@@ -4,6 +4,7 @@ using Character = Characters.Character;
 
 namespace Player
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class SpaceShip : Character
     {
         private ShootingMissile _shootingMissile;
