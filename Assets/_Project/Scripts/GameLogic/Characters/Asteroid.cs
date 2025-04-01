@@ -1,6 +1,5 @@
 using System;
 using GameLogic;
-using Managers;
 using Player;
 using Shooting;
 using UnityEngine;
@@ -10,7 +9,6 @@ namespace Characters
 {
     public class Asteroid : Enemy
     {
-        private SpawnManager _spawnManager;
         
         public event Func<Asteroid> OnGetAsteroid;
         public event Action<Asteroid> OnReturnAsteroid;
@@ -117,23 +115,17 @@ namespace Characters
 
         private void Crushing()
         {
-            if (OnGetAsteroid != null)
-            {
-                Debug.Log($"На событие подписано {OnGetAsteroid.GetInvocationList().Length} слушателей.");
-            }
-            else
-            {
-                Debug.Log("На событие никто не подписан.");
-            }
-            
             for (int i = 1; i <= 4; i++)
             {
-                
-                    var fragment = OnGetAsteroid.Invoke();
+
+                var fragment = OnGetAsteroid?.Invoke();
+                if (fragment != null)
+                {
                     fragment.IsObjectParent(false);
                     fragment.transform.position = transform.position;
                     fragment.transform.localScale = transform.localScale / 2;
                     fragment.MoveFragment(i, fragment);
+                }
             }
         }
 

@@ -763,8 +763,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _prefab: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
-  _defaultPoolSize: 10
-  _maxPoolSize: 60
+  _defaultPoolSize: 5
+  _maxPoolSize: 5
   _gameOver: {fileID: 1278875013}
 --- !u!114 &752357152
 MonoBehaviour:

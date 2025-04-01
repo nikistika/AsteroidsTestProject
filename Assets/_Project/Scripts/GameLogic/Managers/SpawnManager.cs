@@ -27,9 +27,7 @@ namespace Managers
         [SerializeField] private MissileFactory _missileFactory;
         [SerializeField] private UFOFactory _ufoFactory;
         [SerializeField] private GameplayUI _gameplayUI;
-        
         [SerializeField] private SpaceShip _spaceShip;
-        
         [SerializeField] private float _respawnAsteroidRange = 3;
         [SerializeField] private float _minRespawnUFORange = 5;
         [SerializeField] private float _maxRespawnUFORange = 10;
@@ -70,7 +68,7 @@ namespace Managers
         {
             var asteroid = _asteroidFactory.SpawnObject();
             asteroid.OnReturnAsteroid += ReturnAsteroid;
-            asteroid.OnGetAsteroid += SpawnAsteroid;
+             asteroid.OnGetAsteroid += SpawnAsteroid;
             return asteroid;
         }
 

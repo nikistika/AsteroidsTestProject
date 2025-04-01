@@ -5,11 +5,12 @@ namespace Factories
 {
     public abstract class BaseFactory<T> : MonoBehaviour where T : MonoBehaviour
     {
+
+        private ObjectPool<T> _pool;
+
         [SerializeField] protected T _prefab;
         [SerializeField] private int _defaultPoolSize;
         [SerializeField] private int _maxPoolSize;
-
-        private ObjectPool<T> _pool;
 
         protected void Awake()
         {

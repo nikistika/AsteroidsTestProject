@@ -11,6 +11,7 @@ namespace Factories
         private Camera _camera;
 
         protected DataSpaceShip _dataSpaceShip;
+
         [SerializeField] protected GameOver _gameOver;
 
         protected void Awake()
