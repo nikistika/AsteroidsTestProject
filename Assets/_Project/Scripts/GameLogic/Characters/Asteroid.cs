@@ -10,7 +10,7 @@ namespace Characters
     public class Asteroid : Enemy
     {
         
-        public event Func<Asteroid> OnGetAsteroid;
+        public event Action<int, Asteroid> OnGetFragments;
         public event Action<Asteroid> OnReturnAsteroid;
         
         private bool _flagParent = true;
@@ -58,7 +58,7 @@ namespace Characters
             _flagParent = isObjectParent;
         }
 
-        private void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
+        public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
             if (fragmentNumber == 1) fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
             else if (fragmentNumber == 2)
@@ -115,18 +115,7 @@ namespace Characters
 
         private void Crushing()
         {
-            for (int i = 1; i <= 4; i++)
-            {
-
-                var fragment = OnGetAsteroid?.Invoke();
-                if (fragment != null)
-                {
-                    fragment.IsObjectParent(false);
-                    fragment.transform.position = transform.position;
-                    fragment.transform.localScale = transform.localScale / 2;
-                    fragment.MoveFragment(i, fragment);
-                }
-            }
+            OnGetFragments?.Invoke(4, this);
         }
 
         private void GameOver()

@@ -68,8 +68,23 @@ namespace Managers
         {
             var asteroid = _asteroidFactory.SpawnObject();
             asteroid.OnReturnAsteroid += ReturnAsteroid;
-             asteroid.OnGetAsteroid += SpawnAsteroid;
+             asteroid.OnGetFragments += SpawnAsteroidFragments;
             return asteroid;
+        }
+
+        private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)
+        {
+            for (var i = 1; i <= quantity; i++)
+            {
+                var fragment = SpawnAsteroid();
+                if (fragment != null)
+                {
+                    fragment.IsObjectParent(false);
+                    fragment.transform.position = objectParent.transform.position;
+                    fragment.transform.localScale = objectParent.transform.localScale / 2;
+                    fragment.MoveFragment(i, fragment);
+                }
+            }
         }
 
         private void SpawnUFO()
@@ -81,7 +96,7 @@ namespace Managers
         private void ReturnAsteroid(Asteroid asteroid)
         {
             asteroid.OnReturnAsteroid -= ReturnAsteroid;
-            asteroid.OnGetAsteroid -= SpawnAsteroid;
+            asteroid.OnGetFragments -= SpawnAsteroidFragments;
             _asteroidFactory.ReturnObject(asteroid);
         }
 
