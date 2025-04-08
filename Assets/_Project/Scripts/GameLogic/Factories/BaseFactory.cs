@@ -11,7 +11,7 @@ namespace Factories
         [SerializeField] protected T _prefab;
         [SerializeField] private int _defaultPoolSize;
         [SerializeField] private int _maxPoolSize;
-
+        
         protected void Awake()
         {
             PoolInitialization();

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3395255367656053016}
   - component: {fileID: 1020523353175193945}
   - component: {fileID: 8307710009982620948}
+  - component: {fileID: 975948765993044589}
   m_Layer: 0
   m_Name: UFO Enemy
   m_TagString: Untagged
@@ -99,7 +100,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da59fd88074be9a40a2376654cecf78e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scoreKill: 10
   _speed: 1
 --- !u!70 &1020523353175193945
 CapsuleCollider2D:
@@ -163,3 +163,16 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &975948765993044589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4117814180324629382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb4980eb60a94572a59945bce5f23d4a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreKill: 15

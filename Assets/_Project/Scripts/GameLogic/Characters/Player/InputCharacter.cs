@@ -33,7 +33,7 @@ namespace Player
             _gameOver.OnGameOver += GameOver;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (!_flagGameOver)
             {

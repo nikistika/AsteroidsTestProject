@@ -8,10 +8,11 @@ namespace Factories
     {
         private SpaceShip _spaceShip;
 
-        public void Construct(SpaceShip spaceShip, DataSpaceShip dataSpaceShip)
+        public void Construct(SpaceShip spaceShip, DataSpaceShip dataSpaceShip, 
+            Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
+            base.Construct(dataSpaceShip, camera, halfHeightCamera, halfWidthCamera);
             _spaceShip = spaceShip;
-            _dataSpaceShip = dataSpaceShip;
         }
         
         public override void ActionReleaseObject(UFO obj)
@@ -23,7 +24,8 @@ namespace Factories
         protected override UFO ActionCreateObject()
         {
             var UFO = Instantiate(_prefab);
-            UFO.Construct(_dataSpaceShip, _gameOver, _spaceShip);
+            UFO.Construct(_gameOver, _spaceShip);
+            UFO.GetComponent<Score>().Construct(_dataSpaceShip);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }

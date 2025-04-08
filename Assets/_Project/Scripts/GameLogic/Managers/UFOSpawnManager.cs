@@ -27,6 +27,11 @@ namespace Managers
             return ufo;
         }
 
+        protected override void Initialization()
+        {
+            _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
+        }
+
         private void ReturnUFO(UFO ufo)
         {
             ufo.OnReturnUFO -= ReturnUFO;

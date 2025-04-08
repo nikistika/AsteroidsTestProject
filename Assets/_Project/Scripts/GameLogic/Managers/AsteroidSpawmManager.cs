@@ -2,6 +2,7 @@ using System.Collections;
 using Characters;
 using Factories;
 using GameLogic;
+using Player;
 using UnityEngine;
 
 namespace Managers
@@ -9,13 +10,13 @@ namespace Managers
     public class AsteroidSpawmManager : BaseSpawnManager<Asteroid>
     {
         private WaitForSeconds _waitRespawnAsteroidRange;
-
+        
         [SerializeField] private AsteroidFactory _asteroidFactory;
+        [SerializeField] private DataSpaceShip _dataSpaceShip;
         [SerializeField] private float _respawnAsteroidRange = 3;
-
+        
         private void Start()
         {
-            _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
             StartCoroutine(SpawnAsteroidsCoroutine());
         }
 
@@ -25,6 +26,12 @@ namespace Managers
             asteroid.OnReturnAsteroid += ReturnAsteroid;
             asteroid.OnGetFragments += SpawnAsteroidFragments;
             return asteroid;
+        }
+
+        protected override void Initialization()
+        {
+            _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
+            _asteroidFactory.Construct(_dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
         }
 
         private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)

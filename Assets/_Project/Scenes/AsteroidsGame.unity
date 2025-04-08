@@ -662,9 +662,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 592356358}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d8234e90d94178f44855901530b9c190, type: 3}
+  m_Script: {fileID: 11500000, guid: e5a4bc77cafcd5d45b37dfab42b0bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _asteroidSpawmManager: {fileID: 1205883579}
+  _spaceShipSpawnManager: {fileID: 1205883580}
 --- !u!1 &669028222
 GameObject:
   m_ObjectHideFlags: 0
@@ -711,7 +713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e66a28a53a35c4387507b60fa4fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameOver: {fileID: 0}
+  _gameOver: {fileID: 1278875013}
   _scoreTMP: {fileID: 1330110202}
   _laserCountTMP: {fileID: 218799331}
   _coordinatesTMP: {fileID: 2005562705}
@@ -1096,6 +1098,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameOver: {fileID: 1278875013}
   _asteroidFactory: {fileID: 752357151}
+  _dataSpaceShip: {fileID: 7577271200104973372, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
   _respawnAsteroidRange: 3
 --- !u!114 &1205883580
 MonoBehaviour:

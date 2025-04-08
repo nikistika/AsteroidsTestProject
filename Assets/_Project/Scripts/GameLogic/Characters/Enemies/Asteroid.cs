@@ -13,15 +13,13 @@ namespace Characters
         public event Action<Asteroid> OnReturnAsteroid;
         
         private bool _flagParent = true;
-        private DataSpaceShip _dataSpaceShip;
         private GameOver _gameOver;
         
-        [SerializeField] private int _scoreKill = 5;
         [SerializeField] private int _speed = 1;
 
-        public void Construct(DataSpaceShip dataSpaceShip, GameOver gameOver)
+        public void Construct(GameOver gameOver, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
-            _dataSpaceShip = dataSpaceShip;
+            base.Construct(camera, halfHeightCamera, halfWidthCamera);
             _gameOver = gameOver;
         }
 
@@ -83,8 +81,6 @@ namespace Characters
                 {
                     transform.localScale *= 2;
                 }
-                
-                _dataSpaceShip.AddScore(_scoreKill);
                 
                 OnReturnAsteroid?.Invoke(this);
             }

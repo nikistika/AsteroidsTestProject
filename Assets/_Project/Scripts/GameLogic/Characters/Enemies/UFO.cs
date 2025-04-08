@@ -12,16 +12,12 @@ namespace Characters
         
         private SpaceShip _spaceShip;
         private bool _flagGameOver;
-        private DataSpaceShip _dataSpaceShip;
         private GameOver _gameOver;
         
-        [SerializeField] private int _scoreKill = 10;
         [SerializeField] private int _speed = 1;
         
-        public void Construct( DataSpaceShip dataSpaceShip, GameOver gameOver,
-            SpaceShip spaseShip)
+        public void Construct(GameOver gameOver, SpaceShip spaseShip)
         {
-            _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
             _spaceShip = spaseShip;
         }
@@ -57,7 +53,6 @@ namespace Characters
         {
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
-                _dataSpaceShip.AddScore(_scoreKill);
                 OnReturnUFO?.Invoke(this);
             }
 

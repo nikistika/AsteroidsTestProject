@@ -7,15 +7,11 @@ namespace Factories
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
         
-        public void Construct(DataSpaceShip dataSpaceShip)
-        {
-            _dataSpaceShip = dataSpaceShip;
-        }
-        
         protected override Asteroid ActionCreateObject()
         {
-            var asteroid = Instantiate(_prefab);
-            asteroid.Construct(_dataSpaceShip, _gameOver);
+            Asteroid asteroid = Instantiate(_prefab);
+            asteroid.Construct(_gameOver, _camera, _halfHeightCamera, _halfWidthCamera);
+            asteroid.GetComponent<Score>().Construct(_dataSpaceShip);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;
         }

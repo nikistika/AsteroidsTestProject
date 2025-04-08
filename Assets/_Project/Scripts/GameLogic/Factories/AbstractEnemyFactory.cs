@@ -6,20 +6,20 @@ namespace Factories
 {
     public abstract class AbstractEnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
-        private float _halfHeightCamera;
-        private float _halfWidthCamera;
-        private Camera _camera;
+        protected float _halfHeightCamera;
+        protected float _halfWidthCamera;
+        protected Camera _camera;
 
         protected DataSpaceShip _dataSpaceShip;
 
         [SerializeField] protected GameOver _gameOver;
 
-        protected void Awake()
+        public void Construct(DataSpaceShip dataSpaceShip, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
-            base.Awake();
-            _camera = Camera.main;
-            _halfHeightCamera = _camera.orthographicSize;
-            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
+            _dataSpaceShip = dataSpaceShip;
+            _camera = camera;
+            _halfHeightCamera = halfHeightCamera;
+            _halfWidthCamera = halfWidthCamera;
         }
 
         protected Vector2 GetRandomSpawnPosition()

@@ -11,12 +11,15 @@ namespace Characters
         protected float _halfWidthCamera;
         protected Rigidbody2D _rigidbody;
 
+        public void Construct(Camera camera, float halfHeightCamera, float halfWidthCamera)
+        {
+            _camera = camera;
+            _halfHeightCamera = halfHeightCamera;
+            _halfWidthCamera = halfWidthCamera;
+        }
+        
         protected void Awake()
         {
-            _camera = Camera.main;
-            _halfHeightCamera = _camera.orthographicSize;
-            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
-
             Initialization();
         }
 

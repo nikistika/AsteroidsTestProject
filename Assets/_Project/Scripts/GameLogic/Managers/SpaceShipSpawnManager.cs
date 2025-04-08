@@ -18,19 +18,18 @@ namespace Managers
         [SerializeField] private UFOFactory _ufoFactory;
         [SerializeField] private GameplayUI _gameplayUI;
         [SerializeField] private SpaceShip _spaceShip;
-
-        private void Start()
-        {
-            SpawnObject();
-        }
-
+        
         protected override SpaceShip SpawnObject()
         {
             var objectSpaceShip = Instantiate(_spaceShip);
-
             GetComponentsSpaceShip(objectSpaceShip);
             DependencyTransfer(objectSpaceShip);
             return objectSpaceShip;
+        }
+
+        protected override void Initialization()
+        {
+            SpawnObject();
         }
 
         private void GetComponentsSpaceShip(SpaceShip objectSpaceShip)
@@ -46,8 +45,8 @@ namespace Managers
             _inputCharacter.Construct(_gameOver);
             _shootingMissile.Construct(_missileFactory);
             _missileFactory.Construct(objectSpaceShip, _shootingMissile);
-            _ufoFactory.Construct(objectSpaceShip, _dataSpaceShip);
-            _asteroidFactory.Construct(_dataSpaceShip);
+            _ufoFactory.Construct(objectSpaceShip, _dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
+            _asteroidFactory.Construct(_dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
             _gameplayUI.Construct(_shootingLaser, _dataSpaceShip);
             _gameOver.Construct(_dataSpaceShip);
         }
