@@ -667,6 +667,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _asteroidSpawmManager: {fileID: 1205883579}
   _spaceShipSpawnManager: {fileID: 1205883580}
+  _asteroidFactory: {fileID: 752357151}
+  _dataSpaceShip: {fileID: 7577271200104973372, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
 --- !u!1 &669028222
 GameObject:
   m_ObjectHideFlags: 0

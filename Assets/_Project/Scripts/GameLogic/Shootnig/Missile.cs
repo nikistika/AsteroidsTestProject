@@ -14,16 +14,16 @@ namespace Shooting
 
         [SerializeField] private float _speed = 3;
 
-        public void Construct(ShootingMissile shootingMissile)
+        public void Construct(ShootingMissile shootingMissile, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
             _shootingMissile = shootingMissile;
+            _camera = camera;
+            _halfHeightCamera = halfHeightCamera;
+            _halfWidthCamera = halfWidthCamera;
         }
 
         private void Awake()
         {
-            _camera = Camera.main;
-            _halfHeightCamera = _camera.orthographicSize;
-            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 

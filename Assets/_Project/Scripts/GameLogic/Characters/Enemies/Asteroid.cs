@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 namespace Characters
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class Asteroid : Character
     {
         public event Action<int, Asteroid> OnGetFragments;
@@ -19,7 +20,7 @@ namespace Characters
 
         public void Construct(GameOver gameOver, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
-            base.Construct(camera, halfHeightCamera, halfWidthCamera);
+            base.Construct(halfHeightCamera, halfWidthCamera);
             _gameOver = gameOver;
         }
 

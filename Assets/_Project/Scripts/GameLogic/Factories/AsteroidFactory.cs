@@ -1,12 +1,10 @@
 using Characters;
-using Player;
 using UnityEngine;
 
 namespace Factories
 {
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
-        
         protected override Asteroid ActionCreateObject()
         {
             Asteroid asteroid = Instantiate(_prefab);
@@ -24,7 +22,7 @@ namespace Factories
             obj.IsObjectParent(true);
         }
 
-        public override void ActionReleaseObject(Asteroid obj)
+        protected override void ActionReleaseObject(Asteroid obj)
         {
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.gameObject.SetActive(false);

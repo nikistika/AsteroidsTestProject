@@ -1,6 +1,5 @@
 using GameLogic;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 namespace Managers
 {

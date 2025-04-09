@@ -6,14 +6,12 @@ namespace Characters
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Character : MonoBehaviour
     {
-        protected Camera _camera;
         protected float _halfHeightCamera;
         protected float _halfWidthCamera;
         protected Rigidbody2D _rigidbody;
 
-        public void Construct(Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public void Construct(float halfHeightCamera, float halfWidthCamera)
         {
-            _camera = camera;
             _halfHeightCamera = halfHeightCamera;
             _halfWidthCamera = halfWidthCamera;
         }

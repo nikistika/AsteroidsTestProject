@@ -5,12 +5,21 @@ namespace Factories
 {
     public abstract class BaseFactory<T> : MonoBehaviour where T : MonoBehaviour
     {
-
+        protected float _halfHeightCamera;
+        protected float _halfWidthCamera;
+        protected Camera _camera;
         private ObjectPool<T> _pool;
 
         [SerializeField] protected T _prefab;
         [SerializeField] private int _defaultPoolSize;
         [SerializeField] private int _maxPoolSize;
+
+        protected void Construct(Camera camera, float halfHeightCamera, float halfWidthCamera)
+        {
+            _camera = camera;
+            _halfHeightCamera = halfHeightCamera;
+            _halfWidthCamera = halfWidthCamera;
+        }
         
         protected void Awake()
         {
@@ -33,7 +42,7 @@ namespace Factories
             );
         }
 
-        public abstract void ActionReleaseObject(T obj);
+        protected abstract void ActionReleaseObject(T obj);
 
         public void ReturnObject(T obj)
         {

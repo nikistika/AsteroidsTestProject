@@ -1,7 +1,6 @@
 using System.Collections;
 using Characters;
 using Factories;
-using GameLogic;
 using Player;
 using UnityEngine;
 
@@ -31,7 +30,6 @@ namespace Managers
         protected override void Initialization()
         {
             _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
-            _asteroidFactory.Construct(_dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
         }
 
         private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)

@@ -42,9 +42,10 @@ namespace Managers
 
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
+            objectSpaceShip.Construct(_halfHeightCamera, _halfWidthCamera);
             _inputCharacter.Construct(_gameOver);
             _shootingMissile.Construct(_missileFactory);
-            _missileFactory.Construct(objectSpaceShip, _shootingMissile);
+            _missileFactory.Construct(objectSpaceShip, _shootingMissile, _camera, _halfHeightCamera, _halfWidthCamera);
             _ufoFactory.Construct(objectSpaceShip, _dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
             _asteroidFactory.Construct(_dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
             _gameplayUI.Construct(_shootingLaser, _dataSpaceShip);

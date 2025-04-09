@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Characters
 {
+    [RequireComponent(typeof(Rigidbody2D))]
     public class UFO : Character
     {
         public event Action<UFO> OnReturnUFO;
@@ -16,8 +17,9 @@ namespace Characters
         
         [SerializeField] private int _speed = 1;
         
-        public void Construct(GameOver gameOver, SpaceShip spaseShip)
+        public void Construct(GameOver gameOver, SpaceShip spaseShip, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
+            base.Construct(halfHeightCamera, halfWidthCamera);
             _gameOver = gameOver;
             _spaceShip = spaseShip;
         }
@@ -38,9 +40,6 @@ namespace Characters
         protected override void Initialization()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            _camera = Camera.main;
-            _halfHeightCamera = _camera.orthographicSize;
-            _halfWidthCamera = _halfHeightCamera * _camera.aspect;
         }
 
         private void Move()

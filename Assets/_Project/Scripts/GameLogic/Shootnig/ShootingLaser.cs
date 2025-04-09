@@ -6,7 +6,6 @@ namespace Shooting
 {
     public class ShootingLaser : MonoBehaviour
     {
-        
         public event Action<int> OnEditLaserCount;
         public event Action<float, float> OnLaserCooldown;
         
@@ -73,7 +72,12 @@ namespace Shooting
             }
 
             AddLaserCount(1);
-            if (LaserCount < MaxLaserCount) StartCoroutine(ShotCooldown());
+            
+            if (LaserCount < MaxLaserCount)
+            {
+                StartCoroutine(ShotCooldown());
+            }
+            
             _laserCooldownActive = false;
         }
     }
