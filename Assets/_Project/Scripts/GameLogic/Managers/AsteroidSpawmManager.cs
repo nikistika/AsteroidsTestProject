@@ -27,7 +27,7 @@ namespace Managers
             return asteroid;
         }
 
-        protected override void Initialization()
+        protected override void Initialize()
         {
             _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
         }

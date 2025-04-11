@@ -8,10 +8,11 @@ namespace Managers
 {
     public class SpaceShipSpawnManager : BaseSpawnManager<SpaceShip>
     {
-        private InputCharacter _inputCharacter;
+        private InputCharacter<InputKeyboard> _inputCharacter;
         private ShootingMissile _shootingMissile;
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
+        private InputKeyboard inputKeyboard;
 
         [SerializeField] private AsteroidFactory _asteroidFactory;
         [SerializeField] private MissileFactory _missileFactory;
@@ -27,8 +28,10 @@ namespace Managers
             return objectSpaceShip;
         }
 
-        protected override void Initialization()
+        protected override void Initialize()
         {
+            inputKeyboard = new InputKeyboard();
+
             SpawnObject();
         }
 
@@ -43,7 +46,7 @@ namespace Managers
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
             objectSpaceShip.Construct(_halfHeightCamera, _halfWidthCamera);
-            _inputCharacter.Construct(_gameOver);
+            _inputCharacter.Construct(_gameOver, inputKeyboard);
             _shootingMissile.Construct(_missileFactory);
             _missileFactory.Construct(objectSpaceShip, _shootingMissile, _camera, _halfHeightCamera, _halfWidthCamera);
             _ufoFactory.Construct(objectSpaceShip, _dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);

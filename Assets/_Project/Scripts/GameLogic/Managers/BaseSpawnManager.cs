@@ -22,12 +22,12 @@ namespace Managers
         private void Awake()
         {
             _gameOver.OnGameOver += GameOver;
-            Initialization();
+            Initialize();
         }
 
         protected abstract T SpawnObject();
         
-        protected abstract void Initialization();
+        protected abstract void Initialize();
 
         private void GameOver()
         {

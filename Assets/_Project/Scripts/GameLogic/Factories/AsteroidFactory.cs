@@ -8,7 +8,7 @@ namespace Factories
         protected override Asteroid ActionCreateObject()
         {
             Asteroid asteroid = Instantiate(_prefab);
-            asteroid.Construct(_gameOver, _camera, _halfHeightCamera, _halfWidthCamera);
+            asteroid.Construct(_gameOver, _halfHeightCamera, _halfWidthCamera);
             asteroid.GetComponent<Score>().Construct(_dataSpaceShip);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;

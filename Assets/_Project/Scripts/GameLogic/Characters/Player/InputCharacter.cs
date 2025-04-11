@@ -6,21 +6,23 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class InputCharacter : MonoBehaviour
+    public class InputCharacter<T> : MonoBehaviour where T : IInput
     {
 
         private GameOver _gameOver;
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
+        private T _input;
 
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
 
-        public void Construct(GameOver gameOver)
+        public void Construct(GameOver gameOver, T input)
         {
             _gameOver = gameOver;
+            _input = input;
         }
         
         private void Awake()
@@ -43,27 +45,27 @@ namespace Player
 
         private void Input()
         {
-            if (UnityEngine.Input.GetKey(KeyCode.W))
+            if (_input.ButtonForward())
             {
                 _rigidbody.AddRelativeForce(Vector2.up * (_speedMove * Time.deltaTime), ForceMode2D.Force);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.D))
+            if (_input.ButtonRight())
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation - _speedRotate);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.A))
+            if (_input.ButtonLeft())
             {
                 _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.Space))
+            if (_input.ButtonShotingMissile())
             {
                 _shootingMissile.Shot();
             }
 
-            if (UnityEngine.Input.GetKey(KeyCode.G))
+            if (_input.ButtonShotingLaser())
             {
                 _shootingLaser.Shot();
             }
