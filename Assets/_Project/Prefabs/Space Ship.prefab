@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 7577271200104973372}
   - component: {fileID: 4759089236649671140}
   - component: {fileID: 4922975042287902267}
+  - component: {fileID: 7008452124954055679}
   m_Layer: 0
   m_Name: Space Ship
   m_TagString: Untagged
@@ -261,6 +262,18 @@ MonoBehaviour:
   _laserCooldown: 5
   <MaxLaserCount>k__BackingField: 3
   <LaserCount>k__BackingField: 3
+--- !u!114 &7008452124954055679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2502153312653533073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e298b579b38fff4ea2fb71bc4436ae2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7163616426749682268
 GameObject:
   m_ObjectHideFlags: 0

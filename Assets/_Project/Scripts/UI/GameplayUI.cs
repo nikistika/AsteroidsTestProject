@@ -14,25 +14,28 @@ namespace UI
 
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
+        private GameOver _gameOver;
         
-        [SerializeField] private GameOver _gameOver;
+        [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private TMP_Text _scoreTMP;
         [SerializeField] private TMP_Text _laserCountTMP;
         [SerializeField] private TMP_Text _coordinatesTMP;
         [SerializeField] private TMP_Text _rotationTMP;
         [SerializeField] private TMP_Text _speedTMP;
 
-        public void Construct(ShootingLaser shootingLaser, DataSpaceShip dataSpaceShip)
+        public void Construct(ShootingLaser shootingLaser, 
+            DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _shootingLaser = shootingLaser;
             _dataSpaceShip = dataSpaceShip;
+            _gameOver = gameOver;
         }
 
         private void Start()
         {
             _shootingLaser.OnEditLaserCount += EditLaserCount;
             _shootingLaser.OnLaserCooldown += LaserCooldown;
-            _dataSpaceShip.OnScoreChanged += AddScore;
+            _scoreManager.OnScoreChanged += AddScore;
             _gameOver.OnGameOver += GameOver;
             
             AddScore(0);
@@ -72,7 +75,7 @@ namespace UI
         {
             _shootingLaser.OnEditLaserCount -= EditLaserCount;
             _shootingLaser.OnLaserCooldown -= LaserCooldown;
-            _dataSpaceShip.OnScoreChanged -= AddScore;
+            _scoreManager.OnScoreChanged -= AddScore;
             _gameOver.OnGameOver -= GameOver;
 
         }

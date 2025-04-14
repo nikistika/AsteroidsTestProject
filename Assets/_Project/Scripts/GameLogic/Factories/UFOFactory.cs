@@ -1,4 +1,5 @@
 using Characters;
+using GameLogic;
 using Player;
 using UnityEngine;
 
@@ -8,13 +9,13 @@ namespace Factories
     {
         private SpaceShip _spaceShip;
 
-        public void Construct(SpaceShip spaceShip, DataSpaceShip dataSpaceShip, 
-            Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public UFOFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
+            float halfHeightCamera, float halfWidthCamera, UFO prefab, SpaceShip spaceShip) : 
+            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab)
         {
-            base.Construct(dataSpaceShip, camera, halfHeightCamera, halfWidthCamera);
             _spaceShip = spaceShip;
         }
-
+        
         protected override void ActionReleaseObject(UFO obj)
         {
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -23,9 +24,9 @@ namespace Factories
         
         protected override UFO ActionCreateObject()
         {
-            var UFO = Instantiate(_prefab);
-            UFO.Construct(_gameOver, _spaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
-            UFO.GetComponent<Score>().Construct(_dataSpaceShip);
+            var UFO = Object.Instantiate(_prefab);
+            UFO.Construct(_gameOver, _spaceShip, _halfHeightCamera, _halfWidthCamera);
+            UFO.GetComponent<Score>().Construct(_scoreManager);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }

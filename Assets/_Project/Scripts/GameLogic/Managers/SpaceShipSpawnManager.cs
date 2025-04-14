@@ -1,4 +1,5 @@
 using Factories;
+using GameLogic;
 using Player;
 using Shooting;
 using UI;
@@ -8,21 +9,41 @@ namespace Managers
 {
     public class SpaceShipSpawnManager : BaseSpawnManager<SpaceShip>
     {
-        private InputCharacter<InputKeyboard> _inputCharacter;
+        private InputCharacter _inputCharacter;
         private ShootingMissile _shootingMissile;
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
         private InputKeyboard inputKeyboard;
+        private ScoreManager _scoreManager;
 
-        [SerializeField] private AsteroidFactory _asteroidFactory;
-        [SerializeField] private MissileFactory _missileFactory;
-        [SerializeField] private UFOFactory _ufoFactory;
-        [SerializeField] private GameplayUI _gameplayUI;
-        [SerializeField] private SpaceShip _spaceShip;
+        private AsteroidFactory _asteroidFactory;
+        private MissileFactory _missileFactory;
+        private UFOFactory _ufoFactory;
+
+        private GameplayUI _gameplayUI;
+        private SpaceShip _spaceShipPrefab;
         
-        protected override SpaceShip SpawnObject()
+        private Missile _missilePrefab;
+
+        public SpaceShip SpaceShipObject {get; private set;}
+
+        public SpaceShipSpawnManager(GameOver gameOver, Camera camera,
+            float halfHeightCamera, float halfWidthCamera, ScoreManager scoreManager,
+            AsteroidFactory asteroidFactory, UFOFactory ufoFactory,Missile missilePrefab, 
+            GameplayUI gameplayUI, SpaceShip spaceShipPrefab) :
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
         {
-            var objectSpaceShip = Instantiate(_spaceShip);
+            _scoreManager = scoreManager;
+            _asteroidFactory  = asteroidFactory;
+            _ufoFactory = ufoFactory;
+            _missilePrefab = missilePrefab;
+            _gameplayUI = gameplayUI;
+            _spaceShipPrefab = spaceShipPrefab;
+        }
+
+        public override SpaceShip SpawnObject()
+        {
+            var objectSpaceShip = Object.Instantiate(_spaceShipPrefab);
             GetComponentsSpaceShip(objectSpaceShip);
             DependencyTransfer(objectSpaceShip);
             return objectSpaceShip;
@@ -30,9 +51,7 @@ namespace Managers
 
         protected override void Initialize()
         {
-            inputKeyboard = new InputKeyboard();
-
-            SpawnObject();
+            SpaceShipObject = SpawnObject();
         }
 
         private void GetComponentsSpaceShip(SpaceShip objectSpaceShip)
@@ -46,13 +65,14 @@ namespace Managers
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
             objectSpaceShip.Construct(_halfHeightCamera, _halfWidthCamera);
-            _inputCharacter.Construct(_gameOver, inputKeyboard);
+            _inputCharacter.Construct(_gameOver);
+            
+            _missileFactory = new MissileFactory(_camera, _halfHeightCamera, _halfWidthCamera,
+                _missilePrefab, objectSpaceShip, _shootingMissile);
+            _missileFactory.StartWork();
+            
             _shootingMissile.Construct(_missileFactory);
-            _missileFactory.Construct(objectSpaceShip, _shootingMissile, _camera, _halfHeightCamera, _halfWidthCamera);
-            _ufoFactory.Construct(objectSpaceShip, _dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
-            _asteroidFactory.Construct(_dataSpaceShip, _camera, _halfHeightCamera, _halfWidthCamera);
-            _gameplayUI.Construct(_shootingLaser, _dataSpaceShip);
-            _gameOver.Construct(_dataSpaceShip);
+            _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver);
         }
     }
 }

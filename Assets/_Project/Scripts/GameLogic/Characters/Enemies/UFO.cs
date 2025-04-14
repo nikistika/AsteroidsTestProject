@@ -17,7 +17,7 @@ namespace Characters
         
         [SerializeField] private int _speed = 1;
         
-        public void Construct(GameOver gameOver, SpaceShip spaseShip, Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public void Construct(GameOver gameOver, SpaceShip spaseShip, float halfHeightCamera, float halfWidthCamera)
         {
             base.Construct(halfHeightCamera, halfWidthCamera);
             _gameOver = gameOver;

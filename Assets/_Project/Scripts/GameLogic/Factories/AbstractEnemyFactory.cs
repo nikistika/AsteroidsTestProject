@@ -1,19 +1,19 @@
 using GameLogic;
-using Player;
 using UnityEngine;
 
 namespace Factories
 {
     public abstract class AbstractEnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
-        protected DataSpaceShip _dataSpaceShip;
-
-        [SerializeField] protected GameOver _gameOver;
-
-        public void Construct(DataSpaceShip dataSpaceShip, Camera camera, float halfHeightCamera, float halfWidthCamera)
+        protected ScoreManager _scoreManager;
+        protected GameOver _gameOver;
+        
+        public AbstractEnemyFactory(ScoreManager scoreManager, GameOver gameOver, 
+            Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab) : 
+            base(camera, halfHeightCamera, halfWidthCamera, prefab)
         {
-            base.Construct(camera, halfHeightCamera, halfWidthCamera);
-            _dataSpaceShip = dataSpaceShip;
+            _gameOver = gameOver;
+            _scoreManager = scoreManager;
         }
 
         protected Vector2 GetRandomSpawnPosition()

@@ -3,39 +3,54 @@ using UnityEngine.Pool;
 
 namespace Factories
 {
-    public abstract class BaseFactory<T> : MonoBehaviour where T : MonoBehaviour
+    public abstract class BaseFactory<T> where T : MonoBehaviour
     {
         protected float _halfHeightCamera;
         protected float _halfWidthCamera;
         protected Camera _camera;
         private ObjectPool<T> _pool;
+        
+        protected T _prefab;
+        
+        //TODO: Это в скриптбл обжект 
+        private int _defaultPoolSize = 10;
+        private int _maxPoolSize = 30;
 
-        [SerializeField] protected T _prefab;
-        [SerializeField] private int _defaultPoolSize;
-        [SerializeField] private int _maxPoolSize;
-
-        protected void Construct(Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public BaseFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab)
         {
             _camera = camera;
             _halfHeightCamera = halfHeightCamera;
             _halfWidthCamera = halfWidthCamera;
+            _prefab = prefab;
         }
-        
-        protected void Awake()
+
+        public void StartWork()
         {
-            PoolInitialization();
+            if (_pool == null)
+            {
+                PoolInitialization();
+            }
         }
 
         private void PoolInitialization()
         {
             _pool = new ObjectPool<T>(
-                createFunc: () => { return ActionCreateObject(); },
-                actionOnGet: (obj) => { ActionGetObject(obj); },
+                createFunc: () =>
+                {
+                    return ActionCreateObject();
+                },
+                actionOnGet: (obj) =>
+                {
+                    ActionGetObject(obj);
+                },
                 actionOnRelease: (obj) =>
                 {
                     ActionReleaseObject(obj);
                 },
-                actionOnDestroy: (obj) => Destroy(obj),
+                actionOnDestroy: (obj) =>
+                {
+                    Object.Destroy(obj);
+                },
                 collectionCheck: false,
                 defaultCapacity: _defaultPoolSize,
                 maxSize: _maxPoolSize

@@ -1,25 +1,33 @@
 using System.Collections;
 using Characters;
+using Coroutine;
 using Factories;
+using GameLogic;
 using Player;
+using SciptableObjects;
 using UnityEngine;
 
 namespace Managers
 {
-    public class AsteroidSpawmManager : BaseSpawnManager<Asteroid>
+    public class AsteroidSpawnManager : BaseSpawnManager<Asteroid>
     {
         private WaitForSeconds _waitRespawnAsteroidRange;
         
-        [SerializeField] private AsteroidFactory _asteroidFactory;
-        [SerializeField] private DataSpaceShip _dataSpaceShip;
-        [SerializeField] private float _respawnAsteroidRange = 3;
-        
-        private void Start()
-        {
-            StartCoroutine(SpawnAsteroidsCoroutine());
-        }
+        private AsteroidFactory _asteroidFactory;
+        private EnemySpawnManagerSO _asteroidSpawnData;
+        private CoroutinePerformer _coroutinePerformer;
 
-        protected override Asteroid SpawnObject()
+        public AsteroidSpawnManager(GameOver gameOver, Camera camera, 
+            float halfHeightCamera, float halfWidthCamera, AsteroidFactory asteroidFactory, 
+            EnemySpawnManagerSO asteroidSpawnData, CoroutinePerformer coroutinePerformer) : 
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
+        {
+            _asteroidFactory  = asteroidFactory;
+            _asteroidSpawnData = asteroidSpawnData;
+            _coroutinePerformer = coroutinePerformer;
+        }
+        
+        public override Asteroid SpawnObject()
         {
             var asteroid = _asteroidFactory.SpawnObject();
             asteroid.OnReturnAsteroid += ReturnAsteroid;
@@ -29,7 +37,8 @@ namespace Managers
 
         protected override void Initialize()
         {
-            _waitRespawnAsteroidRange = new WaitForSeconds(_respawnAsteroidRange);
+            _waitRespawnAsteroidRange  = new WaitForSeconds(_asteroidSpawnData.RespawnRange);
+            _coroutinePerformer.StartCoroutine(SpawnAsteroidsCoroutine());
         }
 
         private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)

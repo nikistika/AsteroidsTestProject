@@ -11,16 +11,15 @@ namespace Shooting
 
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
-
         private MissileFactory _missileFactory;
+        
         [SerializeField] private float _delayShotTimes = 1;
 
         public void Construct(MissileFactory missileFactory)
         {
             _missileFactory = missileFactory;
         }
-
-
+        
         private void Awake()
         {
             _waitDelayShotTimes = new WaitForSeconds(_delayShotTimes);

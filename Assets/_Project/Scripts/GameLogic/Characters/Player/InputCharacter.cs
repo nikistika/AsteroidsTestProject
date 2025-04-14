@@ -6,28 +6,28 @@ using UnityEngine;
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class InputCharacter<T> : MonoBehaviour where T : IInput
+    public class InputCharacter : MonoBehaviour
     {
 
         private GameOver _gameOver;
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
-        private T _input;
+        private InputKeyboard _input;
 
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
 
-        public void Construct(GameOver gameOver, T input)
+        public void Construct(GameOver gameOver)
         {
             _gameOver = gameOver;
-            _input = input;
         }
         
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
+            _input = GetComponent<InputKeyboard>();
         }
 
         private void Start()
@@ -60,12 +60,12 @@ namespace Player
                 _rigidbody.MoveRotation(_rigidbody.rotation + _speedRotate);
             }
 
-            if (_input.ButtonShotingMissile())
+            if (_input.ButtonShootingMissile())
             {
                 _shootingMissile.Shot();
             }
 
-            if (_input.ButtonShotingLaser())
+            if (_input.ButtonShootingLaser())
             {
                 _shootingLaser.Shot();
             }

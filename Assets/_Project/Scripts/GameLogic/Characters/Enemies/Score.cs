@@ -6,20 +6,21 @@ namespace Characters
 {
     public class Score : MonoBehaviour
     {
-        private DataSpaceShip _dataSpaceShip;
+
+        private ScoreManager _scoreManager;
         
         [SerializeField] private int _scoreKill = 5;
 
-        public void Construct(DataSpaceShip dataSpaceShip)
+        public void Construct(ScoreManager scoreManager)
         {
-            _dataSpaceShip = dataSpaceShip;
+            _scoreManager = scoreManager;
         }
         
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
             {
-                _dataSpaceShip.AddScore(_scoreKill);
+                _scoreManager.AddScore(_scoreKill);
             }
         }
         

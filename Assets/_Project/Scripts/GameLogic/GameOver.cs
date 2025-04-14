@@ -1,27 +1,24 @@
 using System;
 using Player;
 using UI;
-using UnityEngine;
 
 namespace GameLogic
 {
-    public class GameOver : MonoBehaviour
+    public class GameOver
     {
         public event Action OnGameOver;
 
-        [SerializeField] private UISpawnManager _uiSpawnManager;
-        private DataSpaceShip _dataSpaceShip;
+        private UISpawnManager _uiSpawnManager;
 
-        public void Construct(DataSpaceShip dataSpaceShip)
+        public GameOver(UISpawnManager uiSpawnManager)
         {
-            _dataSpaceShip = dataSpaceShip;
+            _uiSpawnManager = uiSpawnManager;
         }
         
         public void EndGame()
         {
             OnGameOver.Invoke();
-
-            _uiSpawnManager.SpawnRestartPanel(_dataSpaceShip);
+            _uiSpawnManager.SpawnRestartPanel();
         }
     }
 }

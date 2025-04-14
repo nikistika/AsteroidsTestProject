@@ -1,6 +1,9 @@
 using System.Collections;
 using Characters;
+using Coroutine;
 using Factories;
+using GameLogic;
+using SciptableObjects;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -10,17 +13,21 @@ namespace Managers
     {
         private WaitForSeconds _waitRespawnUFORange;
 
-        [SerializeField] private UFOFactory _ufoFactory;
-        [SerializeField] private float _minRespawnUFORange = 5;
-        [SerializeField] private float _maxRespawnUFORange = 10;
+        private UFOFactory _ufoFactory;
+        private EnemySpawnManagerSO _ufoSpawnData;
+        private CoroutinePerformer _coroutinePerformer;
 
-        private void Start()
+        public UFOSpawnManager(GameOver gameOver, Camera camera, 
+            float halfHeightCamera, float halfWidthCamera, UFOFactory ufoFactory, 
+            EnemySpawnManagerSO ufoSpawnData, CoroutinePerformer coroutinePerformer) : 
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
         {
-            _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
-            StartCoroutine(SpawnUFOCoroutine());
+            _ufoFactory = ufoFactory;
+            _ufoSpawnData = ufoSpawnData;
+            _coroutinePerformer = coroutinePerformer;
         }
 
-        protected override UFO SpawnObject()
+        public override UFO SpawnObject()
         {
             var ufo = _ufoFactory.SpawnObject();
             ufo.OnReturnUFO += ReturnUFO;
@@ -29,7 +36,8 @@ namespace Managers
 
         protected override void Initialize()
         {
-            _waitRespawnUFORange = new WaitForSeconds(Random.Range(_minRespawnUFORange, _maxRespawnUFORange));
+            _waitRespawnUFORange = new WaitForSeconds(_ufoSpawnData.RespawnRange);
+            _coroutinePerformer.StartCoroutine(SpawnUFOCoroutine());
         }
 
         private void ReturnUFO(UFO ufo)

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputKeyboard : MonoBehaviour, IInput
@@ -7,23 +5,23 @@ public class InputKeyboard : MonoBehaviour, IInput
 
     public bool ButtonForward()
     {
-        return UnityEngine.Input.GetKey(KeyCode.W);
+        return Input.GetKey(KeyCode.W);
     }
     public bool ButtonLeft()
     {
-        return UnityEngine.Input.GetKey(KeyCode.A);
+        return Input.GetKey(KeyCode.A);
     }
-    public void ButtonRight()
+    public bool ButtonRight()
     {
-        return UnityEngine.Input.GetKey(KeyCode.D);
+        return Input.GetKey(KeyCode.D);
     }
-    public bool ButtonShotingMissile()
+    public bool ButtonShootingMissile()
     {
-        return UnityEngine.Input.GetKey(KeyCode.Space);
+        return Input.GetKey(KeyCode.Space);
     }
-    public bool ButtonShotingLaser()
+    public bool ButtonShootingLaser()
     {
-        return UnityEngine.Input.GetKey(KeyCode.G);
+        return Input.GetKey(KeyCode.G);
     }
 
 }

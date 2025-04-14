@@ -1,15 +1,22 @@
 using Characters;
+using GameLogic;
 using UnityEngine;
 
 namespace Factories
 {
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
+        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
+            float halfHeightCamera, float halfWidthCamera, Asteroid prefab) : 
+            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab)
+        {
+        }
+
         protected override Asteroid ActionCreateObject()
         {
-            Asteroid asteroid = Instantiate(_prefab);
+            Asteroid asteroid = Object.Instantiate(_prefab);
             asteroid.Construct(_gameOver, _halfHeightCamera, _halfWidthCamera);
-            asteroid.GetComponent<Score>().Construct(_dataSpaceShip);
+            asteroid.GetComponent<Score>().Construct(_scoreManager);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;
         }

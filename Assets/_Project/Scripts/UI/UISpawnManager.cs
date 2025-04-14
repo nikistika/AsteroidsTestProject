@@ -8,12 +8,13 @@ namespace UI
         
         [SerializeField] private RestartPanel _restartPanel;
         [SerializeField] private Canvas _uiCanvas;
+        [SerializeField] private ScoreManager _scoreManager;
 
-        public void SpawnRestartPanel(DataSpaceShip dataSpaceShip)
+        public void SpawnRestartPanel()
         {
             var restartPanel = Instantiate(_restartPanel, _uiCanvas.transform); 
             restartPanel.gameObject.SetActive(true);
-            restartPanel.ActivateRestartPanel(dataSpaceShip.CurrentScore);
+            restartPanel.ActivateRestartPanel(_scoreManager.CurrentScore);
         }
     }
 }

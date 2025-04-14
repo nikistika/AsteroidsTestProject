@@ -6,23 +6,23 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class DataSpaceShip : MonoBehaviour
     {
-        public event Action<int> OnScoreChanged;
+        // public event Action<int> OnScoreChanged;
 
         private Rigidbody2D _rigidbody;
 
-        public int CurrentScore { get; private set; }
+        // public int CurrentScore { get; private set; }
         
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
-            AddScore(0);
+            // AddScore(0);
         }
         
-        public void AddScore(int score)
-        {
-            CurrentScore += score;
-            OnScoreChanged?.Invoke(CurrentScore);
-        }
+        // public void AddScore(int score)
+        // {
+        //     CurrentScore += score;
+        //     OnScoreChanged?.Invoke(CurrentScore);
+        // }
 
         public Vector2 GetCoordinates()
         {

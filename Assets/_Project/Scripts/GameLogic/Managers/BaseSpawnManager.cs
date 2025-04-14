@@ -3,29 +3,35 @@ using UnityEngine;
 
 namespace Managers
 {
-    public abstract class BaseSpawnManager<T> : MonoBehaviour
+    public abstract class BaseSpawnManager<T>
     {
         protected bool _flagGameOver;
         protected Camera _camera;
         protected float _halfHeightCamera;
         protected float _halfWidthCamera;
-        
-        [SerializeField] protected GameOver _gameOver;
-        
-        public void Construct(Camera camera, float halfHeightCamera, float halfWidthCamera)
+        protected GameOver _gameOver;
+
+        public BaseSpawnManager(GameOver gameOver, Camera camera, float halfHeightCamera, float halfWidthCamera)
         {
+            _gameOver = gameOver;
             _camera = camera;
             _halfHeightCamera = halfHeightCamera;
             _halfWidthCamera = halfWidthCamera;
         }
         
-        private void Awake()
+        public void StartWork()
         {
-            _gameOver.OnGameOver += GameOver;
+            BaseInitialize();
             Initialize();
         }
 
-        protected abstract T SpawnObject();
+        public abstract T SpawnObject();
+
+        private void BaseInitialize()
+        {
+            _gameOver.OnGameOver += GameOver;
+
+        }
         
         protected abstract void Initialize();
 

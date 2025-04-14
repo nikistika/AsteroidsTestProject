@@ -9,10 +9,10 @@ namespace Factories
         private SpaceShip _spaceShip;
         private ShootingMissile _shootingMissile;
 
-        public void Construct(SpaceShip spaceShip, ShootingMissile shootingMissile, 
-            Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public MissileFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, 
+            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile) : 
+            base(camera, halfHeightCamera, halfWidthCamera, prefab)
         {
-            base.Construct(camera, halfHeightCamera, halfWidthCamera);
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
         }
@@ -25,11 +25,9 @@ namespace Factories
         
         protected override Missile ActionCreateObject()
         {
-            var missile = Instantiate(_prefab, _spaceShip.gameObject.transform, true);
+            var missile = Object.Instantiate(_prefab, _spaceShip.gameObject.transform, true);
             missile.transform.position = _spaceShip.transform.position;
-
             missile.Construct(_shootingMissile, _camera, _halfHeightCamera, _halfWidthCamera);
-
             return missile;
         }
 

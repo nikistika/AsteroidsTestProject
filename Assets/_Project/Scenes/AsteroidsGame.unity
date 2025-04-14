@@ -122,6 +122,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &30200382
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 30200384}
+  - component: {fileID: 30200383}
+  m_Layer: 0
+  m_Name: ScoreManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &30200383
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30200382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e97ec9856b2d5ce4aa67afe493e01d33, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &30200384
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 30200382}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 188828672}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &114015534
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,9 +300,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1205883578}
-  - {fileID: 752357150}
-  - {fileID: 1278875012}
   - {fileID: 592356359}
+  - {fileID: 30200384}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &218555460
@@ -665,10 +708,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5a4bc77cafcd5d45b37dfab42b0bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _asteroidSpawmManager: {fileID: 1205883579}
+  _scoreManager: {fileID: 30200383}
+  _uiSpawnManager: {fileID: 1115538865}
+  _asteroidSpawnManager: {fileID: 1205883579}
+  _ufoSpawnManager: {fileID: 1205883581}
   _spaceShipSpawnManager: {fileID: 1205883580}
-  _asteroidFactory: {fileID: 752357151}
   _dataSpaceShip: {fileID: 7577271200104973372, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
+  _asteroidPrefab: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
+  _ufoPrefab: {fileID: 3395255367656053016, guid: de5576463dbcec940b6d92821ec78325, type: 3}
+  _asteroidSpawnData: {fileID: 11400000, guid: b0b9797ed4939a149992839a23fbf8e0, type: 2}
+  _ufoSpawnData: {fileID: 11400000, guid: 02c1eca5779527349ae69b120da51b6b, type: 2}
 --- !u!1 &669028222
 GameObject:
   m_ObjectHideFlags: 0
@@ -715,93 +764,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e66a28a53a35c4387507b60fa4fb55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameOver: {fileID: 1278875013}
+  _scoreManager: {fileID: 30200383}
   _scoreTMP: {fileID: 1330110202}
   _laserCountTMP: {fileID: 218799331}
   _coordinatesTMP: {fileID: 2005562705}
   _rotationTMP: {fileID: 784204264}
   _speedTMP: {fileID: 218555463}
---- !u!1 &752357149
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 752357150}
-  - component: {fileID: 752357151}
-  - component: {fileID: 752357152}
-  - component: {fileID: 752357153}
-  m_Layer: 0
-  m_Name: Factory
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &752357150
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752357149}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 188828672}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &752357151
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752357149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9cc3d2ae425e04b88bfe30d89e5ed6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 202451623952374402, guid: 28f6c4f45e8114d44b08e2d1366cc993, type: 3}
-  _defaultPoolSize: 5
-  _maxPoolSize: 5
-  _gameOver: {fileID: 1278875013}
---- !u!114 &752357152
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752357149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ce10a90529d4e1faae117bbd92591f2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 3395255367656053016, guid: de5576463dbcec940b6d92821ec78325, type: 3}
-  _defaultPoolSize: 10
-  _maxPoolSize: 30
-  _gameOver: {fileID: 1278875013}
---- !u!114 &752357153
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 752357149}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34c36c1e6b8b4796a598bbb16a310440, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 6730024081266783, guid: d8f6dd3f95cc5264aa047d2642c6b985, type: 3}
-  _defaultPoolSize: 10
-  _maxPoolSize: 30
 --- !u!1 &784204261
 GameObject:
   m_ObjectHideFlags: 0
@@ -1014,6 +982,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _restartPanel: {fileID: 8914433265186712238, guid: 0da884059384299419a9ea9d8873f9bc, type: 3}
   _uiCanvas: {fileID: 114015538}
+  _scoreManager: {fileID: 30200383}
 --- !u!1 &1163222726
 GameObject:
   m_ObjectHideFlags: 0
@@ -1098,10 +1067,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dcf2b9ab530f449697d5731f5bc95325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameOver: {fileID: 1278875013}
-  _asteroidFactory: {fileID: 752357151}
   _dataSpaceShip: {fileID: 7577271200104973372, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
-  _respawnAsteroidRange: 3
 --- !u!114 &1205883580
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1114,12 +1080,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb0cc350a7da40889c097ad66b58f333, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameOver: {fileID: 1278875013}
-  _asteroidFactory: {fileID: 752357151}
-  _missileFactory: {fileID: 752357153}
-  _ufoFactory: {fileID: 752357152}
   _gameplayUI: {fileID: 669028224}
-  _spaceShip: {fileID: 4759089236649671140, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
+  _spaceShipPrefab: {fileID: 4759089236649671140, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
 --- !u!114 &1205883581
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,55 +1094,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd449f49cf6e4d529dca25f4edc37abe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gameOver: {fileID: 1278875013}
-  _ufoFactory: {fileID: 752357152}
-  _minRespawnUFORange: 5
-  _maxRespawnUFORange: 10
---- !u!1 &1278875011
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1278875012}
-  - component: {fileID: 1278875013}
-  m_Layer: 0
-  m_Name: GameOver
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1278875012
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278875011}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 188828672}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1278875013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1278875011}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc7018dd963f4546969673e513bfd76b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _uiSpawnManager: {fileID: 1115538865}
 --- !u!1 &1330110199
 GameObject:
   m_ObjectHideFlags: 0
@@ -1608,5 +1521,5 @@ SceneRoots:
   - {fileID: 519420032}
   - {fileID: 188828672}
   - {fileID: 912813668}
-  - {fileID: 1631877374}
   - {fileID: 669028223}
+  - {fileID: 1631877374}

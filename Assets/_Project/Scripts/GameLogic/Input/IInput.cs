@@ -4,9 +4,9 @@ using UnityEngine;
 
 public interface IInput
 {
-    public void ButtonForward();
-    public void ButtonLeft(); 
-    public void ButtonRight();
-    public void ButtonShotingMissile();
-    public void ButtonShotingLaser();
+    public bool ButtonForward();
+    public bool ButtonLeft(); 
+    public bool ButtonRight();
+    public bool ButtonShootingMissile();
+    public bool ButtonShootingLaser();
 }
