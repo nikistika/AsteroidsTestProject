@@ -1,13 +1,12 @@
-using _Project.Scripts.GameLogic.Coroutine;
 using UnityEngine;
 
 namespace Coroutine
 {
-    public class CoroutinePerformer : MonoBehaviour, ICoroutinePerformer
+    public class CoroutinePerformer : MonoBehaviour
     {
         private void Awake()
         {
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(this);
         }
 
     }

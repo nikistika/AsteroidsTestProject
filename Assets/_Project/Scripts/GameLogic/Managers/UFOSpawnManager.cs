@@ -12,7 +12,6 @@ namespace Managers
     public class UFOSpawnManager : BaseSpawnManager<UFO>
     {
         private WaitForSeconds _waitRespawnUFORange;
-
         private UFOFactory _ufoFactory;
         private EnemySpawnManagerSO _ufoSpawnData;
         private CoroutinePerformer _coroutinePerformer;

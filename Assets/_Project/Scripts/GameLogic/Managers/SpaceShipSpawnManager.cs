@@ -1,6 +1,7 @@
 using Factories;
 using GameLogic;
 using Player;
+using SciptableObjects;
 using Shooting;
 using UI;
 using UnityEngine;
@@ -14,31 +15,23 @@ namespace Managers
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
         private InputKeyboard inputKeyboard;
-        private ScoreManager _scoreManager;
-
-        private AsteroidFactory _asteroidFactory;
         private MissileFactory _missileFactory;
-        private UFOFactory _ufoFactory;
-
         private GameplayUI _gameplayUI;
         private SpaceShip _spaceShipPrefab;
-        
         private Missile _missilePrefab;
-
+        private PoolSizeSO _missilePoolSizeData;
+        
         public SpaceShip SpaceShipObject {get; private set;}
 
         public SpaceShipSpawnManager(GameOver gameOver, Camera camera,
-            float halfHeightCamera, float halfWidthCamera, ScoreManager scoreManager,
-            AsteroidFactory asteroidFactory, UFOFactory ufoFactory,Missile missilePrefab, 
-            GameplayUI gameplayUI, SpaceShip spaceShipPrefab) :
+            float halfHeightCamera, float halfWidthCamera,Missile missilePrefab, 
+            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData) :
             base(gameOver, camera, halfHeightCamera, halfWidthCamera)
         {
-            _scoreManager = scoreManager;
-            _asteroidFactory  = asteroidFactory;
-            _ufoFactory = ufoFactory;
             _missilePrefab = missilePrefab;
             _gameplayUI = gameplayUI;
             _spaceShipPrefab = spaceShipPrefab;
+            _missilePoolSizeData = missilePoolSizeData;
         }
 
         public override SpaceShip SpawnObject()
@@ -68,7 +61,7 @@ namespace Managers
             _inputCharacter.Construct(_gameOver);
             
             _missileFactory = new MissileFactory(_camera, _halfHeightCamera, _halfWidthCamera,
-                _missilePrefab, objectSpaceShip, _shootingMissile);
+                _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData);
             _missileFactory.StartWork();
             
             _shootingMissile.Construct(_missileFactory);

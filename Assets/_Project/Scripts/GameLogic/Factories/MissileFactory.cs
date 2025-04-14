@@ -1,4 +1,5 @@
 using Player;
+using SciptableObjects;
 using Shooting;
 using UnityEngine;
 
@@ -10,8 +11,8 @@ namespace Factories
         private ShootingMissile _shootingMissile;
 
         public MissileFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, 
-            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile) : 
-            base(camera, halfHeightCamera, halfWidthCamera, prefab)
+            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile, PoolSizeSO missilePoolSizeData) : 
+            base(camera, halfHeightCamera, halfWidthCamera, prefab, missilePoolSizeData)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
@@ -25,9 +26,9 @@ namespace Factories
         
         protected override Missile ActionCreateObject()
         {
-            var missile = Object.Instantiate(_prefab, _spaceShip.gameObject.transform, true);
+            var missile = Object.Instantiate(Prefab, _spaceShip.gameObject.transform, true);
             missile.transform.position = _spaceShip.transform.position;
-            missile.Construct(_shootingMissile, _camera, _halfHeightCamera, _halfWidthCamera);
+            missile.Construct(_shootingMissile, Camera, HalfHeightCamera, HalfWidthCamera);
             return missile;
         }
 

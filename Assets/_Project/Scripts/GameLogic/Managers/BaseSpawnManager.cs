@@ -30,7 +30,6 @@ namespace Managers
         private void BaseInitialize()
         {
             _gameOver.OnGameOver += GameOver;
-
         }
         
         protected abstract void Initialize();

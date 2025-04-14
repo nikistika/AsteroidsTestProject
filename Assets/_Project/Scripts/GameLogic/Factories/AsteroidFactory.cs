@@ -1,5 +1,6 @@
 using Characters;
 using GameLogic;
+using SciptableObjects;
 using UnityEngine;
 
 namespace Factories
@@ -7,16 +8,16 @@ namespace Factories
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
         public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
-            float halfHeightCamera, float halfWidthCamera, Asteroid prefab) : 
-            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab)
+            float halfHeightCamera, float halfWidthCamera, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) : 
+            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab, asteroidPoolSizeData)
         {
         }
 
         protected override Asteroid ActionCreateObject()
         {
-            Asteroid asteroid = Object.Instantiate(_prefab);
-            asteroid.Construct(_gameOver, _halfHeightCamera, _halfWidthCamera);
-            asteroid.GetComponent<Score>().Construct(_scoreManager);
+            Asteroid asteroid = Object.Instantiate(Prefab);
+            asteroid.Construct(GameOver, HalfHeightCamera, HalfWidthCamera);
+            asteroid.GetComponent<Score>().Construct(ScoreManager);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;
         }

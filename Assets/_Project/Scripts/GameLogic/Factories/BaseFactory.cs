@@ -1,3 +1,4 @@
+using SciptableObjects;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -5,23 +6,24 @@ namespace Factories
 {
     public abstract class BaseFactory<T> where T : MonoBehaviour
     {
-        protected float _halfHeightCamera;
-        protected float _halfWidthCamera;
-        protected Camera _camera;
+        protected float HalfHeightCamera;
+        protected float HalfWidthCamera;
+        protected T Prefab;
+        protected Camera Camera;
+        
         private ObjectPool<T> _pool;
-        
-        protected T _prefab;
-        
-        //TODO: Это в скриптбл обжект 
-        private int _defaultPoolSize = 10;
-        private int _maxPoolSize = 30;
+        private int _defaultPoolSize; 
+        private int _maxPoolSize;
 
-        public BaseFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab)
+        protected BaseFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData)
         {
-            _camera = camera;
-            _halfHeightCamera = halfHeightCamera;
-            _halfWidthCamera = halfWidthCamera;
-            _prefab = prefab;
+            Camera = camera;
+            HalfHeightCamera = halfHeightCamera;
+            HalfWidthCamera = halfWidthCamera;
+            Prefab = prefab;
+
+            _defaultPoolSize = poolSizeData.DefaultPoolSize;
+            _maxPoolSize = poolSizeData.MaxPoolSize;
         }
 
         public void StartWork()

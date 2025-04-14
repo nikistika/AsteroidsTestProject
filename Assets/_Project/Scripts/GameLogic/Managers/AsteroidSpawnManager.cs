@@ -3,7 +3,6 @@ using Characters;
 using Coroutine;
 using Factories;
 using GameLogic;
-using Player;
 using SciptableObjects;
 using UnityEngine;
 
@@ -12,7 +11,6 @@ namespace Managers
     public class AsteroidSpawnManager : BaseSpawnManager<Asteroid>
     {
         private WaitForSeconds _waitRespawnAsteroidRange;
-        
         private AsteroidFactory _asteroidFactory;
         private EnemySpawnManagerSO _asteroidSpawnData;
         private CoroutinePerformer _coroutinePerformer;

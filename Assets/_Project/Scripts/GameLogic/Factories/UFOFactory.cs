@@ -1,6 +1,7 @@
 using Characters;
 using GameLogic;
 using Player;
+using SciptableObjects;
 using UnityEngine;
 
 namespace Factories
@@ -10,8 +11,8 @@ namespace Factories
         private SpaceShip _spaceShip;
 
         public UFOFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
-            float halfHeightCamera, float halfWidthCamera, UFO prefab, SpaceShip spaceShip) : 
-            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab)
+            float halfHeightCamera, float halfWidthCamera, UFO prefab, SpaceShip spaceShip, PoolSizeSO ufoPoolSizeData) : 
+            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab, ufoPoolSizeData)
         {
             _spaceShip = spaceShip;
         }
@@ -24,9 +25,9 @@ namespace Factories
         
         protected override UFO ActionCreateObject()
         {
-            var UFO = Object.Instantiate(_prefab);
-            UFO.Construct(_gameOver, _spaceShip, _halfHeightCamera, _halfWidthCamera);
-            UFO.GetComponent<Score>().Construct(_scoreManager);
+            var UFO = Object.Instantiate(Prefab);
+            UFO.Construct(GameOver, _spaceShip, HalfHeightCamera, HalfWidthCamera);
+            UFO.GetComponent<Score>().Construct(ScoreManager);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }

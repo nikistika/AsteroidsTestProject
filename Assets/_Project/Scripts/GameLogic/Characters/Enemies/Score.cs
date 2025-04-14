@@ -1,5 +1,4 @@
-﻿using Player;
-using Shooting;
+﻿using Shooting;
 using UnityEngine;
 
 namespace Characters
