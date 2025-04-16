@@ -5,19 +5,19 @@ namespace Characters
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Character : MonoBehaviour
     {
-        protected float _halfHeightCamera;
-        protected float _halfWidthCamera;
-        protected Rigidbody2D _rigidbody;
+        protected float HalfHeightCamera;
+        protected float HalfWidthCamera;
+        protected Rigidbody2D Rigidbody;
 
         public void Construct(float halfHeightCamera, float halfWidthCamera)
         {
-            _halfHeightCamera = halfHeightCamera;
-            _halfWidthCamera = halfWidthCamera;
+            HalfHeightCamera = halfHeightCamera;
+            HalfWidthCamera = halfWidthCamera;
         }
         
         protected void Awake()
         {
-            Initialization();
+            Initialize();
         }
 
         private void FixedUpdate()
@@ -27,27 +27,27 @@ namespace Characters
 
         protected void GoingAbroad()
         {
-            if (gameObject.transform.position.y > _halfHeightCamera + 0.5f)
+            if (gameObject.transform.position.y > HalfHeightCamera + 0.5f)
             {
-                _rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, -_halfHeightCamera));
+                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, -HalfHeightCamera));
             }
 
-            if (gameObject.transform.position.y < -_halfHeightCamera - 0.5f)
+            if (gameObject.transform.position.y < -HalfHeightCamera - 0.5f)
             {
-                _rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, _halfHeightCamera));
+                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, HalfHeightCamera));
             }
 
-            if (gameObject.transform.position.x > _halfWidthCamera + 0.5f)
+            if (gameObject.transform.position.x > HalfWidthCamera + 0.5f)
             {
-                _rigidbody.MovePosition(new Vector2(-_halfWidthCamera, gameObject.transform.position.y));
+                Rigidbody.MovePosition(new Vector2(-HalfWidthCamera, gameObject.transform.position.y));
             }
 
-            if (gameObject.transform.position.x < -_halfWidthCamera - 0.5f)
+            if (gameObject.transform.position.x < -HalfWidthCamera - 0.5f)
             {
-                _rigidbody.MovePosition(new Vector2(_halfWidthCamera, gameObject.transform.position.y));
+                Rigidbody.MovePosition(new Vector2(HalfWidthCamera, gameObject.transform.position.y));
             }
         }
 
-        protected abstract void Initialization();
+        protected abstract void Initialize();
     }
 }

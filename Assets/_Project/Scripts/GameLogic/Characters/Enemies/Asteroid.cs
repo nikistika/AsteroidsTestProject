@@ -36,14 +36,14 @@ namespace Characters
 
         public void Move()
         {
-            if (transform.position.y > _halfHeightCamera)
-                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f) * _speed;
-            else if (transform.position.y < -_halfHeightCamera)
-                _rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f)  * _speed;
-            else if (transform.position.x > _halfWidthCamera)
-                _rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f))  * _speed;
-            else if (transform.position.x < -_halfWidthCamera)
-                _rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f))  * _speed;
+            if (transform.position.y > HalfHeightCamera)
+                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f) * _speed;
+            else if (transform.position.y < -HalfHeightCamera)
+                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f)  * _speed;
+            else if (transform.position.x > HalfWidthCamera)
+                Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f))  * _speed;
+            else if (transform.position.x < -HalfWidthCamera)
+                Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f))  * _speed;
         }
 
         public void IsObjectParent(bool isObjectParent)
@@ -54,19 +54,19 @@ namespace Characters
         public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
             if (fragmentNumber == 1) 
-                fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
+                fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
             else if (fragmentNumber == 2)
-                fragmentAsteroid._rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
+                fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
             else if (fragmentNumber == 3)
-                fragmentAsteroid._rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
+                fragmentAsteroid.Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
             else if (fragmentNumber == 4)
-                fragmentAsteroid._rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
+                fragmentAsteroid.Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
         }
         
         
-        protected override void Initialization()
+        protected override void Initialize()
         {
-            _rigidbody = GetComponent<Rigidbody2D>();
+            Rigidbody = GetComponent<Rigidbody2D>();
             RandomScale();
         }
 
@@ -115,7 +115,7 @@ namespace Characters
         private void GameOver()
         {
             _gameOver.OnGameOver -= GameOver;
-            _rigidbody.velocity = Vector2.zero;
+            Rigidbody.velocity = Vector2.zero;
         }
     }
 }

@@ -8,16 +8,14 @@ namespace Shooting
     {
         private float _halfHeightCamera;
         private float _halfWidthCamera;
-        private Camera _camera;
         private Rigidbody2D _rigidbody;
         private ShootingMissile _shootingMissile;
 
         [SerializeField] private float _speed = 3;
 
-        public void Construct(ShootingMissile shootingMissile, Camera camera, float halfHeightCamera, float halfWidthCamera)
+        public void Construct(ShootingMissile shootingMissile, float halfHeightCamera, float halfWidthCamera)
         {
             _shootingMissile = shootingMissile;
-            _camera = camera;
             _halfHeightCamera = halfHeightCamera;
             _halfWidthCamera = halfWidthCamera;
         }

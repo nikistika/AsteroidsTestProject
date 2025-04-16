@@ -12,7 +12,7 @@ namespace Factories
 
         public MissileFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, 
             Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile, PoolSizeSO missilePoolSizeData) : 
-            base(camera, halfHeightCamera, halfWidthCamera, prefab, missilePoolSizeData)
+            base(halfHeightCamera, halfWidthCamera, prefab, missilePoolSizeData)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
@@ -28,7 +28,7 @@ namespace Factories
         {
             var missile = Object.Instantiate(Prefab, _spaceShip.gameObject.transform, true);
             missile.transform.position = _spaceShip.transform.position;
-            missile.Construct(_shootingMissile, Camera, HalfHeightCamera, HalfWidthCamera);
+            missile.Construct(_shootingMissile, HalfHeightCamera, HalfWidthCamera);
             return missile;
         }
 

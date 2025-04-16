@@ -1,5 +1,6 @@
 using Factories;
 using GameLogic;
+using InputSystem;
 using Player;
 using SciptableObjects;
 using Shooting;
@@ -14,7 +15,7 @@ namespace Managers
         private ShootingMissile _shootingMissile;
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
-        private InputKeyboard inputKeyboard;
+        private InputKeyboard _inputKeyboard;
         private MissileFactory _missileFactory;
         private GameplayUI _gameplayUI;
         private SpaceShip _spaceShipPrefab;
@@ -25,8 +26,9 @@ namespace Managers
 
         public SpaceShipSpawnManager(GameOver gameOver, Camera camera,
             float halfHeightCamera, float halfWidthCamera,Missile missilePrefab, 
-            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData) :
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
+            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData, 
+            ScoreManager scoreManager) :
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
         {
             _missilePrefab = missilePrefab;
             _gameplayUI = gameplayUI;
@@ -57,15 +59,15 @@ namespace Managers
 
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
-            objectSpaceShip.Construct(_halfHeightCamera, _halfWidthCamera);
-            _inputCharacter.Construct(_gameOver);
+            objectSpaceShip.Construct(HalfHeightCamera, HalfWidthCamera);
+            _inputCharacter.Construct(GameOver);
             
-            _missileFactory = new MissileFactory(_camera, _halfHeightCamera, _halfWidthCamera,
+            _missileFactory = new MissileFactory(Camera, HalfHeightCamera, HalfWidthCamera,
                 _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData);
             _missileFactory.StartWork();
             
             _shootingMissile.Construct(_missileFactory);
-            _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver);
+            _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, GameOver, ScoreManager);
         }
     }
 }

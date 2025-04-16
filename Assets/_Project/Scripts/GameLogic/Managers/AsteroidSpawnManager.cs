@@ -17,8 +17,8 @@ namespace Managers
 
         public AsteroidSpawnManager(GameOver gameOver, Camera camera, 
             float halfHeightCamera, float halfWidthCamera, AsteroidFactory asteroidFactory, 
-            EnemySpawnManagerSO asteroidSpawnData, CoroutinePerformer coroutinePerformer) : 
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
+            EnemySpawnManagerSO asteroidSpawnData, CoroutinePerformer coroutinePerformer, ScoreManager scoreManager) : 
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
         {
             _asteroidFactory  = asteroidFactory;
             _asteroidSpawnData = asteroidSpawnData;
@@ -63,7 +63,7 @@ namespace Managers
 
         private IEnumerator SpawnAsteroidsCoroutine()
         {
-            while (!_flagGameOver)
+            while (!FlagGameOver)
             {
                 SpawnObject();
                 yield return _waitRespawnAsteroidRange;

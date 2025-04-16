@@ -9,15 +9,13 @@ namespace Factories
         protected float HalfHeightCamera;
         protected float HalfWidthCamera;
         protected T Prefab;
-        protected Camera Camera;
         
         private ObjectPool<T> _pool;
         private int _defaultPoolSize; 
         private int _maxPoolSize;
 
-        protected BaseFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData)
+        protected BaseFactory(float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData)
         {
-            Camera = camera;
             HalfHeightCamera = halfHeightCamera;
             HalfWidthCamera = halfWidthCamera;
             Prefab = prefab;
@@ -30,11 +28,11 @@ namespace Factories
         {
             if (_pool == null)
             {
-                PoolInitialization();
+                PoolInitialize();
             }
         }
 
-        private void PoolInitialization()
+        private void PoolInitialize()
         {
             _pool = new ObjectPool<T>(
                 createFunc: () =>

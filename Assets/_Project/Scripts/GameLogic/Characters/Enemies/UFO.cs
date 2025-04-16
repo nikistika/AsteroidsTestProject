@@ -37,15 +37,15 @@ namespace Characters
             }
         }
 
-        protected override void Initialization()
+        protected override void Initialize()
         {
-            _rigidbody = GetComponent<Rigidbody2D>();
+            Rigidbody = GetComponent<Rigidbody2D>();
         }
 
         private void Move()
         {
             Vector2 direction = (_spaceShip.transform.position - transform.position).normalized;
-            _rigidbody.velocity = direction * _speed;
+            Rigidbody.velocity = direction * _speed;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -64,7 +64,8 @@ namespace Characters
         private void GameOver()
         {
             _flagGameOver = true;
-            _rigidbody.velocity = Vector2.zero;
+            _gameOver.OnGameOver -= GameOver;
+            Rigidbody.velocity = Vector2.zero;
         }
     }
 }

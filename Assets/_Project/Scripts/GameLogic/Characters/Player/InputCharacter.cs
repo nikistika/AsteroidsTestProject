@@ -1,4 +1,5 @@
 using GameLogic;
+using InputSystem;
 using Shooting;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace Player
         private GameOver _gameOver;
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
-        private InputKeyboard _input;
+        private IInput _input;
 
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
@@ -73,6 +74,7 @@ namespace Player
         private void GameOver()
         {
             _rigidbody.velocity = Vector2.zero;
+            _gameOver.OnGameOver -= GameOver;
             _flagGameOver = true;
         }
     }

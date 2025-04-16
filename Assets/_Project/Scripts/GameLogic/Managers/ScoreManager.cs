@@ -1,20 +1,28 @@
 using System;
-using UnityEngine;
 
-public class ScoreManager : MonoBehaviour
+namespace Managers
 {
-    public event Action<int> OnScoreChanged;
-
-    public int CurrentScore { get; private set; }
-
-    private void Start()
+    public class ScoreManager
     {
-        AddScore(0);
-    }
-    
-    public void AddScore(int score)
-    {
-        CurrentScore += score;
-        OnScoreChanged?.Invoke(CurrentScore);
+        public event Action<int> OnScoreChanged;
+
+        public int CurrentScore { get; private set; }
+
+        private bool _startFlag;
+        
+        public void StartWork()
+        {
+            if (_startFlag == false)
+            {
+                _startFlag = true;
+                AddScore(0);
+            }
+        }
+
+        public void AddScore(int score)
+        {
+            CurrentScore += score;
+            OnScoreChanged?.Invoke(CurrentScore);
+        }
     }
 }

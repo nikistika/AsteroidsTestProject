@@ -5,18 +5,21 @@ namespace Managers
 {
     public abstract class BaseSpawnManager<T>
     {
-        protected bool _flagGameOver;
-        protected Camera _camera;
-        protected float _halfHeightCamera;
-        protected float _halfWidthCamera;
-        protected GameOver _gameOver;
+        protected bool FlagGameOver;
+        protected Camera Camera;
+        protected float HalfHeightCamera;
+        protected float HalfWidthCamera;
+        protected GameOver GameOver;
+        protected ScoreManager ScoreManager;
 
-        public BaseSpawnManager(GameOver gameOver, Camera camera, float halfHeightCamera, float halfWidthCamera)
+        protected BaseSpawnManager(GameOver gameOver, Camera camera, 
+            float halfHeightCamera, float halfWidthCamera, ScoreManager scoreManager)
         {
-            _gameOver = gameOver;
-            _camera = camera;
-            _halfHeightCamera = halfHeightCamera;
-            _halfWidthCamera = halfWidthCamera;
+            GameOver = gameOver;
+            Camera = camera;
+            HalfHeightCamera = halfHeightCamera;
+            HalfWidthCamera = halfWidthCamera;
+            ScoreManager = scoreManager;
         }
         
         public void StartWork()
@@ -29,15 +32,15 @@ namespace Managers
 
         private void BaseInitialize()
         {
-            _gameOver.OnGameOver += GameOver;
+            GameOver.OnGameOver += GameOverHandler;
         }
         
         protected abstract void Initialize();
 
-        private void GameOver()
+        private void GameOverHandler()
         {
-            _gameOver.OnGameOver -= GameOver;
-            _flagGameOver = true;
+            GameOver.OnGameOver -= GameOverHandler;
+            FlagGameOver = true;
         }
     }
 }

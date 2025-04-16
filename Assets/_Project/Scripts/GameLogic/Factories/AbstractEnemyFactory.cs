@@ -1,4 +1,5 @@
 using GameLogic;
+using Managers;
 using SciptableObjects;
 using UnityEngine;
 
@@ -9,9 +10,9 @@ namespace Factories
         protected ScoreManager ScoreManager;
         protected GameOver GameOver;
 
-        protected AbstractEnemyFactory(ScoreManager scoreManager, GameOver gameOver, 
-            Camera camera, float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData) : 
-            base(camera, halfHeightCamera, halfWidthCamera, prefab, poolSizeData)
+        protected AbstractEnemyFactory(ScoreManager scoreManager, GameOver gameOver,
+            float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData) : 
+            base(halfHeightCamera, halfWidthCamera, prefab, poolSizeData)
         {
             GameOver = gameOver;
             ScoreManager = scoreManager;

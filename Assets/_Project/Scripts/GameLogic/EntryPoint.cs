@@ -23,9 +23,9 @@ namespace GameLogic
         private AsteroidSpawnManager _asteroidSpawnManager;
         private UFOSpawnManager _ufoSpawnManager;
         private SpaceShipSpawnManager _spaceShipSpawnManager;
+        private ScoreManager _scoreManager;
+        private UISpawnManager _uiSpawnManager;
         
-        [SerializeField] private ScoreManager _scoreManager;
-        [SerializeField] private UISpawnManager _uiSpawnManager;
         [SerializeField] private Asteroid _asteroidPrefab;
         [SerializeField] private UFO _ufoPrefab;
         [SerializeField] private Missile _missilePrefab;
@@ -37,14 +37,22 @@ namespace GameLogic
         [SerializeField] private PoolSizeSO _ufoPoolSizeData;
         [SerializeField] private PoolSizeSO _missilePoolSizeData;
         [SerializeField] private CoroutinePerformer _coroutinePerformer;
+        [SerializeField] private RestartPanel _restartPanel;
+        [SerializeField] private Canvas _uiCanvas;
         
         private void Awake()
         {
-            DependencyInitialization();
+            DependencyInitialize();
         }
 
-        private void DependencyInitialization()
+        private void DependencyInitialize()
         {
+            _scoreManager = new ScoreManager();
+            _scoreManager.StartWork();
+            
+            _uiSpawnManager = new UISpawnManager();
+            _uiSpawnManager.Construct(_scoreManager, _restartPanel, _uiCanvas);
+            
             _gameOver = new GameOver(_uiSpawnManager);
             _camera = Camera.main;
             _halfHeightCamera = _camera.orthographicSize;
@@ -52,11 +60,11 @@ namespace GameLogic
             _gameOver = new GameOver(_uiSpawnManager);
             
             _spaceShipSpawnManager = new SpaceShipSpawnManager(_gameOver, _camera, _halfHeightCamera,
-                _halfWidthCamera, _missilePrefab, _gameplayUI, _spaceShipPrefab, _missilePoolSizeData);
+                _halfWidthCamera, _missilePrefab, _gameplayUI, _spaceShipPrefab, _missilePoolSizeData, _scoreManager);
             _spaceShipSpawnManager.StartWork();
             _spaceShip = _spaceShipSpawnManager.SpaceShipObject;
             
-            _asteroidFactory = new AsteroidFactory(_scoreManager, _gameOver, _camera, 
+            _asteroidFactory = new AsteroidFactory(_scoreManager, _gameOver, 
                 _halfHeightCamera, _halfWidthCamera, _asteroidPrefab, _asteroidPoolSizeData);
             _asteroidFactory.StartWork();
             
@@ -65,13 +73,12 @@ namespace GameLogic
             _ufoFactory.StartWork();
 
             _asteroidSpawnManager = new AsteroidSpawnManager(_gameOver, _camera, _halfHeightCamera,
-                _halfWidthCamera, _asteroidFactory, _asteroidSpawnData, _coroutinePerformer);
+                _halfWidthCamera, _asteroidFactory, _asteroidSpawnData, _coroutinePerformer, _scoreManager);
             _asteroidSpawnManager.StartWork();
 
             _ufoSpawnManager = new UFOSpawnManager(_gameOver, _camera, _halfHeightCamera,
-                _halfWidthCamera, _ufoFactory, _ufoSpawnData , _coroutinePerformer);
+                _halfWidthCamera, _ufoFactory, _ufoSpawnData , _coroutinePerformer, _scoreManager);
             _ufoSpawnManager.StartWork();
-            
         }   
     }
 }

@@ -1,4 +1,5 @@
 using GameLogic;
+using Managers;
 using Player;
 using Shooting;
 using TMPro;
@@ -8,15 +9,14 @@ namespace UI
 {
     public class GameplayUI : MonoBehaviour
     {
+        
         private int _maxLaserCount;
-
         private string _laserCountText;
-
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
         private GameOver _gameOver;
+        private ScoreManager _scoreManager;
         
-        [SerializeField] private ScoreManager _scoreManager;
         [SerializeField] private TMP_Text _scoreTMP;
         [SerializeField] private TMP_Text _laserCountTMP;
         [SerializeField] private TMP_Text _coordinatesTMP;
@@ -24,11 +24,12 @@ namespace UI
         [SerializeField] private TMP_Text _speedTMP;
 
         public void Construct(ShootingLaser shootingLaser, 
-            DataSpaceShip dataSpaceShip, GameOver gameOver)
+            DataSpaceShip dataSpaceShip, GameOver gameOver, ScoreManager scoreManager)
         {
             _shootingLaser = shootingLaser;
             _dataSpaceShip = dataSpaceShip;
             _gameOver = gameOver;
+            _scoreManager = scoreManager;
         }
 
         private void Start()

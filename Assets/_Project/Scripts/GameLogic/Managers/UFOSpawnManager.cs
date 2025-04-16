@@ -18,8 +18,8 @@ namespace Managers
 
         public UFOSpawnManager(GameOver gameOver, Camera camera, 
             float halfHeightCamera, float halfWidthCamera, UFOFactory ufoFactory, 
-            EnemySpawnManagerSO ufoSpawnData, CoroutinePerformer coroutinePerformer) : 
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera)
+            EnemySpawnManagerSO ufoSpawnData, CoroutinePerformer coroutinePerformer, ScoreManager scoreManager) : 
+            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
         {
             _ufoFactory = ufoFactory;
             _ufoSpawnData = ufoSpawnData;
@@ -47,7 +47,7 @@ namespace Managers
 
         private IEnumerator SpawnUFOCoroutine()
         {
-            while (!_flagGameOver)
+            while (!FlagGameOver)
             {
                 SpawnObject();
                 yield return _waitRespawnUFORange;

@@ -1,5 +1,6 @@
 using Characters;
 using GameLogic;
+using Managers;
 using Player;
 using SciptableObjects;
 using UnityEngine;
@@ -12,7 +13,7 @@ namespace Factories
 
         public UFOFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
             float halfHeightCamera, float halfWidthCamera, UFO prefab, SpaceShip spaceShip, PoolSizeSO ufoPoolSizeData) : 
-            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab, ufoPoolSizeData)
+            base(scoreManager, gameOver, halfHeightCamera, halfWidthCamera, prefab, ufoPoolSizeData)
         {
             _spaceShip = spaceShip;
         }

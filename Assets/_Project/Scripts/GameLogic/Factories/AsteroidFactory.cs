@@ -1,5 +1,6 @@
 using Characters;
 using GameLogic;
+using Managers;
 using SciptableObjects;
 using UnityEngine;
 
@@ -7,9 +8,9 @@ namespace Factories
 {
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
-        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver, Camera camera, 
+        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver, 
             float halfHeightCamera, float halfWidthCamera, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) : 
-            base(scoreManager, gameOver, camera, halfHeightCamera, halfWidthCamera, prefab, asteroidPoolSizeData)
+            base(scoreManager, gameOver, halfHeightCamera, halfWidthCamera, prefab, asteroidPoolSizeData)
         {
         }
 
