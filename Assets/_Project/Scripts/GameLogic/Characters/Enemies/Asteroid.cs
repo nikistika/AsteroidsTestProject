@@ -3,6 +3,7 @@ using GameLogic;
 using Player;
 using Shooting;
 using UnityEngine;
+using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Characters
@@ -12,15 +13,16 @@ namespace Characters
     {
         public event Action<int, Asteroid> OnGetFragments;
         public event Action<Asteroid> OnReturnAsteroid;
-        
+
         private bool _flagParent = true;
         private GameOver _gameOver;
-        
+
         [SerializeField] private int _speed = 1;
 
-        public void Construct(GameOver gameOver, float halfHeightCamera, float halfWidthCamera)
+        [Inject]
+        public void Construct(GameOver gameOver, ScreenSize screenSize)
         {
-            base.Construct(halfHeightCamera, halfWidthCamera);
+            base.Construct(screenSize);
             _gameOver = gameOver;
         }
 
@@ -36,14 +38,14 @@ namespace Characters
 
         public void Move()
         {
-            if (transform.position.y > HalfHeightCamera)
+            if (transform.position.y > ScreenSize.HalfHeightCamera)
                 Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f) * _speed;
-            else if (transform.position.y < -HalfHeightCamera)
-                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f)  * _speed;
-            else if (transform.position.x > HalfWidthCamera)
-                Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f))  * _speed;
-            else if (transform.position.x < -HalfWidthCamera)
-                Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f))  * _speed;
+            else if (transform.position.y < -ScreenSize.HalfHeightCamera)
+                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f) * _speed;
+            else if (transform.position.x > ScreenSize.HalfWidthCamera)
+                Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f)) * _speed;
+            else if (transform.position.x < -ScreenSize.HalfWidthCamera)
+                Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f)) * _speed;
         }
 
         public void IsObjectParent(bool isObjectParent)
@@ -53,7 +55,7 @@ namespace Characters
 
         public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
         {
-            if (fragmentNumber == 1) 
+            if (fragmentNumber == 1)
                 fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
             else if (fragmentNumber == 2)
                 fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
@@ -62,8 +64,7 @@ namespace Characters
             else if (fragmentNumber == 4)
                 fragmentAsteroid.Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
         }
-        
-        
+
         protected override void Initialize()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
@@ -82,7 +83,7 @@ namespace Characters
                 {
                     transform.localScale *= 2;
                 }
-                
+
                 OnReturnAsteroid?.Invoke(this);
             }
 

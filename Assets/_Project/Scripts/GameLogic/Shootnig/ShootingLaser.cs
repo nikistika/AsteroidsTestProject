@@ -8,7 +8,7 @@ namespace Shooting
     {
         public event Action<int> OnEditLaserCount;
         public event Action<float, float> OnLaserCooldown;
-        
+
         private bool _laserActive;
         private bool _laserCooldownActive;
         private WaitForSeconds _waitLaserDuration;
@@ -25,8 +25,8 @@ namespace Shooting
 
         private void Awake()
         {
-            _waitLaserDuration = new(_laserDuration);
-            _waitLaserDelay = new(_laserDelay);
+            _waitLaserDuration = new WaitForSeconds(_laserDuration);
+            _waitLaserDelay = new WaitForSeconds(_laserDelay);
             LaserCount = MaxLaserCount;
         }
 
@@ -72,12 +72,12 @@ namespace Shooting
             }
 
             AddLaserCount(1);
-            
+
             if (LaserCount < MaxLaserCount)
             {
                 StartCoroutine(ShotCooldown());
             }
-            
+
             _laserCooldownActive = false;
         }
     }

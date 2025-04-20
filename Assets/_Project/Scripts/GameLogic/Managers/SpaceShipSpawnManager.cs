@@ -13,22 +13,22 @@ namespace Managers
     {
         private InputCharacter _inputCharacter;
         private ShootingMissile _shootingMissile;
-        private ShootingLaser _shootingLaser;
-        private DataSpaceShip _dataSpaceShip;
         private InputKeyboard _inputKeyboard;
         private MissileFactory _missileFactory;
         private GameplayUI _gameplayUI;
         private SpaceShip _spaceShipPrefab;
         private Missile _missilePrefab;
         private PoolSizeSO _missilePoolSizeData;
-        
-        public SpaceShip SpaceShipObject {get; private set;}
 
-        public SpaceShipSpawnManager(GameOver gameOver, Camera camera,
-            float halfHeightCamera, float halfWidthCamera,Missile missilePrefab, 
-            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData, 
+        public SpaceShip SpaceShipObject { get; private set; }
+        public ShootingLaser ShootingLaser { get; private set; }
+        public DataSpaceShip DataSpaceShip { get; private set; }
+
+        public SpaceShipSpawnManager(GameOver gameOver,
+            ScreenSize screenSize, Missile missilePrefab,
+            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData,
             ScoreManager scoreManager) :
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
+            base(gameOver, screenSize, scoreManager)
         {
             _missilePrefab = missilePrefab;
             _gameplayUI = gameplayUI;
@@ -53,21 +53,21 @@ namespace Managers
         {
             _inputCharacter = objectSpaceShip.GetComponent<InputCharacter>();
             _shootingMissile = objectSpaceShip.GetComponent<ShootingMissile>();
-            _shootingLaser = objectSpaceShip.GetComponent<ShootingLaser>();
-            _dataSpaceShip = objectSpaceShip.GetComponent<DataSpaceShip>();
+            ShootingLaser = objectSpaceShip.GetComponent<ShootingLaser>();
+            DataSpaceShip = objectSpaceShip.GetComponent<DataSpaceShip>();
         }
 
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
-            objectSpaceShip.Construct(HalfHeightCamera, HalfWidthCamera);
+            objectSpaceShip.Construct(ScreenSize);
             _inputCharacter.Construct(GameOver);
-            
-            _missileFactory = new MissileFactory(Camera, HalfHeightCamera, HalfWidthCamera,
+
+            _missileFactory = new MissileFactory(ScreenSize,
                 _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData);
             _missileFactory.StartWork();
-            
+
             _shootingMissile.Construct(_missileFactory);
-            _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, GameOver, ScoreManager);
+            // _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, GameOver, ScoreManager);
         }
     }
 }

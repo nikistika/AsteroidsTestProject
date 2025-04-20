@@ -1,3 +1,4 @@
+using GameLogic;
 using Player;
 using SciptableObjects;
 using Shooting;
@@ -10,9 +11,9 @@ namespace Factories
         private SpaceShip _spaceShip;
         private ShootingMissile _shootingMissile;
 
-        public MissileFactory(Camera camera, float halfHeightCamera, float halfWidthCamera, 
-            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile, PoolSizeSO missilePoolSizeData) : 
-            base(halfHeightCamera, halfWidthCamera, prefab, missilePoolSizeData)
+        public MissileFactory(ScreenSize screenSize,
+            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile, PoolSizeSO missilePoolSizeData) :
+            base(screenSize, prefab, missilePoolSizeData)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
@@ -23,12 +24,12 @@ namespace Factories
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.gameObject.SetActive(false);
         }
-        
+
         protected override Missile ActionCreateObject()
         {
             var missile = Object.Instantiate(Prefab, _spaceShip.gameObject.transform, true);
             missile.transform.position = _spaceShip.transform.position;
-            missile.Construct(_shootingMissile, HalfHeightCamera, HalfWidthCamera);
+            missile.Construct(_shootingMissile, ScreenSize);
             return missile;
         }
 

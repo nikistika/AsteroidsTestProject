@@ -1,6 +1,6 @@
-using System.Collections;
+using System;
 using Characters;
-using Coroutine;
+using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic;
 using SciptableObjects;
@@ -13,18 +13,16 @@ namespace Managers
         private WaitForSeconds _waitRespawnAsteroidRange;
         private AsteroidFactory _asteroidFactory;
         private EnemySpawnManagerSO _asteroidSpawnData;
-        private CoroutinePerformer _coroutinePerformer;
 
-        public AsteroidSpawnManager(GameOver gameOver, Camera camera, 
-            float halfHeightCamera, float halfWidthCamera, AsteroidFactory asteroidFactory, 
-            EnemySpawnManagerSO asteroidSpawnData, CoroutinePerformer coroutinePerformer, ScoreManager scoreManager) : 
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
+        public AsteroidSpawnManager(GameOver gameOver,
+            ScreenSize screenSize, AsteroidFactory asteroidFactory,
+            EnemySpawnManagerSO asteroidSpawnData, ScoreManager scoreManager) :
+            base(gameOver, screenSize, scoreManager)
         {
-            _asteroidFactory  = asteroidFactory;
+            _asteroidFactory = asteroidFactory;
             _asteroidSpawnData = asteroidSpawnData;
-            _coroutinePerformer = coroutinePerformer;
         }
-        
+
         public override Asteroid SpawnObject()
         {
             var asteroid = _asteroidFactory.SpawnObject();
@@ -35,8 +33,7 @@ namespace Managers
 
         protected override void Initialize()
         {
-            _waitRespawnAsteroidRange  = new WaitForSeconds(_asteroidSpawnData.RespawnRange);
-            _coroutinePerformer.StartCoroutine(SpawnAsteroidsCoroutine());
+            SpawnAsteroidsAsync().Forget();
         }
 
         private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)
@@ -61,12 +58,12 @@ namespace Managers
             _asteroidFactory.ReturnObject(asteroid);
         }
 
-        private IEnumerator SpawnAsteroidsCoroutine()
+        private async UniTask SpawnAsteroidsAsync()
         {
             while (!FlagGameOver)
             {
                 SpawnObject();
-                yield return _waitRespawnAsteroidRange;
+                await UniTask.Delay(TimeSpan.FromSeconds(_asteroidSpawnData.RespawnRange));
             }
         }
     }

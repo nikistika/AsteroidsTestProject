@@ -1,23 +1,24 @@
 using Characters;
+using GameLogic;
 using UnityEngine;
+using Zenject;
 
 namespace Shooting
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Missile : MonoBehaviour
     {
-        private float _halfHeightCamera;
-        private float _halfWidthCamera;
+        private ScreenSize _screenSize;
         private Rigidbody2D _rigidbody;
         private ShootingMissile _shootingMissile;
 
         [SerializeField] private float _speed = 3;
 
-        public void Construct(ShootingMissile shootingMissile, float halfHeightCamera, float halfWidthCamera)
+        [Inject]
+        public void Construct(ShootingMissile shootingMissile, ScreenSize screenSize)
         {
             _shootingMissile = shootingMissile;
-            _halfHeightCamera = halfHeightCamera;
-            _halfWidthCamera = halfWidthCamera;
+            _screenSize = screenSize;
         }
 
         private void Awake()
@@ -50,10 +51,10 @@ namespace Shooting
 
         private void GoingAbroad()
         {
-            if (gameObject.transform.position.y > _halfHeightCamera ||
-                gameObject.transform.position.y < -_halfHeightCamera ||
-                gameObject.transform.position.x > _halfWidthCamera ||
-                gameObject.transform.position.x < -_halfWidthCamera)
+            if (gameObject.transform.position.y > _screenSize.HalfHeightCamera ||
+                gameObject.transform.position.y < -_screenSize.HalfHeightCamera ||
+                gameObject.transform.position.x > _screenSize.HalfWidthCamera ||
+                gameObject.transform.position.x < -_screenSize.HalfWidthCamera)
             {
                 _shootingMissile.InvokeOnReturnMissileToPool(this);
             }

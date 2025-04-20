@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using Factories;
 using UnityEngine;
+using Zenject;
 
 namespace Shooting
 {
@@ -12,14 +13,15 @@ namespace Shooting
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
         private MissileFactory _missileFactory;
-        
+
         [SerializeField] private float _delayShotTimes = 1;
 
+        [Inject]
         public void Construct(MissileFactory missileFactory)
         {
             _missileFactory = missileFactory;
         }
-        
+
         private void Awake()
         {
             _waitDelayShotTimes = new WaitForSeconds(_delayShotTimes);
@@ -54,6 +56,5 @@ namespace Shooting
             yield return _waitDelayShotTimes;
             _shotToggle = false;
         }
-
     }
 }

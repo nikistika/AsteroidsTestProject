@@ -1,20 +1,22 @@
+using GameLogic;
 using UnityEngine;
+using Zenject;
 
 namespace Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Character : MonoBehaviour
     {
-        protected float HalfHeightCamera;
-        protected float HalfWidthCamera;
         protected Rigidbody2D Rigidbody;
 
-        public void Construct(float halfHeightCamera, float halfWidthCamera)
+        protected ScreenSize ScreenSize { get; private set; }
+
+        [Inject]
+        public void Construct(ScreenSize screenSize)
         {
-            HalfHeightCamera = halfHeightCamera;
-            HalfWidthCamera = halfWidthCamera;
+            ScreenSize = screenSize;
         }
-        
+
         protected void Awake()
         {
             Initialize();
@@ -27,24 +29,28 @@ namespace Characters
 
         protected void GoingAbroad()
         {
-            if (gameObject.transform.position.y > HalfHeightCamera + 0.5f)
+            if (gameObject.transform.position.y > ScreenSize.HalfHeightCamera + 0.5f)
             {
-                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, -HalfHeightCamera));
+                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
+                    -ScreenSize.HalfHeightCamera));
             }
 
-            if (gameObject.transform.position.y < -HalfHeightCamera - 0.5f)
+            if (gameObject.transform.position.y < -ScreenSize.HalfHeightCamera - 0.5f)
             {
-                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x, HalfHeightCamera));
+                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
+                    ScreenSize.HalfHeightCamera));
             }
 
-            if (gameObject.transform.position.x > HalfWidthCamera + 0.5f)
+            if (gameObject.transform.position.x > ScreenSize.HalfWidthCamera + 0.5f)
             {
-                Rigidbody.MovePosition(new Vector2(-HalfWidthCamera, gameObject.transform.position.y));
+                Rigidbody.MovePosition(new Vector2(-ScreenSize.HalfWidthCamera,
+                    gameObject.transform.position.y));
             }
 
-            if (gameObject.transform.position.x < -HalfWidthCamera - 0.5f)
+            if (gameObject.transform.position.x < -ScreenSize.HalfWidthCamera - 0.5f)
             {
-                Rigidbody.MovePosition(new Vector2(HalfWidthCamera, gameObject.transform.position.y));
+                Rigidbody.MovePosition(new Vector2(ScreenSize.HalfWidthCamera,
+                    gameObject.transform.position.y));
             }
         }
 

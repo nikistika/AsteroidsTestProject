@@ -2,8 +2,7 @@ using UnityEngine;
 
 namespace Shooting
 {
-    public class Laser: MonoBehaviour
+    public class Laser : MonoBehaviour
     {
-        
     }
 }

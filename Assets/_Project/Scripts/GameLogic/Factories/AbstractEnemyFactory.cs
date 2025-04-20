@@ -11,8 +11,8 @@ namespace Factories
         protected GameOver GameOver;
 
         protected AbstractEnemyFactory(ScoreManager scoreManager, GameOver gameOver,
-            float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData) : 
-            base(halfHeightCamera, halfWidthCamera, prefab, poolSizeData)
+            ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData) :
+            base(screenSize, prefab, poolSizeData)
         {
             GameOver = gameOver;
             ScoreManager = scoreManager;
@@ -25,13 +25,17 @@ namespace Factories
             switch (randomIndex)
             {
                 case 1:
-                    return new Vector2(Random.Range(-HalfWidthCamera, HalfWidthCamera), HalfHeightCamera + 0.5f);
+                    return new Vector2(Random.Range(-ScreenSize.HalfWidthCamera, ScreenSize.HalfWidthCamera),
+                        ScreenSize.HalfHeightCamera + 0.5f);
                 case 2:
-                    return new Vector2(Random.Range(-HalfWidthCamera, HalfWidthCamera), -HalfHeightCamera - 0.5f);
+                    return new Vector2(Random.Range(-ScreenSize.HalfWidthCamera, ScreenSize.HalfWidthCamera),
+                        -ScreenSize.HalfHeightCamera - 0.5f);
                 case 3:
-                    return new Vector2(HalfWidthCamera + 0.5f, Random.Range(-HalfHeightCamera, HalfHeightCamera));
+                    return new Vector2(ScreenSize.HalfWidthCamera + 0.5f,
+                        Random.Range(-ScreenSize.HalfHeightCamera, ScreenSize.HalfHeightCamera));
                 case 4:
-                    return new Vector2(-HalfWidthCamera - 0.5f, Random.Range(-HalfHeightCamera, HalfHeightCamera));
+                    return new Vector2(-ScreenSize.HalfWidthCamera - 0.5f,
+                        Random.Range(-ScreenSize.HalfHeightCamera, ScreenSize.HalfHeightCamera));
             }
 
             return new Vector2(0, 0);

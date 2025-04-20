@@ -9,7 +9,7 @@ namespace Managers
         public int CurrentScore { get; private set; }
 
         private bool _startFlag;
-        
+
         public void StartWork()
         {
             if (_startFlag == false)

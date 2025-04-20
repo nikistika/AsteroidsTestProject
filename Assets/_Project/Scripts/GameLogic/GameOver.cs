@@ -1,5 +1,4 @@
 using System;
-using Player;
 using UI;
 
 namespace GameLogic
@@ -8,17 +7,17 @@ namespace GameLogic
     {
         public event Action OnGameOver;
 
-        private UISpawnManager _uiSpawnManager;
+        private UIRestartSpawnManager _uiRestartSpawnManager;
 
-        public GameOver(UISpawnManager uiSpawnManager)
+        public GameOver(UIRestartSpawnManager uiRestartSpawnManager)
         {
-            _uiSpawnManager = uiSpawnManager;
+            _uiRestartSpawnManager = uiRestartSpawnManager;
         }
-        
+
         public void EndGame()
         {
             OnGameOver.Invoke();
-            _uiSpawnManager.SpawnRestartPanel();
+            _uiRestartSpawnManager.SpawnRestartPanel();
         }
     }
 }

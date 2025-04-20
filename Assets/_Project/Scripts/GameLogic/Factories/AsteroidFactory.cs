@@ -8,16 +8,16 @@ namespace Factories
 {
     public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
     {
-        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver, 
-            float halfHeightCamera, float halfWidthCamera, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) : 
-            base(scoreManager, gameOver, halfHeightCamera, halfWidthCamera, prefab, asteroidPoolSizeData)
+        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver,
+            ScreenSize screenSize, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) :
+            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData)
         {
         }
 
         protected override Asteroid ActionCreateObject()
         {
             Asteroid asteroid = Object.Instantiate(Prefab);
-            asteroid.Construct(GameOver, HalfHeightCamera, HalfWidthCamera);
+            asteroid.Construct(GameOver, ScreenSize);
             asteroid.GetComponent<Score>().Construct(ScoreManager);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;

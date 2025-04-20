@@ -6,7 +6,7 @@ namespace Player
     public class DataSpaceShip : MonoBehaviour
     {
         private Rigidbody2D _rigidbody;
-        
+
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
@@ -14,20 +14,25 @@ namespace Player
 
         public Vector2 GetCoordinates()
         {
-            Vector2 coordinates = transform.position;
+            var coordinates = transform.position;
             return coordinates;
         }
-               
-        public Vector2 GetRotation()
+
+        public float GetRotation()
         {
-            Vector2 rotation = transform.rotation.eulerAngles;
+            var rotation = transform.eulerAngles.z;
             return rotation;
         }
-                
+
         public Vector2 GetSpeed()
         {
-            Vector2 speed = _rigidbody.velocity;
-            return speed;
+            if (_rigidbody != null)
+            {
+                var speed = _rigidbody.velocity;
+                return speed;
+            }
+
+            return Vector2.zero;
         }
     }
 }

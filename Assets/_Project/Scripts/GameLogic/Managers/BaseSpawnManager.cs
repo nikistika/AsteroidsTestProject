@@ -1,27 +1,22 @@
 using GameLogic;
-using UnityEngine;
 
 namespace Managers
 {
     public abstract class BaseSpawnManager<T>
     {
         protected bool FlagGameOver;
-        protected Camera Camera;
-        protected float HalfHeightCamera;
-        protected float HalfWidthCamera;
+        protected ScreenSize ScreenSize;
         protected GameOver GameOver;
         protected ScoreManager ScoreManager;
 
-        protected BaseSpawnManager(GameOver gameOver, Camera camera, 
-            float halfHeightCamera, float halfWidthCamera, ScoreManager scoreManager)
+        protected BaseSpawnManager(GameOver gameOver,
+            ScreenSize screenSize, ScoreManager scoreManager)
         {
             GameOver = gameOver;
-            Camera = camera;
-            HalfHeightCamera = halfHeightCamera;
-            HalfWidthCamera = halfWidthCamera;
+            ScreenSize = screenSize;
             ScoreManager = scoreManager;
         }
-        
+
         public void StartWork()
         {
             BaseInitialize();
@@ -34,7 +29,7 @@ namespace Managers
         {
             GameOver.OnGameOver += GameOverHandler;
         }
-        
+
         protected abstract void Initialize();
 
         private void GameOverHandler()

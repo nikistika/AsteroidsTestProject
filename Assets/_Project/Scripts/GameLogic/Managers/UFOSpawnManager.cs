@@ -1,11 +1,10 @@
-using System.Collections;
+using System;
 using Characters;
-using Coroutine;
+using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic;
 using SciptableObjects;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
 namespace Managers
 {
@@ -14,16 +13,13 @@ namespace Managers
         private WaitForSeconds _waitRespawnUFORange;
         private UFOFactory _ufoFactory;
         private EnemySpawnManagerSO _ufoSpawnData;
-        private CoroutinePerformer _coroutinePerformer;
 
-        public UFOSpawnManager(GameOver gameOver, Camera camera, 
-            float halfHeightCamera, float halfWidthCamera, UFOFactory ufoFactory, 
-            EnemySpawnManagerSO ufoSpawnData, CoroutinePerformer coroutinePerformer, ScoreManager scoreManager) : 
-            base(gameOver, camera, halfHeightCamera, halfWidthCamera, scoreManager)
+        public UFOSpawnManager(GameOver gameOver, ScreenSize screenSize, UFOFactory ufoFactory,
+            EnemySpawnManagerSO ufoSpawnData, ScoreManager scoreManager) :
+            base(gameOver, screenSize, scoreManager)
         {
             _ufoFactory = ufoFactory;
             _ufoSpawnData = ufoSpawnData;
-            _coroutinePerformer = coroutinePerformer;
         }
 
         public override UFO SpawnObject()
@@ -35,8 +31,7 @@ namespace Managers
 
         protected override void Initialize()
         {
-            _waitRespawnUFORange = new WaitForSeconds(_ufoSpawnData.RespawnRange);
-            _coroutinePerformer.StartCoroutine(SpawnUFOCoroutine());
+            SpawnUFOAsync().Forget();
         }
 
         private void ReturnUFO(UFO ufo)
@@ -45,12 +40,12 @@ namespace Managers
             _ufoFactory.ReturnObject(ufo);
         }
 
-        private IEnumerator SpawnUFOCoroutine()
+        private async UniTask SpawnUFOAsync()
         {
             while (!FlagGameOver)
             {
                 SpawnObject();
-                yield return _waitRespawnUFORange;
+                await UniTask.Delay(TimeSpan.FromSeconds(_ufoSpawnData.RespawnRange));
             }
         }
     }

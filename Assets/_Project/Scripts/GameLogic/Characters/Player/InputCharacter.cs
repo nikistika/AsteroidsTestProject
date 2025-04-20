@@ -2,13 +2,13 @@ using GameLogic;
 using InputSystem;
 using Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class InputCharacter : MonoBehaviour
     {
-
         private GameOver _gameOver;
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
@@ -19,11 +19,12 @@ namespace Player
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
 
+        [Inject]
         public void Construct(GameOver gameOver)
         {
             _gameOver = gameOver;
         }
-        
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();

@@ -1,3 +1,4 @@
+using GameLogic;
 using SciptableObjects;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -6,18 +7,16 @@ namespace Factories
 {
     public abstract class BaseFactory<T> where T : MonoBehaviour
     {
-        protected float HalfHeightCamera;
-        protected float HalfWidthCamera;
+        protected ScreenSize ScreenSize;
         protected T Prefab;
-        
+
         private ObjectPool<T> _pool;
-        private int _defaultPoolSize; 
+        private int _defaultPoolSize;
         private int _maxPoolSize;
 
-        protected BaseFactory(float halfHeightCamera, float halfWidthCamera, T prefab, PoolSizeSO poolSizeData)
+        protected BaseFactory(ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData)
         {
-            HalfHeightCamera = halfHeightCamera;
-            HalfWidthCamera = halfWidthCamera;
+            ScreenSize = screenSize;
             Prefab = prefab;
 
             _defaultPoolSize = poolSizeData.DefaultPoolSize;
@@ -35,22 +34,10 @@ namespace Factories
         private void PoolInitialize()
         {
             _pool = new ObjectPool<T>(
-                createFunc: () =>
-                {
-                    return ActionCreateObject();
-                },
-                actionOnGet: (obj) =>
-                {
-                    ActionGetObject(obj);
-                },
-                actionOnRelease: (obj) =>
-                {
-                    ActionReleaseObject(obj);
-                },
-                actionOnDestroy: (obj) =>
-                {
-                    Object.Destroy(obj);
-                },
+                createFunc: () => { return ActionCreateObject(); },
+                actionOnGet: (obj) => { ActionGetObject(obj); },
+                actionOnRelease: (obj) => { ActionReleaseObject(obj); },
+                actionOnDestroy: (obj) => { Object.Destroy(obj); },
                 collectionCheck: false,
                 defaultCapacity: _defaultPoolSize,
                 maxSize: _maxPoolSize

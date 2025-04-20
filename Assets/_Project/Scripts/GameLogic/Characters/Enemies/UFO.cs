@@ -3,6 +3,7 @@ using GameLogic;
 using Player;
 using Shooting;
 using UnityEngine;
+using Zenject;
 
 namespace Characters
 {
@@ -10,16 +11,17 @@ namespace Characters
     public class UFO : Character
     {
         public event Action<UFO> OnReturnUFO;
-        
+
         private SpaceShip _spaceShip;
-        private bool _flagGameOver;
         private GameOver _gameOver;
-        
+        private bool _flagGameOver;
+
         [SerializeField] private int _speed = 1;
-        
-        public void Construct(GameOver gameOver, SpaceShip spaseShip, float halfHeightCamera, float halfWidthCamera)
+
+        [Inject]
+        public void Construct(GameOver gameOver, SpaceShip spaseShip, ScreenSize screenSize)
         {
-            base.Construct(halfHeightCamera, halfWidthCamera);
+            base.Construct(screenSize);
             _gameOver = gameOver;
             _spaceShip = spaseShip;
         }

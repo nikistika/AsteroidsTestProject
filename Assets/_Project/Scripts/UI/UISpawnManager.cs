@@ -1,26 +1,42 @@
+﻿using GameLogic;
 using Managers;
-using UnityEngine;
+using Player;
+using Shooting;
+using Zenject;
 
 namespace UI
 {
     public class UISpawnManager
     {
-        private RestartPanel _restartPanel;
-        private Canvas _uiCanvas;
-        private ScoreManager _scoreManager;
+        private readonly ScoreManager _scoreManager;
+        private readonly IInstantiator _iInstantiator;
+        private readonly GameplayUI _gameplayUI;
+        private readonly ShootingLaser _shootingLaser;
+        private readonly DataSpaceShip _dataSpaceShip;
+        private readonly GameOver _gameOver;
 
-        public void Construct(ScoreManager scoreManager, RestartPanel restartPanel, Canvas uiCanvas)
+        public UISpawnManager(ScoreManager scoreManager,
+            IInstantiator iInstantiator, GameplayUI gameplayUI, ShootingLaser shootingLaser,
+            DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _scoreManager = scoreManager;
-            _restartPanel = restartPanel;
-            _uiCanvas = uiCanvas;
+            _iInstantiator = iInstantiator;
+            _gameplayUI = gameplayUI;
+            _shootingLaser = shootingLaser;
+            _dataSpaceShip = dataSpaceShip;
+            _gameOver = gameOver;
         }
         
-        public void SpawnRestartPanel()
+        public void StartWork()
         {
-            var restartPanel = Object.Instantiate(_restartPanel, _uiCanvas.transform); 
-            restartPanel.gameObject.SetActive(true);
-            restartPanel.ActivateRestartPanel(_scoreManager.CurrentScore);
+            SpawnUI();
+        }
+
+        private void SpawnUI()
+        {
+            var gameplayUIObject = _iInstantiator.InstantiatePrefab(_gameplayUI);
+            var gameplayUI = gameplayUIObject.GetComponent<GameplayUI>();
+            gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver, _scoreManager);
         }
     }
 }
