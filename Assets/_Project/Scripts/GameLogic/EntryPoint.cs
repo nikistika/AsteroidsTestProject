@@ -29,13 +29,17 @@ namespace GameLogic
         private UISpawnManager _uiSpawnManager;
         private IInstantiator _instantiator;
         private GameplayUI _gameplayUI;
+        private GameplayUI _gameplayUIObject;
+        private UIRestartSpawnManager _uiRestartSpawnManager;
+        private RestartPanel _restartPanel;
 
         [Inject]
         public void Construct(ScoreManager scoreManager, SpaceShipSpawnManager spaceShipSpawnManager,
             AsteroidFactory asteroidFactory, AsteroidSpawnManager asteroidSpawnManager,
             ScreenSize screenSize, UFO ufoPrefab, GameOver gameOver,
             [Inject(Id = "UFOPoolSizeData")] PoolSizeSO missilePoolSizeData,
-            EnemySpawnManagerSO ufoSpawnData, IInstantiator instantiator, GameplayUI gameplayUI)
+            EnemySpawnManagerSO ufoSpawnData, IInstantiator instantiator, GameplayUI gameplayUI,
+            RestartPanel restartPanel)
         {
             _spaceShipSpawnManager = spaceShipSpawnManager;
             _asteroidFactory = asteroidFactory;
@@ -48,6 +52,7 @@ namespace GameLogic
             _scoreManager = scoreManager;
             _instantiator = instantiator;
             _gameplayUI = gameplayUI;
+            _restartPanel = restartPanel;
         }
 
         private void Start()
@@ -61,6 +66,9 @@ namespace GameLogic
 
             _uiSpawnManager = new UISpawnManager(_scoreManager, _instantiator, _gameplayUI, 
                 _shootingLaser, _dataSpaceShip, _gameOver);
+            _uiSpawnManager.StartWork();
+            
+            _gameplayUIObject = _uiSpawnManager.GameplayUIObject;
             
             _ufoFactory = new UFOFactory(_scoreManager, _gameOver,
                 _screenSize, _ufoPrefab, _spaceShip, _missilePoolSizeData);
@@ -68,12 +76,14 @@ namespace GameLogic
             _ufoSpawnManager = new UFOSpawnManager(_gameOver, _screenSize,
                 _ufoFactory, _ufoSpawnData, _scoreManager);
             
+            _uiRestartSpawnManager = new UIRestartSpawnManager(_scoreManager, _restartPanel, 
+                _instantiator, _gameplayUIObject, _gameOver);
+            
             _asteroidFactory.StartWork();
             _ufoFactory.StartWork();
             _asteroidSpawnManager.StartWork();
             _ufoSpawnManager.StartWork();
-            _uiSpawnManager.StartWork();
-            
+            _uiRestartSpawnManager.StartWork();
         }
     }
 }

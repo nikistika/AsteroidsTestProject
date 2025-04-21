@@ -14,7 +14,9 @@ namespace UI
         private readonly ShootingLaser _shootingLaser;
         private readonly DataSpaceShip _dataSpaceShip;
         private readonly GameOver _gameOver;
-
+        
+        public GameplayUI GameplayUIObject { get; private set; }
+        
         public UISpawnManager(ScoreManager scoreManager,
             IInstantiator instantiator, GameplayUI gameplayUI, ShootingLaser shootingLaser,
             DataSpaceShip dataSpaceShip, GameOver gameOver)
@@ -36,6 +38,7 @@ namespace UI
         {
             var gameplayUIObject = _instantiator.InstantiatePrefab(_gameplayUI);
             var gameplayUI = gameplayUIObject.GetComponent<GameplayUI>();
+            GameplayUIObject = gameplayUI;
             gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver, _scoreManager);
         }
     }

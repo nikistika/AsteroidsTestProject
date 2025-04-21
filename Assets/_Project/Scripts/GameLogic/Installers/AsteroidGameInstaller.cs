@@ -21,6 +21,7 @@ namespace GameLogic.Installers
         private ScoreManager _scoreManager;
         private UIRestartSpawnManager _uiRestartSpawnManager;
         private ScreenSize _screenSize;
+        
         [Inject] private IInstantiator _iInstantiator;
 
         [SerializeField] private Asteroid _asteroidPrefab;
@@ -54,10 +55,7 @@ namespace GameLogic.Installers
             _scoreManager = new ScoreManager();
             Container.Bind<ScoreManager>().FromInstance(_scoreManager).AsSingle();
 
-            _uiRestartSpawnManager = new UIRestartSpawnManager(_scoreManager, _restartPanel, _iInstantiator, _gameplayUI);
-            Container.Bind<UIRestartSpawnManager>().FromInstance(_uiRestartSpawnManager).AsSingle();
-
-            _gameOver = new GameOver(_uiRestartSpawnManager);
+            _gameOver = new GameOver();
             Container.Bind<GameOver>().FromInstance(_gameOver).AsSingle();
 
             _spaceShipSpawnManager = new SpaceShipSpawnManager(_gameOver, _screenSize,
@@ -81,9 +79,6 @@ namespace GameLogic.Installers
 
             Container.Bind<EntryPoint>().FromInstance(_entryPoint).AsSingle();
             Container.Inject(_entryPoint);
-            
-            
-
         }
     }
 }

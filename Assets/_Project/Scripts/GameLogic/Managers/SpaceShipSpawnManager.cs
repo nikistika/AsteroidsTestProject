@@ -67,7 +67,6 @@ namespace Managers
             _missileFactory.StartWork();
 
             _shootingMissile.Construct(_missileFactory);
-            // _gameplayUI.Construct(_shootingLaser, _dataSpaceShip, GameOver, ScoreManager);
         }
     }
 }
