@@ -76,9 +76,14 @@ namespace GameLogic.Installers
 
             Container.Bind<PoolSizeSO>().WithId("UFOPoolSizeData")
                 .FromInstance(_ufoPoolSizeData).AsSingle();
+            
+            Container.Bind<GameplayUI>().FromInstance(_gameplayUI).AsSingle();
 
             Container.Bind<EntryPoint>().FromInstance(_entryPoint).AsSingle();
             Container.Inject(_entryPoint);
+            
+            
+
         }
     }
 }

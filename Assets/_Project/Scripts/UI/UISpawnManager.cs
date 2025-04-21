@@ -9,18 +9,18 @@ namespace UI
     public class UISpawnManager
     {
         private readonly ScoreManager _scoreManager;
-        private readonly IInstantiator _iInstantiator;
+        private readonly IInstantiator _instantiator;
         private readonly GameplayUI _gameplayUI;
         private readonly ShootingLaser _shootingLaser;
         private readonly DataSpaceShip _dataSpaceShip;
         private readonly GameOver _gameOver;
 
         public UISpawnManager(ScoreManager scoreManager,
-            IInstantiator iInstantiator, GameplayUI gameplayUI, ShootingLaser shootingLaser,
+            IInstantiator instantiator, GameplayUI gameplayUI, ShootingLaser shootingLaser,
             DataSpaceShip dataSpaceShip, GameOver gameOver)
         {
             _scoreManager = scoreManager;
-            _iInstantiator = iInstantiator;
+            _instantiator = instantiator;
             _gameplayUI = gameplayUI;
             _shootingLaser = shootingLaser;
             _dataSpaceShip = dataSpaceShip;
@@ -34,7 +34,7 @@ namespace UI
 
         private void SpawnUI()
         {
-            var gameplayUIObject = _iInstantiator.InstantiatePrefab(_gameplayUI);
+            var gameplayUIObject = _instantiator.InstantiatePrefab(_gameplayUI);
             var gameplayUI = gameplayUIObject.GetComponent<GameplayUI>();
             gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver, _scoreManager);
         }

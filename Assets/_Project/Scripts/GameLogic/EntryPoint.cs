@@ -24,16 +24,18 @@ namespace GameLogic
         private ScreenSize _screenSize;
         private PoolSizeSO _missilePoolSizeData;
         private EnemySpawnManagerSO _ufoSpawnData;
-        private UIRestartSpawnManager _uiRestartSpawnManager;
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
+        private UISpawnManager _uiSpawnManager;
+        private IInstantiator _instantiator;
+        private GameplayUI _gameplayUI;
 
         [Inject]
         public void Construct(ScoreManager scoreManager, SpaceShipSpawnManager spaceShipSpawnManager,
             AsteroidFactory asteroidFactory, AsteroidSpawnManager asteroidSpawnManager,
             ScreenSize screenSize, UFO ufoPrefab, GameOver gameOver,
             [Inject(Id = "UFOPoolSizeData")] PoolSizeSO missilePoolSizeData,
-            EnemySpawnManagerSO ufoSpawnData, UIRestartSpawnManager uiRestartSpawnManager)
+            EnemySpawnManagerSO ufoSpawnData, IInstantiator instantiator, GameplayUI gameplayUI)
         {
             _spaceShipSpawnManager = spaceShipSpawnManager;
             _asteroidFactory = asteroidFactory;
@@ -44,7 +46,8 @@ namespace GameLogic
             _missilePoolSizeData = missilePoolSizeData;
             _ufoSpawnData = ufoSpawnData;
             _scoreManager = scoreManager;
-            _uiRestartSpawnManager = uiRestartSpawnManager;
+            _instantiator = instantiator;
+            _gameplayUI = gameplayUI;
         }
 
         private void Start()
@@ -55,6 +58,9 @@ namespace GameLogic
             _spaceShip = _spaceShipSpawnManager.SpaceShipObject;
             _shootingLaser = _spaceShipSpawnManager.ShootingLaser;
             _dataSpaceShip = _spaceShipSpawnManager.DataSpaceShip;
+
+            _uiSpawnManager = new UISpawnManager(_scoreManager, _instantiator, _gameplayUI, 
+                _shootingLaser, _dataSpaceShip, _gameOver);
             
             _ufoFactory = new UFOFactory(_scoreManager, _gameOver,
                 _screenSize, _ufoPrefab, _spaceShip, _missilePoolSizeData);
@@ -62,13 +68,11 @@ namespace GameLogic
             _ufoSpawnManager = new UFOSpawnManager(_gameOver, _screenSize,
                 _ufoFactory, _ufoSpawnData, _scoreManager);
             
-            // _uiSpawnManager = new UISpawnManager()
-            
             _asteroidFactory.StartWork();
             _ufoFactory.StartWork();
             _asteroidSpawnManager.StartWork();
             _ufoSpawnManager.StartWork();
-            // _uiSpawnManager.StartWork();
+            _uiSpawnManager.StartWork();
             
         }
     }

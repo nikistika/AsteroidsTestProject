@@ -1,8 +1,4 @@
-using GameLogic;
 using Managers;
-using Player;
-using Shooting;
-using UnityEngine;
 using Zenject;
 
 namespace UI
@@ -24,18 +20,6 @@ namespace UI
             _gameplayUI = gameplayUI;
 
         }
-
-        // public void StartWork()
-        // {
-        //     SpawnUI();
-        // }
-
-        // private void SpawnUI()
-        // {
-        //     var gameplayUIObject = _iInstantiator.InstantiatePrefab(_gameplayUI);
-        //     var gameplayUI = gameplayUIObject.GetComponent<GameplayUI>();
-        //     gameplayUI.Construct(_shootingLaser, _dataSpaceShip, _gameOver, _scoreManager);
-        // }
         
         public void SpawnRestartPanel()
         {
