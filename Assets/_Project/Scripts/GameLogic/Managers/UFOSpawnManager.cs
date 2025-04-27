@@ -11,12 +11,12 @@ namespace Managers
     public class UFOSpawnManager : BaseSpawnManager<UFO>
     {
         private WaitForSeconds _waitRespawnUFORange;
-        private UFOFactory _ufoFactory;
-        private EnemySpawnManagerSO _ufoSpawnData;
+        private readonly  UFOFactory _ufoFactory;
+        private readonly  EnemySpawnManagerSO _ufoSpawnData;
 
         public UFOSpawnManager(GameOver gameOver, ScreenSize screenSize, UFOFactory ufoFactory,
-            EnemySpawnManagerSO ufoSpawnData, ScoreManager scoreManager) :
-            base(gameOver, screenSize, scoreManager)
+            EnemySpawnManagerSO ufoSpawnData) :
+            base(gameOver, screenSize)
         {
             _ufoFactory = ufoFactory;
             _ufoSpawnData = ufoSpawnData;

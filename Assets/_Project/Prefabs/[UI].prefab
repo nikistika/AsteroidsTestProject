@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5061637090287294370}
   - component: {fileID: 4146471527959913948}
+  - component: {fileID: 6990470850528050003}
+  - component: {fileID: 4080289236432125533}
   m_Layer: 0
   m_Name: '[UI]'
   m_TagString: Untagged
@@ -43,6 +45,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 51e66a28a53a35c4387507b60fa4fb55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scoreTMP: {fileID: 8746870485210101301}
+  _laserCountTMP: {fileID: 4530593344796773535}
+  _coordinatesTMP: {fileID: 1015803844558360888}
+  _rotationTMP: {fileID: 7687398037346868591}
+  _speedTMP: {fileID: 8871198564736349095}
+--- !u!114 &6990470850528050003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076486470595468299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d54ff4c3a1443c6bab118025878f5c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4080289236432125533
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2076486470595468299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3256ac8f1e449b794e73b08a22fcf57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreTMP: {fileID: 8746870485210101301}

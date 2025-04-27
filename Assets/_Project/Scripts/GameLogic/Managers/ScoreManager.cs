@@ -1,8 +1,10 @@
 using System;
+using ModestTree;
+using Zenject;
 
 namespace Managers
 {
-    public class ScoreManager
+    public class ScoreManager : IInitializable
     {
         public event Action<int> OnScoreChanged;
 
@@ -10,19 +12,21 @@ namespace Managers
 
         private bool _startFlag;
 
-        public void StartWork()
-        {
-            if (_startFlag == false)
-            {
-                _startFlag = true;
-                AddScore(0);
-            }
-        }
-
         public void AddScore(int score)
         {
             CurrentScore += score;
             OnScoreChanged?.Invoke(CurrentScore);
+        }
+
+        [Inject]
+        public void Initialize()
+        {
+            if (_startFlag == false)
+            {
+                Log.Debug("Initializing score manager");
+                _startFlag = true;
+                AddScore(0);
+            }
         }
     }
 }

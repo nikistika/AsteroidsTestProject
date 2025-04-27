@@ -7,14 +7,12 @@ namespace Managers
         protected bool FlagGameOver;
         protected ScreenSize ScreenSize;
         protected GameOver GameOver;
-        protected ScoreManager ScoreManager;
 
         protected BaseSpawnManager(GameOver gameOver,
-            ScreenSize screenSize, ScoreManager scoreManager)
+            ScreenSize screenSize)
         {
             GameOver = gameOver;
             ScreenSize = screenSize;
-            ScoreManager = scoreManager;
         }
 
         public void StartWork()

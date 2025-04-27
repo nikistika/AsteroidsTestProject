@@ -12,18 +12,18 @@ namespace Characters
     {
         public event Action<UFO> OnReturnUFO;
 
-        private SpaceShip _spaceShip;
+        private ShipRepository _shipRepository;
         private GameOver _gameOver;
         private bool _flagGameOver;
 
         [SerializeField] private int _speed = 1;
 
         [Inject]
-        public void Construct(GameOver gameOver, SpaceShip spaseShip, ScreenSize screenSize)
+        public void Construct(GameOver gameOver, ShipRepository shipRepository, ScreenSize screenSize)
         {
             base.Construct(screenSize);
             _gameOver = gameOver;
-            _spaceShip = spaseShip;
+            _shipRepository = shipRepository;
         }
 
         private void Start()
@@ -46,7 +46,7 @@ namespace Characters
 
         private void Move()
         {
-            Vector2 direction = (_spaceShip.transform.position - transform.position).normalized;
+            Vector2 direction = (_shipRepository.SpaceShip.transform.position - transform.position).normalized;
             Rigidbody.velocity = direction * _speed;
         }
 

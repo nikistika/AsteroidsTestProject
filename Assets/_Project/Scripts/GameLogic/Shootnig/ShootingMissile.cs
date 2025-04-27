@@ -41,7 +41,7 @@ namespace Shooting
         {
             if (OnReturnMissileToPool != null)
             {
-                OnReturnMissileToPool.Invoke(missile);
+                OnReturnMissileToPool?.Invoke(missile);
             }
         }
 

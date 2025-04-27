@@ -4,18 +4,19 @@ using Managers;
 using Player;
 using SciptableObjects;
 using UnityEngine;
+using Zenject;
 
 namespace Factories
 {
-    public class UFOFactory : AbstractEnemyFactory<UFO>
+    public class UFOFactory : EnemyFactory<UFO>, IInitializable
     {
-        private SpaceShip _spaceShip;
+        private readonly  ShipRepository _shipRepository;
 
         public UFOFactory(ScoreManager scoreManager, GameOver gameOver,
-            ScreenSize screenSize, UFO prefab, SpaceShip spaceShip, PoolSizeSO ufoPoolSizeData) :
+            ScreenSize screenSize, UFO prefab, ShipRepository shipRepository, PoolSizeSO ufoPoolSizeData) :
             base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData)
         {
-            _spaceShip = spaceShip;
+            _shipRepository = shipRepository;
         }
 
         protected override void ActionReleaseObject(UFO obj)
@@ -27,7 +28,7 @@ namespace Factories
         protected override UFO ActionCreateObject()
         {
             var UFO = Object.Instantiate(Prefab);
-            UFO.Construct(GameOver, _spaceShip, ScreenSize);
+            UFO.Construct(GameOver, _shipRepository, ScreenSize);
             UFO.GetComponent<Score>().Construct(ScoreManager);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
@@ -37,6 +38,11 @@ namespace Factories
         {
             obj.gameObject.SetActive(true);
             obj.gameObject.transform.position = GetRandomSpawnPosition();
+        }
+
+        public void Initialize()
+        {
+            StartWork();
         }
     }
 }

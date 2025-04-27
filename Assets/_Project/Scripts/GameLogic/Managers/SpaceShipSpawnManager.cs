@@ -15,10 +15,11 @@ namespace Managers
         private ShootingMissile _shootingMissile;
         private InputKeyboard _inputKeyboard;
         private MissileFactory _missileFactory;
-        private GameplayUI _gameplayUI;
-        private SpaceShip _spaceShipPrefab;
-        private Missile _missilePrefab;
-        private PoolSizeSO _missilePoolSizeData;
+        
+        private readonly  SpaceShip _spaceShipPrefab;
+        private readonly  Missile _missilePrefab;
+        private readonly  PoolSizeSO _missilePoolSizeData;
+        private readonly  ShipRepository _shipRepository;
 
         public SpaceShip SpaceShipObject { get; private set; }
         public ShootingLaser ShootingLaser { get; private set; }
@@ -26,14 +27,14 @@ namespace Managers
 
         public SpaceShipSpawnManager(GameOver gameOver,
             ScreenSize screenSize, Missile missilePrefab,
-            GameplayUI gameplayUI, SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData,
-            ScoreManager scoreManager) :
-            base(gameOver, screenSize, scoreManager)
+            SpaceShip spaceShipPrefab, PoolSizeSO missilePoolSizeData,
+            ShipRepository shipRepository) :
+            base(gameOver, screenSize)
         {
             _missilePrefab = missilePrefab;
-            _gameplayUI = gameplayUI;
             _spaceShipPrefab = spaceShipPrefab;
             _missilePoolSizeData = missilePoolSizeData;
+            _shipRepository = shipRepository;
         }
 
         public override SpaceShip SpawnObject()
@@ -55,6 +56,8 @@ namespace Managers
             _shootingMissile = objectSpaceShip.GetComponent<ShootingMissile>();
             ShootingLaser = objectSpaceShip.GetComponent<ShootingLaser>();
             DataSpaceShip = objectSpaceShip.GetComponent<DataSpaceShip>();
+            
+            _shipRepository.GetSpaceShip(objectSpaceShip, ShootingLaser, DataSpaceShip);
         }
 
         private void DependencyTransfer(SpaceShip objectSpaceShip)

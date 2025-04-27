@@ -5,12 +5,12 @@ using UnityEngine;
 
 namespace Factories
 {
-    public abstract class AbstractEnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
+    public abstract class EnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
-        protected ScoreManager ScoreManager;
-        protected GameOver GameOver;
+        protected readonly  ScoreManager ScoreManager;
+        protected readonly  GameOver GameOver;
 
-        protected AbstractEnemyFactory(ScoreManager scoreManager, GameOver gameOver,
+        protected EnemyFactory(ScoreManager scoreManager, GameOver gameOver,
             ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData) :
             base(screenSize, prefab, poolSizeData)
         {

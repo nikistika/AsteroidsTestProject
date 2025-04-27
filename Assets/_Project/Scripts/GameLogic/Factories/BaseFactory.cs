@@ -7,12 +7,14 @@ namespace Factories
 {
     public abstract class BaseFactory<T> where T : MonoBehaviour
     {
-        protected ScreenSize ScreenSize;
-        protected T Prefab;
+        protected readonly  ScreenSize ScreenSize;
+        protected readonly  T Prefab;
 
+        private readonly  int _defaultPoolSize;
+        private readonly  int _maxPoolSize;
+        
         private ObjectPool<T> _pool;
-        private int _defaultPoolSize;
-        private int _maxPoolSize;
+
 
         protected BaseFactory(ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData)
         {

@@ -3,10 +3,11 @@ using GameLogic;
 using Managers;
 using SciptableObjects;
 using UnityEngine;
+using Zenject;
 
 namespace Factories
 {
-    public class AsteroidFactory : AbstractEnemyFactory<Asteroid>
+    public class AsteroidFactory : EnemyFactory<Asteroid>, IInitializable
     {
         public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver,
             ScreenSize screenSize, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) :
@@ -35,6 +36,11 @@ namespace Factories
         {
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.gameObject.SetActive(false);
+        }
+
+        public void Initialize()
+        {
+            StartWork();
         }
     }
 }

@@ -16,8 +16,8 @@ namespace Managers
 
         public AsteroidSpawnManager(GameOver gameOver,
             ScreenSize screenSize, AsteroidFactory asteroidFactory,
-            EnemySpawnManagerSO asteroidSpawnData, ScoreManager scoreManager) :
-            base(gameOver, screenSize, scoreManager)
+            EnemySpawnManagerSO asteroidSpawnData) :
+            base(gameOver, screenSize)
         {
             _asteroidFactory = asteroidFactory;
             _asteroidSpawnData = asteroidSpawnData;

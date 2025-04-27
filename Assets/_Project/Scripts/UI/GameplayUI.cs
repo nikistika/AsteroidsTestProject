@@ -12,7 +12,7 @@ namespace UI
         private int _maxLaserCount;
         private string _laserCountText;
         private ShootingLaser _shootingLaser;
-        private DataSpaceShip _dataSpaceShip;
+        private ShipRepository _shipRepository;
         private GameOver _gameOver;
         private ScoreManager _scoreManager;
 
@@ -22,30 +22,33 @@ namespace UI
         [SerializeField] private TMP_Text _rotationTMP;
         [SerializeField] private TMP_Text _speedTMP;
 
-        public void Construct(ShootingLaser shootingLaser,
-            DataSpaceShip dataSpaceShip, GameOver gameOver, ScoreManager scoreManager)
+        public void Construct(ShipRepository shipRepository, GameOver gameOver, ScoreManager scoreManager)
         {
-            _shootingLaser = shootingLaser;
-            _dataSpaceShip = dataSpaceShip;
+            _shipRepository = shipRepository;
             _gameOver = gameOver;
             _scoreManager = scoreManager;
         }
-
+        
         private void Start()
         {
+            _shootingLaser = _shipRepository.ShootingLaser;
+            
             _shootingLaser.OnEditLaserCount += EditLaserCount;
             _shootingLaser.OnLaserCooldown += LaserCooldown;
             _scoreManager.OnScoreChanged += AddScore;
             _gameOver.OnGameOver += GameOver;
-
+            
             AddScore(0);
+            
             _maxLaserCount = _shootingLaser.MaxLaserCount;
             EditLaserCount(_shootingLaser.LaserCount);
         }
 
+
+
         private void Update()
         {
-            DisplayDataAboutCharacter();
+            if (_shipRepository.DataSpaceShip != null) DisplayDataAboutCharacter();
         }
 
         private void AddScore(int score)
@@ -66,9 +69,9 @@ namespace UI
 
         private void DisplayDataAboutCharacter()
         {
-            _coordinatesTMP.text = $"Coordinates: {_dataSpaceShip.GetCoordinates()}";
-            _rotationTMP.text = $"Rotation: {_dataSpaceShip.GetRotation()}";
-            _speedTMP.text = $"Speed: {_dataSpaceShip.GetSpeed()}";
+            _coordinatesTMP.text = $"Coordinates: {_shipRepository.DataSpaceShip.GetCoordinates()}";
+            _rotationTMP.text = $"Rotation: {_shipRepository.DataSpaceShip.GetRotation()}";
+            _speedTMP.text = $"Speed: {_shipRepository.DataSpaceShip.GetSpeed()}";
         }
 
         private void GameOver()
