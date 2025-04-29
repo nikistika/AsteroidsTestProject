@@ -9,8 +9,12 @@ namespace Factories
 {
     public class AsteroidFactory : EnemyFactory<Asteroid>, IInitializable
     {
-        public AsteroidFactory(ScoreManager scoreManager, GameOver gameOver,
-            ScreenSize screenSize, Asteroid prefab, PoolSizeSO asteroidPoolSizeData) :
+        public AsteroidFactory(
+            ScoreManager scoreManager, 
+            GameOver gameOver,
+            ScreenSize screenSize, 
+            Asteroid prefab, 
+            PoolSizeSO asteroidPoolSizeData) :
             base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData)
         {
         }

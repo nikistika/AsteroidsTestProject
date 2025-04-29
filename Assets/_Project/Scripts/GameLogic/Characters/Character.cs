@@ -12,7 +12,8 @@ namespace Characters
         protected ScreenSize ScreenSize { get; private set; }
 
         [Inject]
-        public void Construct(ScreenSize screenSize)
+        public void Construct(
+            ScreenSize screenSize)
         {
             ScreenSize = screenSize;
         }

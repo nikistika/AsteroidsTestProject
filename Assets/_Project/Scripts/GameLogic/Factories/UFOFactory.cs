@@ -12,8 +12,13 @@ namespace Factories
     {
         private readonly  ShipRepository _shipRepository;
 
-        public UFOFactory(ScoreManager scoreManager, GameOver gameOver,
-            ScreenSize screenSize, UFO prefab, ShipRepository shipRepository, PoolSizeSO ufoPoolSizeData) :
+        public UFOFactory(
+            ScoreManager scoreManager, 
+            GameOver gameOver,
+            ScreenSize screenSize,
+            UFO prefab, ShipRepository 
+                shipRepository, 
+            PoolSizeSO ufoPoolSizeData) :
             base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData)
         {
             _shipRepository = shipRepository;

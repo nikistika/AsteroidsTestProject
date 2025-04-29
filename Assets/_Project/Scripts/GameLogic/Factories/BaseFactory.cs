@@ -16,7 +16,10 @@ namespace Factories
         private ObjectPool<T> _pool;
 
 
-        protected BaseFactory(ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData)
+        protected BaseFactory(
+            ScreenSize screenSize, 
+            T prefab, 
+            PoolSizeSO poolSizeData)
         {
             ScreenSize = screenSize;
             Prefab = prefab;

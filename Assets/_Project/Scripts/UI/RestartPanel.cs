@@ -11,6 +11,7 @@ namespace UI
         public void ActivateRestartPanel(int score)
         {
             _scoreText.text = $"Score: {score}";
+            gameObject.SetActive(true);
         }
 
         public void RestartGame()

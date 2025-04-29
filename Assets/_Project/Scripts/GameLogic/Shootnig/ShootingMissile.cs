@@ -17,7 +17,8 @@ namespace Shooting
         [SerializeField] private float _delayShotTimes = 1;
 
         [Inject]
-        public void Construct(MissileFactory missileFactory)
+        public void Construct(
+        MissileFactory missileFactory)
         {
             _missileFactory = missileFactory;
         }

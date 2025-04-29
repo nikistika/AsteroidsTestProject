@@ -19,7 +19,10 @@ namespace Characters
         [SerializeField] private int _speed = 1;
 
         [Inject]
-        public void Construct(GameOver gameOver, ShipRepository shipRepository, ScreenSize screenSize)
+        public void Construct(
+            GameOver gameOver, 
+            ShipRepository shipRepository, 
+            ScreenSize screenSize)
         {
             base.Construct(screenSize);
             _gameOver = gameOver;

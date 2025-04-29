@@ -16,19 +16,18 @@ namespace GameLogic
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
         private UISpawnManager _uiSpawnManager;
-        private GameplayUI _gameplayUIObject;
-        private UIRestartSpawnManager _uiRestartSpawnManager;
 
         [Inject]
-        public void Construct(SpaceShipSpawnManager spaceShipSpawnManager,
-            AsteroidSpawnManager asteroidSpawnManager, UISpawnManager uiSpawnManager,
-            UFOSpawnManager ufoSpawnManager, UIRestartSpawnManager uiRestartSpawnManager)
+        public void Construct(
+            SpaceShipSpawnManager spaceShipSpawnManager,
+            AsteroidSpawnManager asteroidSpawnManager, 
+            UISpawnManager uiSpawnManager,
+            UFOSpawnManager ufoSpawnManager)
         {
             _spaceShipSpawnManager = spaceShipSpawnManager;
             _asteroidSpawnManager = asteroidSpawnManager;
             _uiSpawnManager = uiSpawnManager;
             _ufoSpawnManager = ufoSpawnManager;
-            _uiRestartSpawnManager = uiRestartSpawnManager;
         }
 
         private void Start()
@@ -37,7 +36,6 @@ namespace GameLogic
             _uiSpawnManager.StartWork();
             _asteroidSpawnManager.StartWork();
             _ufoSpawnManager.StartWork();
-            _uiRestartSpawnManager.StartWork();
         }
     }
 }

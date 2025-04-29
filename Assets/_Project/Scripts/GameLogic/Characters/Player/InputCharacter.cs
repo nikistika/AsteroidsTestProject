@@ -20,7 +20,8 @@ namespace Player
         [SerializeField] private ShootingLaser _shootingLaser;
 
         [Inject]
-        public void Construct(GameOver gameOver)
+        public void Construct(
+            GameOver gameOver)
         {
             _gameOver = gameOver;
         }

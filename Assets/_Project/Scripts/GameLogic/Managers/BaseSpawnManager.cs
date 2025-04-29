@@ -8,7 +8,8 @@ namespace Managers
         protected ScreenSize ScreenSize;
         protected GameOver GameOver;
 
-        protected BaseSpawnManager(GameOver gameOver,
+        protected BaseSpawnManager(
+            GameOver gameOver,
             ScreenSize screenSize)
         {
             GameOver = gameOver;

@@ -11,8 +11,8 @@ namespace Managers
     public class UFOSpawnManager : BaseSpawnManager<UFO>
     {
         private WaitForSeconds _waitRespawnUFORange;
-        private readonly  UFOFactory _ufoFactory;
-        private readonly  EnemySpawnManagerSO _ufoSpawnData;
+        private readonly UFOFactory _ufoFactory;
+        private readonly EnemySpawnManagerSO _ufoSpawnData;
 
         public UFOSpawnManager(GameOver gameOver, ScreenSize screenSize, UFOFactory ufoFactory,
             EnemySpawnManagerSO ufoSpawnData) :

@@ -20,7 +20,6 @@ namespace GameLogic.Installers
         private AsteroidSpawnManager _asteroidSpawnManager;
         private SpaceShipSpawnManager _spaceShipSpawnManager;
         private ScoreManager _scoreManager;
-        private UIRestartSpawnManager _uiRestartSpawnManager;
         private ScreenSize _screenSize;
         private ShipRepository _shipRepository;
         
@@ -91,10 +90,6 @@ namespace GameLogic.Installers
                 _ufoFactory, _ufoSpawnData);
             Container.Bind<UFOSpawnManager>().FromInstance(_ufoSpawnManager).AsSingle();
             
-            _uiRestartSpawnManager = new UIRestartSpawnManager(_scoreManager, _restartPanel, 
-                _instantiator, _gameplayUIRepository, _gameOver);  
-            Container.Bind<UIRestartSpawnManager>().FromInstance(_uiRestartSpawnManager).AsSingle();
-            
             _asteroidSpawnManager = new AsteroidSpawnManager(_gameOver,
                 _screenSize, _asteroidFactory, _asteroidSpawnData);
             Container.Bind<AsteroidSpawnManager>().FromInstance(_asteroidSpawnManager).AsSingle();
@@ -103,8 +98,6 @@ namespace GameLogic.Installers
 
             Container.Bind<PoolSizeSO>().WithId("UFOPoolSizeData")
                 .FromInstance(_ufoPoolSizeData).AsSingle();
-            
-            // Container.Bind<GameplayUI>().FromInstance(_gameplayUI).AsSingle();
             
             Container.Bind<EntryPoint>().FromInstance(_entryPoint).AsSingle();
             

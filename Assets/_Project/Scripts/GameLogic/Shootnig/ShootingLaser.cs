@@ -7,7 +7,7 @@ namespace Shooting
     public class ShootingLaser : MonoBehaviour
     {
         public event Action<int> OnEditLaserCount;
-        public event Action<float, float> OnLaserCooldown;
+        public event Action<int, int> OnLaserCooldown;
 
         private bool _laserActive;
         private bool _laserCooldownActive;
@@ -18,7 +18,7 @@ namespace Shooting
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
         [SerializeField] private float _laserDelay = 1;
-        [SerializeField] private float _laserCooldown = 15;
+        [SerializeField] private int _laserCooldown = 15;
 
         [field: SerializeField] public int MaxLaserCount { get; private set; } = 3;
         [field: SerializeField] public int LaserCount { get; private set; }
@@ -65,7 +65,7 @@ namespace Shooting
         private IEnumerator ShotCooldown()
         {
             _laserCooldownActive = true;
-            for (float timer = _laserCooldown; timer > 0; timer--)
+            for (int timer = _laserCooldown; timer > 0; timer--)
             {
                 OnLaserCooldown?.Invoke(timer, _laserCooldown);
                 yield return _waitLaserCooldown;

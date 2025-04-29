@@ -12,7 +12,8 @@ namespace Characters
         [SerializeField] private int _scoreKill = 5;
 
         [Inject]
-        public void Construct(ScoreManager scoreManager)
+        public void Construct(
+            ScoreManager scoreManager)
         {
             _scoreManager = scoreManager;
         }

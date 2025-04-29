@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Player
@@ -5,34 +6,40 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class DataSpaceShip : MonoBehaviour
     {
+        public event Action<Vector2> OnGetCoordinates;
+        public event Action<float> OnGetRotation;
+        public event Action<Vector2> OnGetSpeed;
+        
         private Rigidbody2D _rigidbody;
-
+        
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
         }
 
-        public Vector2 GetCoordinates()
+        private void Update()
+        {
+            GetCoordinates();
+            GetRotation();
+            GetSpeed();
+        }
+
+        private void GetCoordinates()
         {
             var coordinates = transform.position;
-            return coordinates;
+            OnGetCoordinates?.Invoke(coordinates);
         }
 
-        public float GetRotation()
+        private void GetRotation()
         {
             var rotation = transform.eulerAngles.z;
-            return rotation;
+            OnGetRotation?.Invoke(rotation);
         }
 
-        public Vector2 GetSpeed()
+        private void GetSpeed()
         {
-            if (_rigidbody != null)
-            {
-                var speed = _rigidbody.velocity;
-                return speed;
-            }
-
-            return Vector2.zero;
+            var speed = _rigidbody.velocity;
+            OnGetSpeed?.Invoke(speed);
         }
     }
 }

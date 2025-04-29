@@ -8,7 +8,10 @@ namespace Player
         public ShootingLaser ShootingLaser { get; private set; }
         public DataSpaceShip DataSpaceShip { get; private set; }
         
-        public void GetSpaceShip(SpaceShip spaceShip, ShootingLaser shootingLaser, DataSpaceShip dataSpaceShip)
+        public void GetSpaceShip(
+            SpaceShip spaceShip, 
+            ShootingLaser shootingLaser, 
+            DataSpaceShip dataSpaceShip)
         {
             SpaceShip = spaceShip;
             ShootingLaser = shootingLaser;

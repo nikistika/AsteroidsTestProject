@@ -11,8 +11,12 @@ namespace Factories
         private readonly  SpaceShip _spaceShip;
         private readonly  ShootingMissile _shootingMissile;
 
-        public MissileFactory(ScreenSize screenSize,
-            Missile prefab, SpaceShip spaceShip, ShootingMissile shootingMissile, PoolSizeSO missilePoolSizeData) :
+        public MissileFactory(
+            ScreenSize screenSize,
+            Missile prefab, 
+            SpaceShip spaceShip, 
+            ShootingMissile shootingMissile, 
+            PoolSizeSO missilePoolSizeData) :
             base(screenSize, prefab, missilePoolSizeData)
         {
             _spaceShip = spaceShip;

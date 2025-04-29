@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Numerics;
+using UnityEngine;
 
 namespace UI.Model
 {
@@ -26,10 +26,9 @@ namespace UI.Model
         public void SetInitialValues(int currentScore, int maxLaserCount)
         {
             CurrentScore = currentScore;
-
+            CurrentLaserCount = maxLaserCount;
             MaxLaserCount = maxLaserCount;
-            CurrentLaserCount = MaxLaserCount;
-            
+
             CurrentScoreChanged?.Invoke();
             CurrentLaserCountChanged?.Invoke();
         }
@@ -40,8 +39,9 @@ namespace UI.Model
             CurrentLaserCountChanged?.Invoke();
         }
 
-        public void SetCooldawnLaserCurrentTime(int cooldawnLaserCurrentTime)
+        public void SetCooldawnLaserCurrentTime(int cooldawnLaserCurrentTime, int cooldawnLaserMaxTime)
         {
+            CooldawnLaserMaxTime = cooldawnLaserMaxTime;
             CooldawnLaserCurrentTime = cooldawnLaserCurrentTime;
             CooldawnLaserCurrentTimeChanged?.Invoke();
         }

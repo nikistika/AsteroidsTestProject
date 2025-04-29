@@ -15,7 +15,9 @@ namespace Shooting
         [SerializeField] private float _speed = 3;
 
         [Inject]
-        public void Construct(ShootingMissile shootingMissile, ScreenSize screenSize)
+        public void Construct(
+            ShootingMissile shootingMissile, 
+            ScreenSize screenSize)
         {
             _shootingMissile = shootingMissile;
             _screenSize = screenSize;

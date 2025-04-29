@@ -10,8 +10,12 @@ namespace Factories
         protected readonly  ScoreManager ScoreManager;
         protected readonly  GameOver GameOver;
 
-        protected EnemyFactory(ScoreManager scoreManager, GameOver gameOver,
-            ScreenSize screenSize, T prefab, PoolSizeSO poolSizeData) :
+        protected EnemyFactory(
+            ScoreManager scoreManager, 
+            GameOver gameOver,
+            ScreenSize screenSize, 
+            T prefab, 
+            PoolSizeSO poolSizeData) :
             base(screenSize, prefab, poolSizeData)
         {
             GameOver = gameOver;
