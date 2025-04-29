@@ -204,7 +204,7 @@ MonoBehaviour:
   _ufoPrefab: {fileID: 3395255367656053016, guid: de5576463dbcec940b6d92821ec78325, type: 3}
   _missilePrefab: {fileID: 6730024081266783, guid: d8f6dd3f95cc5264aa047d2642c6b985, type: 3}
   _spaceShipPrefab: {fileID: 4759089236649671140, guid: 6669effd52ddcba43ab2f6ee739c297b, type: 3}
-  _gameplayUI: {fileID: 5311018642093199054, guid: a4437ee1b0441e34d9cf15e7e1093e7a, type: 3}
+  _gameplayUIView: {fileID: 1148894501908898936, guid: d76de57e59a37494a9b2ff352e192c28, type: 3}
   _asteroidSpawnData: {fileID: 11400000, guid: b0b9797ed4939a149992839a23fbf8e0, type: 2}
   _ufoSpawnData: {fileID: 11400000, guid: 02c1eca5779527349ae69b120da51b6b, type: 2}
   _asteroidPoolSizeData: {fileID: 11400000, guid: 69931697d9e48944583fcbaca442618d, type: 2}
