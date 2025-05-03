@@ -1,20 +1,27 @@
 ﻿using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace UI.View
 {
     public class GameplayUIView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _scoreTMP;
+        [SerializeField] private TMP_Text _currentScoreTMP;
+        [SerializeField] private TMP_Text _recordScoreTMP;
         [SerializeField] private TMP_Text _laserCountTMP;
         [SerializeField] private TMP_Text _coordinatesTMP;
         [SerializeField] private TMP_Text _rotationTMP;
         [SerializeField] private TMP_Text _speedTMP;
         [SerializeField] public RestartPanel _restartPanel;
 
-        public void SetScore(string score)
+        public void SetCurrentScore(string score)
         {
-            _scoreTMP.text = score;
+            _currentScoreTMP.text = score;
+        }
+        
+        public void SetRecordScore(string score)
+        {
+            _recordScoreTMP.text = score;
         }
 
         public void SetLaserCount(string laserCountText)

@@ -1,4 +1,5 @@
 ﻿using GameLogic;
+using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
 using Shooting;
@@ -14,23 +15,28 @@ namespace UI.Presenter
         private readonly GameOver _gameOver;
         private readonly ShipRepository _shipRepository;
         private readonly ScoreManager _scoreManager;
+        private readonly SaveController _saveController;
+        
+        private ShootingLaser _shootingLaser;
         private int _score;
+        private int _recordScore;
         private int _maxLaserCount;
         private bool _flagLaserTime;
-        private ShootingLaser _shootingLaser;
-
+        
         public GameplayUIPresenter(
             GameplayUIView gameplayUIView, 
             GameplayUIModel gameplayUIModel, 
             GameOver gameOver,
             ShipRepository shipRepository, 
-            ScoreManager scoreManager)
+            ScoreManager scoreManager,
+            SaveController saveController)
         {
             _gameplayUIView = gameplayUIView;
             _gameplayUIModel = gameplayUIModel;
             _gameOver = gameOver;
             _shipRepository = shipRepository;
             _scoreManager = scoreManager;
+            _saveController = saveController;
         }
 
         public void StartWork()
@@ -53,6 +59,7 @@ namespace UI.Presenter
             _shipRepository.DataSpaceShip.OnGetSpeed += _gameplayUIModel.SetSpeed;
 
             _gameOver.OnGameOver += GameOver;
+            _gameOver.OnGameOver += UpdateRecordScore;
 
             _maxLaserCount = _shootingLaser.MaxLaserCount;
             _score = _gameplayUIModel.CurrentScore;
@@ -63,7 +70,13 @@ namespace UI.Presenter
         private void UpdateCurrentScore()
         {
             _score = _gameplayUIModel.CurrentScore;
-            _gameplayUIView.SetScore($"Score: {_gameplayUIModel.CurrentScore}");
+            _gameplayUIView.SetCurrentScore($"Score: {_gameplayUIModel.CurrentScore}");
+        }
+
+        private void UpdateRecordScore()
+        {
+            _gameplayUIModel.SetRecordScore(_saveController.GetRecordInPlayerPrefs().ScoreRecord);
+            _gameplayUIView.SetRecordScore($"Record score: {_gameplayUIModel.RecordScore}");
         }
 
         private void UpdateCurrentLaserCount()

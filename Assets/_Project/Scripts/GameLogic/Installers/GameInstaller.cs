@@ -1,5 +1,7 @@
 ﻿using Characters;
 using Factories;
+using GameLogic;
+using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
 using SciptableObjects;
@@ -9,9 +11,9 @@ using UI.View;
 using UnityEngine;
 using Zenject;
 
-namespace GameLogic.Installers
+namespace Installers
 {
-    public sealed class AsteroidGameInstaller : MonoInstaller
+    public sealed class GameInstaller : MonoInstaller
     {
         private Camera _camera;
         private GameOver _gameOver;
@@ -27,7 +29,9 @@ namespace GameLogic.Installers
         private UFOFactory _ufoFactory;
         private UFOSpawnManager _ufoSpawnManager;
         private GameplayUIRepository _gameplayUIRepository;
+        private EntryPoint _entryPoint;
         
+        [Inject] private SaveController _saveController;
         [Inject] private IInstantiator _instantiator;
 
         [SerializeField] private Asteroid _asteroidPrefab;
@@ -41,8 +45,9 @@ namespace GameLogic.Installers
         [SerializeField] private PoolSizeSO _ufoPoolSizeData;
         [SerializeField] private PoolSizeSO _missilePoolSizeData;
         [SerializeField] private RestartPanel _restartPanel;
-        [SerializeField] private EntryPoint _entryPoint;
 
+        //TODO: ппопробовать Bind<Class>().WithArguments().AsSingle();
+        
         // ReSharper disable Unity.PerformanceAnalysis
         public override void InstallBindings()
         {
@@ -67,11 +72,11 @@ namespace GameLogic.Installers
             _scoreManager = new ScoreManager();
             Container.Bind<ScoreManager>().FromInstance(_scoreManager).AsSingle();
 
-            _gameOver = new GameOver();
+            _gameOver = new GameOver(_saveController, _scoreManager);
             Container.Bind<GameOver>().FromInstance(_gameOver).AsSingle();
             
             _uiSpawnManager = new UISpawnManager(_scoreManager, _instantiator, 
-            _shipRepository, _gameOver, _gameplayUIRepository, _gameplayUIView);
+            _shipRepository, _gameOver, _gameplayUIRepository, _gameplayUIView, _saveController);
             Container.Bind<UISpawnManager>().FromInstance(_uiSpawnManager).AsSingle();
             
             _spaceShipSpawnManager = new SpaceShipSpawnManager(_gameOver, _screenSize,
@@ -99,13 +104,14 @@ namespace GameLogic.Installers
             Container.Bind<PoolSizeSO>().WithId("UFOPoolSizeData")
                 .FromInstance(_ufoPoolSizeData).AsSingle();
             
+            _entryPoint = new EntryPoint(_spaceShipSpawnManager, _asteroidSpawnManager, _uiSpawnManager, 
+                _ufoSpawnManager);
             Container.Bind<EntryPoint>().FromInstance(_entryPoint).AsSingle();
             
             Container.Bind<IInitializable>().FromInstance(_scoreManager).AsCached();
             Container.Bind<IInitializable>().FromInstance(_asteroidFactory).AsCached();
             Container.Bind<IInitializable>().FromInstance(_ufoFactory).AsCached();
-            
-            Container.Inject(_entryPoint);
+            Container.Bind<IInitializable>().FromInstance(_entryPoint).AsCached();
         }
     }
 }

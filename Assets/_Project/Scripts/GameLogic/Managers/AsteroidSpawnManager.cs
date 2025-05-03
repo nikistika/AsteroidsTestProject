@@ -46,7 +46,7 @@ namespace Managers
                     fragment.IsObjectParent(false);
                     fragment.transform.position = objectParent.transform.position;
                     fragment.transform.localScale = objectParent.transform.localScale / 2;
-                    fragment.MoveFragment(i, fragment);
+                    fragment.MoveFragment(fragment);
                 }
             }
         }

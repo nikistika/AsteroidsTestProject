@@ -1,26 +1,19 @@
 using Managers;
-using Player;
-using Shooting;
 using UI;
-using UnityEngine;
 using Zenject;
 
 namespace GameLogic
 {
-    public class EntryPoint : MonoBehaviour
+    public class EntryPoint : IInitializable
     {
-        private AsteroidSpawnManager _asteroidSpawnManager;
-        private UFOSpawnManager _ufoSpawnManager;
-        private SpaceShipSpawnManager _spaceShipSpawnManager;
-        private SpaceShip _spaceShip;
-        private ShootingLaser _shootingLaser;
-        private DataSpaceShip _dataSpaceShip;
-        private UISpawnManager _uiSpawnManager;
+        private readonly AsteroidSpawnManager _asteroidSpawnManager;
+        private readonly UFOSpawnManager _ufoSpawnManager;
+        private readonly SpaceShipSpawnManager _spaceShipSpawnManager;
+        private readonly UISpawnManager _uiSpawnManager;
 
-        [Inject]
-        public void Construct(
+        public EntryPoint(
             SpaceShipSpawnManager spaceShipSpawnManager,
-            AsteroidSpawnManager asteroidSpawnManager, 
+            AsteroidSpawnManager asteroidSpawnManager,
             UISpawnManager uiSpawnManager,
             UFOSpawnManager ufoSpawnManager)
         {
@@ -29,8 +22,9 @@ namespace GameLogic
             _uiSpawnManager = uiSpawnManager;
             _ufoSpawnManager = ufoSpawnManager;
         }
-
-        private void Start()
+        
+        // ReSharper disable Unity.PerformanceAnalysis
+        public void Initialize()
         {
             _spaceShipSpawnManager.StartWork();
             _uiSpawnManager.StartWork();

@@ -1,4 +1,5 @@
 ﻿using GameLogic;
+using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
 using UI.Model;
@@ -18,6 +19,7 @@ namespace UI
         private readonly GameplayUIView _gameplayUIViewPrefab;
         private GameplayUIModel _gameplayUIModel;
         private GameplayUIPresenter _gameplayUIPresenter;
+        private SaveController _saveController;
 
         public UISpawnManager(
             ScoreManager scoreManager,
@@ -25,7 +27,8 @@ namespace UI
             ShipRepository shipRepository,
             GameOver gameOver,
             GameplayUIRepository gameplayUIRepository,
-            GameplayUIView gameplayUIViewPrefab)
+            GameplayUIView gameplayUIViewPrefab,
+            SaveController saveController)
         {
             _scoreManager = scoreManager;
             _instantiator = instantiator;
@@ -33,6 +36,7 @@ namespace UI
             _gameOver = gameOver;
             _gameplayUIRepository = gameplayUIRepository;
             _gameplayUIViewPrefab = gameplayUIViewPrefab;
+            _saveController = saveController;
         }
 
         public void StartWork()
@@ -46,7 +50,7 @@ namespace UI
             var gameplayUIPresenter = gameplayUIObject.GetComponent<GameplayUIView>();
             _gameplayUIModel = new GameplayUIModel();
             _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIPresenter, _gameplayUIModel, _gameOver,
-                _shipRepository, _scoreManager);
+                _shipRepository, _scoreManager, _saveController);
 
             _gameplayUIRepository.GetGameplayUIObject(gameplayUIPresenter);
 

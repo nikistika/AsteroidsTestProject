@@ -55,12 +55,12 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
+            if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
                 OnReturnUFO?.Invoke(this);
             }
 
-            if (collision.GetComponent<SpaceShip>())
+            if (collision.TryGetComponent<SpaceShip>(out _))
             {
                 _gameOver.EndGame();
             }

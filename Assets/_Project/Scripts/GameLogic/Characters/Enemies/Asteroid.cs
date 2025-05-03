@@ -16,6 +16,10 @@ namespace Characters
 
         private bool _flagParent = true;
         private GameOver _gameOver;
+        private float _scaleNumber1 = 1;
+        private float _scaleNumber1_5 = 1.5f;
+        private float _scaleNumber2 = 2f;
+        private float _scaleNumber2_5 = 2.5f;
 
         [SerializeField] private int _speed = 1;
 
@@ -55,16 +59,11 @@ namespace Characters
             _flagParent = isObjectParent;
         }
 
-        public void MoveFragment(int fragmentNumber, Asteroid fragmentAsteroid)
+        public void MoveFragment(Asteroid fragmentAsteroid)
         {
-            if (fragmentNumber == 1)
-                fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f);
-            else if (fragmentNumber == 2)
-                fragmentAsteroid.Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f);
-            else if (fragmentNumber == 3)
-                fragmentAsteroid.Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f));
-            else if (fragmentNumber == 4)
-                fragmentAsteroid.Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f));
+            
+            Vector2 direction = Random.insideUnitCircle.normalized;
+            fragmentAsteroid.Rigidbody.velocity = direction;
         }
 
         protected override void Initialize()
@@ -75,7 +74,7 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
+            if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
                 if (_flagParent)
                 {
@@ -89,24 +88,23 @@ namespace Characters
                 OnReturnAsteroid?.Invoke(this);
             }
 
-            if (collision.GetComponent<SpaceShip>())
+            if (collision.TryGetComponent<SpaceShip>(out _))
             {
                 _gameOver.EndGame();
             }
         }
-
+        
         private void RandomScale()
         {
-            int randomIndex = Random.Range(0, 3);
-
-            switch (randomIndex)
+            if (Random.value > 0.5f)
             {
-                case 1:
-                    transform.localScale = new Vector3(Random.Range(1f, 1.5f), Random.Range(1f, 1.5f), 2);
-                    break;
-                case 2:
-                    transform.localScale = new Vector3(Random.Range(1.5f, 2.5f), Random.Range(1.5f, 2.5f), 2);
-                    break;
+                transform.localScale = new Vector3(Random.Range(_scaleNumber1, _scaleNumber1_5), 
+                    Random.Range(_scaleNumber1, _scaleNumber1_5), _scaleNumber2);
+            }
+            else
+            {
+                transform.localScale = new Vector3(Random.Range(_scaleNumber1_5, _scaleNumber2_5), 
+                    Random.Range(_scaleNumber1_5, _scaleNumber2_5), _scaleNumber2);
             }
         }
 

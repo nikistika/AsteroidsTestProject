@@ -20,7 +20,7 @@ namespace Characters
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Missile>() || collision.GetComponent<Laser>())
+            if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
                 _scoreManager.AddScore(_scoreKill);
             }

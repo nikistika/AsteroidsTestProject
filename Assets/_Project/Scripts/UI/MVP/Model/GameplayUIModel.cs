@@ -11,8 +11,10 @@ namespace UI.Model
         public event Action CoordinatesShipChanged;
         public event Action SpeedShipChanged;
         public event Action RotationShipChanged;
+        public event Action RecordScoreChanged;
 
         public int CurrentScore { get; private set; }
+        public int RecordScore { get; private set; }
         public int MaxLaserCount { get; private set; }
         public int CurrentLaserCount { get; private set; }
 
@@ -50,6 +52,12 @@ namespace UI.Model
         {
             CurrentScore = currentScore;
             CurrentScoreChanged?.Invoke();
+        }
+        
+        public void SetRecordScore(int recordScore)
+        {
+            RecordScore = recordScore;
+            RecordScoreChanged?.Invoke();
         }
 
         public void SetCoordinates(Vector2 shipCoordinates)
