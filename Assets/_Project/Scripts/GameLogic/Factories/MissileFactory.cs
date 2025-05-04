@@ -8,14 +8,14 @@ namespace Factories
 {
     public class MissileFactory : BaseFactory<Missile>
     {
-        private readonly  SpaceShip _spaceShip;
-        private readonly  ShootingMissile _shootingMissile;
+        private readonly SpaceShip _spaceShip;
+        private readonly ShootingMissile _shootingMissile;
 
         public MissileFactory(
             ScreenSize screenSize,
-            Missile prefab, 
-            SpaceShip spaceShip, 
-            ShootingMissile shootingMissile, 
+            Missile prefab,
+            SpaceShip spaceShip,
+            ShootingMissile shootingMissile,
             PoolSizeSO missilePoolSizeData) :
             base(screenSize, prefab, missilePoolSizeData)
         {

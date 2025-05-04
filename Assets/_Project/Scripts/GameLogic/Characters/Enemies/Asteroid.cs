@@ -1,5 +1,6 @@
 using System;
 using GameLogic;
+using Managers;
 using Player;
 using Shooting;
 using UnityEngine;
@@ -16,6 +17,7 @@ namespace Characters
 
         private bool _flagParent = true;
         private GameOver _gameOver;
+        private KillManager _killManager;
         private float _scaleNumber1 = 1;
         private float _scaleNumber1_5 = 1.5f;
         private float _scaleNumber2 = 2f;
@@ -25,11 +27,13 @@ namespace Characters
 
         [Inject]
         public void Construct(
-            GameOver gameOver, 
-            ScreenSize screenSize)
+            GameOver gameOver,
+            ScreenSize screenSize,
+            KillManager killManager)
         {
             base.Construct(screenSize);
             _gameOver = gameOver;
+            _killManager = killManager;
         }
 
         private void Start()
@@ -61,7 +65,6 @@ namespace Characters
 
         public void MoveFragment(Asteroid fragmentAsteroid)
         {
-            
             Vector2 direction = Random.insideUnitCircle.normalized;
             fragmentAsteroid.Rigidbody.velocity = direction;
         }
@@ -85,6 +88,8 @@ namespace Characters
                     transform.localScale *= 2;
                 }
 
+                _killManager.AddAsteroid(1);
+
                 OnReturnAsteroid?.Invoke(this);
             }
 
@@ -93,17 +98,17 @@ namespace Characters
                 _gameOver.EndGame();
             }
         }
-        
+
         private void RandomScale()
         {
             if (Random.value > 0.5f)
             {
-                transform.localScale = new Vector3(Random.Range(_scaleNumber1, _scaleNumber1_5), 
+                transform.localScale = new Vector3(Random.Range(_scaleNumber1, _scaleNumber1_5),
                     Random.Range(_scaleNumber1, _scaleNumber1_5), _scaleNumber2);
             }
             else
             {
-                transform.localScale = new Vector3(Random.Range(_scaleNumber1_5, _scaleNumber2_5), 
+                transform.localScale = new Vector3(Random.Range(_scaleNumber1_5, _scaleNumber2_5),
                     Random.Range(_scaleNumber1_5, _scaleNumber2_5), _scaleNumber2);
             }
         }

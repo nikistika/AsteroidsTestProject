@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "411035260698",
+    "project_id": "asteroids-game-9e163",
+    "storage_bucket": "asteroids-game-9e163.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411035260698:android:4cbcb2a813520635ca7ea3",
+        "android_client_info": {
+          "package_name": "com.nikistika.asteroid"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqok9Lw4ldeU33Blf3znDjMwFmZE5_odI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

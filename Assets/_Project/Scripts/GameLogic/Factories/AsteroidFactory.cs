@@ -10,19 +10,20 @@ namespace Factories
     public class AsteroidFactory : EnemyFactory<Asteroid>, IInitializable
     {
         public AsteroidFactory(
-            ScoreManager scoreManager, 
+            ScoreManager scoreManager,
             GameOver gameOver,
-            ScreenSize screenSize, 
-            Asteroid prefab, 
-            PoolSizeSO asteroidPoolSizeData) :
-            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData)
+            ScreenSize screenSize,
+            Asteroid prefab,
+            PoolSizeSO asteroidPoolSizeData,
+            KillManager killManager) :
+            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData, killManager)
         {
         }
 
         protected override Asteroid ActionCreateObject()
         {
             Asteroid asteroid = Object.Instantiate(Prefab);
-            asteroid.Construct(GameOver, ScreenSize);
+            asteroid.Construct(GameOver, ScreenSize, _killManager);
             asteroid.GetComponent<Score>().Construct(ScoreManager);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;

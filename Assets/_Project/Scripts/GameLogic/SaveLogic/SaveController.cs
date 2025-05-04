@@ -1,9 +1,15 @@
-﻿namespace GameLogic.SaveLogic.SaveData
-{
-    public class SaveController
-    {
-        private SavePlayerPrefs _savePlayerPrefs;
+﻿using Zenject;
 
+namespace GameLogic.SaveLogic.SaveData
+{
+    public class SaveController : IInitializable
+    {
+        private ISave _savePlayerPrefs;
+        
+        public void Initialize()
+        {
+            _savePlayerPrefs = new SavePlayerPrefs();
+        }
         public SaveController(SavePlayerPrefs savePlayerPrefs)
         {
             _savePlayerPrefs = savePlayerPrefs;
@@ -22,6 +28,5 @@
             }
             return new SaveData();
         }
-        
     }
 }

@@ -10,16 +10,17 @@ namespace Factories
 {
     public class UFOFactory : EnemyFactory<UFO>, IInitializable
     {
-        private readonly  ShipRepository _shipRepository;
+        private readonly ShipRepository _shipRepository;
 
         public UFOFactory(
-            ScoreManager scoreManager, 
+            ScoreManager scoreManager,
             GameOver gameOver,
             ScreenSize screenSize,
-            UFO prefab, ShipRepository 
-                shipRepository, 
-            PoolSizeSO ufoPoolSizeData) :
-            base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData)
+            UFO prefab, ShipRepository
+                shipRepository,
+            PoolSizeSO ufoPoolSizeData,
+            KillManager killManager) :
+            base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData, killManager)
         {
             _shipRepository = shipRepository;
         }
@@ -33,7 +34,7 @@ namespace Factories
         protected override UFO ActionCreateObject()
         {
             var UFO = Object.Instantiate(Prefab);
-            UFO.Construct(GameOver, _shipRepository, ScreenSize);
+            UFO.Construct(GameOver, _shipRepository, ScreenSize, _killManager);
             UFO.GetComponent<Score>().Construct(ScoreManager);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;

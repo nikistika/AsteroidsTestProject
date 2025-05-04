@@ -9,9 +9,9 @@ namespace Player
         public event Action<Vector2> OnGetCoordinates;
         public event Action<float> OnGetRotation;
         public event Action<Vector2> OnGetSpeed;
-        
+
         private Rigidbody2D _rigidbody;
-        
+
         private void Start()
         {
             _rigidbody = GetComponent<Rigidbody2D>();

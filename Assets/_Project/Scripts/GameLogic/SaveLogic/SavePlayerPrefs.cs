@@ -4,9 +4,8 @@ namespace GameLogic.SaveLogic.SaveData
 {
     public class SavePlayerPrefs : ISave
     {
+        public string RecordScore => "RecordScore";
 
-        public string RecordScore { get; } = "RecordScore";
-        
         public void SetRecordScore(SaveData saveData)
         {
             string jsonSave = JsonUtility.ToJson(saveData);

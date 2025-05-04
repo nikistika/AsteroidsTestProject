@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using Factories;
+using Managers;
 using UnityEngine;
 using Zenject;
 
@@ -13,14 +14,17 @@ namespace Shooting
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
         private MissileFactory _missileFactory;
-
+        private KillManager _killManager;
+        
         [SerializeField] private float _delayShotTimes = 1;
 
         [Inject]
         public void Construct(
-        MissileFactory missileFactory)
+        MissileFactory missileFactory,
+        KillManager killManager)
         {
             _missileFactory = missileFactory;
+            _killManager = killManager;
         }
 
         private void Awake()
@@ -34,7 +38,11 @@ namespace Shooting
             if (!_shotToggle)
             {
                 StartCoroutine(DelayShot());
-                _missileFactory.SpawnObject();
+                var missile = _missileFactory.SpawnObject();
+                if (missile != null)
+                {
+                    _killManager.AddMissile(1);
+                }
             }
         }
 

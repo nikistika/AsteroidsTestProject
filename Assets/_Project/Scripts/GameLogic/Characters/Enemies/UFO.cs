@@ -1,5 +1,6 @@
 using System;
 using GameLogic;
+using Managers;
 using Player;
 using Shooting;
 using UnityEngine;
@@ -14,19 +15,22 @@ namespace Characters
 
         private ShipRepository _shipRepository;
         private GameOver _gameOver;
+        private KillManager _killManager;
         private bool _flagGameOver;
 
         [SerializeField] private int _speed = 1;
 
         [Inject]
         public void Construct(
-            GameOver gameOver, 
-            ShipRepository shipRepository, 
-            ScreenSize screenSize)
+            GameOver gameOver,
+            ShipRepository shipRepository,
+            ScreenSize screenSize,
+            KillManager killManager)
         {
             base.Construct(screenSize);
             _gameOver = gameOver;
             _shipRepository = shipRepository;
+            _killManager = killManager;
         }
 
         private void Start()
@@ -57,6 +61,8 @@ namespace Characters
         {
             if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
+                _killManager.AddUFO(1);
+
                 OnReturnUFO?.Invoke(this);
             }
 

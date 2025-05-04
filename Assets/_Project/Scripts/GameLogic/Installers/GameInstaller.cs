@@ -1,6 +1,7 @@
 ﻿using Characters;
 using Factories;
 using GameLogic;
+using GameLogic.Analytics;
 using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
@@ -24,7 +25,7 @@ namespace Installers
         private ScoreManager _scoreManager;
         private ScreenSize _screenSize;
         private ShipRepository _shipRepository;
-        
+        private KillManager _killManager;
         private UISpawnManager _uiSpawnManager;
         private UFOFactory _ufoFactory;
         private UFOSpawnManager _ufoSpawnManager;
@@ -33,6 +34,7 @@ namespace Installers
         
         [Inject] private SaveController _saveController;
         [Inject] private IInstantiator _instantiator;
+        [Inject] private AnalyticsController _analyticsController;
 
         [SerializeField] private Asteroid _asteroidPrefab;
         [SerializeField] private UFO _ufoPrefab;
@@ -74,21 +76,25 @@ namespace Installers
 
             _gameOver = new GameOver(_saveController, _scoreManager);
             Container.Bind<GameOver>().FromInstance(_gameOver).AsSingle();
+
+            _killManager = new KillManager(_gameOver, _analyticsController);
+            Container.Bind<KillManager>().FromInstance(_killManager).AsSingle();
             
             _uiSpawnManager = new UISpawnManager(_scoreManager, _instantiator, 
             _shipRepository, _gameOver, _gameplayUIRepository, _gameplayUIView, _saveController);
             Container.Bind<UISpawnManager>().FromInstance(_uiSpawnManager).AsSingle();
             
-            _spaceShipSpawnManager = new SpaceShipSpawnManager(_gameOver, _screenSize,
-                _missilePrefab, _spaceShipPrefab, _missilePoolSizeData, _shipRepository);
+            _spaceShipSpawnManager = new SpaceShipSpawnManager(_gameOver, _screenSize, 
+                _missilePrefab, _spaceShipPrefab, _missilePoolSizeData, _shipRepository, _analyticsController,
+                _killManager);
             Container.Bind<SpaceShipSpawnManager>().FromInstance(_spaceShipSpawnManager).AsSingle();
 
             _asteroidFactory = new AsteroidFactory(_scoreManager, _gameOver,
-                _screenSize, _asteroidPrefab, _asteroidPoolSizeData);
+                _screenSize, _asteroidPrefab, _asteroidPoolSizeData, _killManager);
             Container.Bind<AsteroidFactory>().FromInstance(_asteroidFactory).AsSingle();
             
             _ufoFactory = new UFOFactory(_scoreManager, _gameOver,
-                _screenSize, _ufoPrefab, _shipRepository, _missilePoolSizeData);
+                _screenSize, _ufoPrefab, _shipRepository, _missilePoolSizeData, _killManager);
             Container.Bind<UFOFactory>().FromInstance(_ufoFactory).AsSingle();
             
             _ufoSpawnManager = new UFOSpawnManager(_gameOver, _screenSize,
@@ -105,10 +111,11 @@ namespace Installers
                 .FromInstance(_ufoPoolSizeData).AsSingle();
             
             _entryPoint = new EntryPoint(_spaceShipSpawnManager, _asteroidSpawnManager, _uiSpawnManager, 
-                _ufoSpawnManager);
+                _ufoSpawnManager, _analyticsController);
             Container.Bind<EntryPoint>().FromInstance(_entryPoint).AsSingle();
             
             Container.Bind<IInitializable>().FromInstance(_scoreManager).AsCached();
+            Container.Bind<IInitializable>().FromInstance(_killManager).AsCached();
             Container.Bind<IInitializable>().FromInstance(_asteroidFactory).AsCached();
             Container.Bind<IInitializable>().FromInstance(_ufoFactory).AsCached();
             Container.Bind<IInitializable>().FromInstance(_entryPoint).AsCached();

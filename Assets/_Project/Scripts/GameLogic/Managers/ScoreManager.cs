@@ -23,7 +23,6 @@ namespace Managers
         {
             if (_startFlag == false)
             {
-                Log.Debug("Initializing score manager");
                 _startFlag = true;
                 AddScore(0);
             }

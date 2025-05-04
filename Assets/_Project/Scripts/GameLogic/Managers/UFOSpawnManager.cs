@@ -14,7 +14,10 @@ namespace Managers
         private readonly UFOFactory _ufoFactory;
         private readonly EnemySpawnManagerSO _ufoSpawnData;
 
-        public UFOSpawnManager(GameOver gameOver, ScreenSize screenSize, UFOFactory ufoFactory,
+        public UFOSpawnManager(
+            GameOver gameOver, 
+            ScreenSize screenSize, 
+            UFOFactory ufoFactory,
             EnemySpawnManagerSO ufoSpawnData) :
             base(gameOver, screenSize)
         {

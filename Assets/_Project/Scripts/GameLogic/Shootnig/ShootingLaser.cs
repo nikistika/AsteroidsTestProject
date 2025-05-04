@@ -1,5 +1,7 @@
 using System;
 using System.Collections;
+using GameLogic.Analytics;
+using Managers;
 using UnityEngine;
 
 namespace Shooting
@@ -15,6 +17,9 @@ namespace Shooting
         private WaitForSeconds _waitLaserDelay;
         private WaitForSeconds _waitLaserCooldown = new(1);
 
+        private AnalyticsController _analyticsController;
+        private KillManager _killManager;
+
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
         [SerializeField] private float _laserDelay = 1;
@@ -22,6 +27,14 @@ namespace Shooting
 
         [field: SerializeField] public int MaxLaserCount { get; private set; } = 3;
         [field: SerializeField] public int LaserCount { get; private set; }
+
+        public void Construct(
+            AnalyticsController analyticsController,
+            KillManager killManager)
+        {
+            _analyticsController = analyticsController;
+            _killManager = killManager;
+        }
 
         private void Awake()
         {
@@ -39,7 +52,15 @@ namespace Shooting
                 _laserActive = true;
                 _laserObject.gameObject.SetActive(true);
                 StartCoroutine(ShotDuration());
+
+                UsingLaserEvent();
+                _killManager.AddLaser(1);
             }
+        }
+
+        private void UsingLaserEvent()
+        {
+            _analyticsController.UsingLaserEvent();
         }
 
         private void AddLaserCount(int count)
