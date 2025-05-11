@@ -2,11 +2,8 @@
 {
     public interface ISave
     {
-        
-        public string RecordScore { get; }
-        
-        public void SetRecordScore(SaveData saveData);
-        public SaveData GetRecordScore(string key);
+        public void SetSaveData(SaveData saveData);
+        public SaveData GetSaveData();
 
     }
 }

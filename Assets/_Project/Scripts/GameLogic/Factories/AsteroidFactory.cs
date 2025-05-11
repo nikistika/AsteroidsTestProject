@@ -1,5 +1,9 @@
+using System.Threading.Tasks;
 using Characters;
+using Cysharp.Threading.Tasks;
 using GameLogic;
+using GameLogic.Enums;
+using LoadingAssets;
 using Managers;
 using SciptableObjects;
 using UnityEngine;
@@ -14,15 +18,16 @@ namespace Factories
             GameOver gameOver,
             ScreenSize screenSize,
             Asteroid prefab,
-            PoolSizeSO asteroidPoolSizeData,
-            KillManager killManager) :
-            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData, killManager)
+            [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)] PoolSizeSO asteroidPoolSizeData,
+            KillManager killManager,
+            IAssetLoader assetLoader) :
+            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData, killManager, assetLoader)
         {
         }
 
-        protected override Asteroid ActionCreateObject()
+        protected override async UniTask<Asteroid> ActionCreateObject()
         {
-            Asteroid asteroid = Object.Instantiate(Prefab);
+            var asteroid = await _assetLoader.CreateAsteroid();
             asteroid.Construct(GameOver, ScreenSize, _killManager);
             asteroid.GetComponent<Score>().Construct(ScoreManager);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();

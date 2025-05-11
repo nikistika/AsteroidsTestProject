@@ -1,4 +1,8 @@
+using System.Threading.Tasks;
+using Characters;
+using Cysharp.Threading.Tasks;
 using GameLogic;
+using LoadingAssets;
 using Player;
 using SciptableObjects;
 using Shooting;
@@ -16,8 +20,9 @@ namespace Factories
             Missile prefab,
             SpaceShip spaceShip,
             ShootingMissile shootingMissile,
-            PoolSizeSO missilePoolSizeData) :
-            base(screenSize, prefab, missilePoolSizeData)
+            PoolSizeSO missilePoolSizeData,
+            IAssetLoader assetLoader) :
+            base(screenSize, prefab, missilePoolSizeData, assetLoader)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
@@ -29,9 +34,10 @@ namespace Factories
             obj.gameObject.SetActive(false);
         }
 
-        protected override Missile ActionCreateObject()
+        protected override async UniTask<Missile> ActionCreateObject()
         {
-            var missile = Object.Instantiate(Prefab, _spaceShip.gameObject.transform, true);
+            var missile = await _assetLoader.CreateMissile();
+            missile.transform.SetParent( _spaceShip.gameObject.transform, true);
             missile.transform.position = _spaceShip.transform.position;
             missile.Construct(_shootingMissile, ScreenSize);
             return missile;

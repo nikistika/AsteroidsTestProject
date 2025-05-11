@@ -1,5 +1,8 @@
 using Characters;
+using Cysharp.Threading.Tasks;
 using GameLogic;
+using GameLogic.Enums;
+using LoadingAssets;
 using Managers;
 using Player;
 using SciptableObjects;
@@ -10,17 +13,18 @@ namespace Factories
 {
     public class UFOFactory : EnemyFactory<UFO>, IInitializable
     {
-        private readonly ShipRepository _shipRepository;
-
+        private readonly ShipRepository _shipRepository; 
+        
         public UFOFactory(
             ScoreManager scoreManager,
             GameOver gameOver,
             ScreenSize screenSize,
-            UFO prefab, ShipRepository
-                shipRepository,
-            PoolSizeSO ufoPoolSizeData,
-            KillManager killManager) :
-            base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData, killManager)
+            UFO prefab,
+            ShipRepository shipRepository,
+            [Inject(Id = GameInstallerIDs.UFOPoolSizeData)] PoolSizeSO ufoPoolSizeData,
+            KillManager killManager, 
+            IAssetLoader assetLoader) :
+            base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData, killManager, assetLoader)
         {
             _shipRepository = shipRepository;
         }
@@ -31,9 +35,10 @@ namespace Factories
             obj.gameObject.SetActive(false);
         }
 
-        protected override UFO ActionCreateObject()
+        protected override async UniTask<UFO> ActionCreateObject()
         {
-            var UFO = Object.Instantiate(Prefab);
+            var UFO = await _assetLoader.CreateUFO();
+
             UFO.Construct(GameOver, _shipRepository, ScreenSize, _killManager);
             UFO.GetComponent<Score>().Construct(ScoreManager);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();

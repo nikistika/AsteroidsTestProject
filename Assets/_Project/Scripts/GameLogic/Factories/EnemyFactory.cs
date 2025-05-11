@@ -1,4 +1,5 @@
 using GameLogic;
+using LoadingAssets;
 using Managers;
 using SciptableObjects;
 using UnityEngine;
@@ -17,8 +18,9 @@ namespace Factories
             ScreenSize screenSize,
             T prefab,
             PoolSizeSO poolSizeData,
-            KillManager killManager) :
-            base(screenSize, prefab, poolSizeData)
+            KillManager killManager,
+            IAssetLoader assetLoader) :
+            base(screenSize, prefab, poolSizeData, assetLoader)
         {
             GameOver = gameOver;
             ScoreManager = scoreManager;

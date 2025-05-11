@@ -15,16 +15,16 @@ namespace GameLogic.SaveLogic.SaveData
             _savePlayerPrefs = savePlayerPrefs;
         }
         
-        public void SaveRecordInPlayerPrefs(SaveData saveData)
+        public void SaveRecord(SaveData saveData)
         {
-            _savePlayerPrefs.SetRecordScore(saveData);
+            _savePlayerPrefs.SetSaveData(saveData);
         }
         
-        public SaveData GetRecordInPlayerPrefs()
+        public SaveData GetRecord()
         {
-            if (_savePlayerPrefs.GetRecordScore(_savePlayerPrefs.RecordScore) != null)
+            if (_savePlayerPrefs.GetSaveData() != null)
             {
-                return _savePlayerPrefs.GetRecordScore(_savePlayerPrefs.RecordScore);
+                return _savePlayerPrefs.GetSaveData();
             }
             return new SaveData();
         }

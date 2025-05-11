@@ -45,7 +45,7 @@ namespace Shooting
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.GetComponent<Asteroid>() || collision.GetComponent<UFO>())
+            if (collision.TryGetComponent<Asteroid>(out _) || collision.TryGetComponent<UFO>(out _))
             {
                 _shootingMissile.InvokeOnReturnMissileToPool(this);
             }

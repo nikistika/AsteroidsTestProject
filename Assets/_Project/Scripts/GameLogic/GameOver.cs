@@ -25,11 +25,11 @@ namespace GameLogic
 
         private void SaveData()
         {
-            SaveData data = _saveController.GetRecordInPlayerPrefs();
+            SaveData data = _saveController.GetRecord();
             if(data.ScoreRecord < _scoreManager.CurrentScore)
             {
                 data.ScoreRecord = _scoreManager.CurrentScore;
-                _saveController.SaveRecordInPlayerPrefs(data);
+                _saveController.SaveRecord(data);
             }
         }
     }

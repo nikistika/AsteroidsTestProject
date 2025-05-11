@@ -33,12 +33,12 @@ namespace Shooting
             OnReturnMissileToPool += ReturnMissileToPool;
         }
 
-        public void Shot()
+        public async void Shot()
         {
             if (!_shotToggle)
             {
                 StartCoroutine(DelayShot());
-                var missile = _missileFactory.SpawnObject();
+                var missile = await _missileFactory.SpawnObject();
                 if (missile != null)
                 {
                     _killManager.AddMissile(1);

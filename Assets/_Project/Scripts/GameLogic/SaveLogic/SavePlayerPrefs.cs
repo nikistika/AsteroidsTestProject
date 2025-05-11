@@ -4,17 +4,17 @@ namespace GameLogic.SaveLogic.SaveData
 {
     public class SavePlayerPrefs : ISave
     {
-        public string RecordScore => "RecordScore";
+        private readonly string _recordScore = "RecordScore";
 
-        public void SetRecordScore(SaveData saveData)
+        public void SetSaveData(SaveData saveData)
         {
             string jsonSave = JsonUtility.ToJson(saveData);
-            PlayerPrefs.SetString(RecordScore, jsonSave);
+            PlayerPrefs.SetString(_recordScore, jsonSave);
         }
 
-        public SaveData GetRecordScore(string key)
+        public SaveData GetSaveData()
         {
-            string jsonSave = PlayerPrefs.GetString(key);
+            string jsonSave = PlayerPrefs.GetString(_recordScore);
             SaveData saveData = JsonUtility.FromJson<SaveData>(jsonSave);
             return saveData;
         }
