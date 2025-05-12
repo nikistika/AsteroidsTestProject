@@ -14,20 +14,19 @@ namespace Shooting
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
         private MissileFactory _missileFactory;
-        private KillManager _killManager;
+        private KillService _killService;
         
         [SerializeField] private float _delayShotTimes = 1;
 
-        [Inject]
         public void Construct(
         MissileFactory missileFactory,
-        KillManager killManager)
+        KillService killService)
         {
             _missileFactory = missileFactory;
-            _killManager = killManager;
+            _killService = killService;
         }
 
-        private void Awake()
+        public void Initialize()
         {
             _waitDelayShotTimes = new WaitForSeconds(_delayShotTimes);
             OnReturnMissileToPool += ReturnMissileToPool;
@@ -41,7 +40,7 @@ namespace Shooting
                 var missile = await _missileFactory.SpawnObject();
                 if (missile != null)
                 {
-                    _killManager.AddMissile(1);
+                    _killService.AddMissile(1);
                 }
             }
         }

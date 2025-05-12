@@ -8,23 +8,23 @@ namespace Factories
 {
     public abstract class EnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
-        protected readonly ScoreManager ScoreManager;
+        protected readonly ScoreService ScoreService;
         protected readonly GameOver GameOver;
-        protected readonly KillManager _killManager;
+        protected readonly KillService KillService;
 
         protected EnemyFactory(
-            ScoreManager scoreManager,
+            ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
             T prefab,
             PoolSizeSO poolSizeData,
-            KillManager killManager,
+            KillService killService,
             IAssetLoader assetLoader) :
             base(screenSize, prefab, poolSizeData, assetLoader)
         {
             GameOver = gameOver;
-            ScoreManager = scoreManager;
-            _killManager = killManager;
+            ScoreService = scoreService;
+            KillService = killService;
         }
 
         protected Vector2 GetRandomSpawnPosition()

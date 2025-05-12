@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 
@@ -18,13 +17,13 @@ namespace Managers
             ScreenSize = screenSize;
         }
 
-        public void StartWork()
+        public async UniTask StartWork()
         {
-            BaseInitialize();
-            Initialize();
+            await BaseInitialize();
+            await Initialize();
         }
-        
-        private void BaseInitialize()
+
+        private async UniTask BaseInitialize()
         {
             GameOver.OnGameOver += GameOverHandler;
         }

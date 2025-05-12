@@ -16,15 +16,15 @@ namespace Factories
         private readonly ShipRepository _shipRepository; 
         
         public UFOFactory(
-            ScoreManager scoreManager,
+            ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
             UFO prefab,
             ShipRepository shipRepository,
             [Inject(Id = GameInstallerIDs.UFOPoolSizeData)] PoolSizeSO ufoPoolSizeData,
-            KillManager killManager, 
+            KillService killService, 
             IAssetLoader assetLoader) :
-            base(scoreManager, gameOver, screenSize, prefab, ufoPoolSizeData, killManager, assetLoader)
+            base(scoreService, gameOver, screenSize, prefab, ufoPoolSizeData, killService, assetLoader)
         {
             _shipRepository = shipRepository;
         }
@@ -39,8 +39,8 @@ namespace Factories
         {
             var UFO = await _assetLoader.CreateUFO();
 
-            UFO.Construct(GameOver, _shipRepository, ScreenSize, _killManager);
-            UFO.GetComponent<Score>().Construct(ScoreManager);
+            UFO.Construct(GameOver, _shipRepository, ScreenSize, KillService);
+            UFO.GetComponent<Score>().Construct(ScoreService);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }

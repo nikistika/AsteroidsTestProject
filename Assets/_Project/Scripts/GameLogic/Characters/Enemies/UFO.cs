@@ -15,7 +15,7 @@ namespace Characters
 
         private ShipRepository _shipRepository;
         private GameOver _gameOver;
-        private KillManager _killManager;
+        private KillService _killService;
         private bool _flagGameOver;
 
         [SerializeField] private int _speed = 1;
@@ -24,12 +24,12 @@ namespace Characters
             GameOver gameOver,
             ShipRepository shipRepository,
             ScreenSize screenSize,
-            KillManager killManager)
+            KillService killService)
         {
-            base.Construct(screenSize);
+            BaseInitialize(screenSize);
             _gameOver = gameOver;
             _shipRepository = shipRepository;
-            _killManager = killManager;
+            _killService = killService;
         }
 
         private void Start()
@@ -45,7 +45,7 @@ namespace Characters
             }
         }
 
-        protected override void Initialize()
+        protected void Initialize()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
         }
@@ -60,7 +60,7 @@ namespace Characters
         {
             if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
-                _killManager.AddUFO(1);
+                _killService.AddUFO(1);
 
                 OnReturnUFO?.Invoke(this);
             }

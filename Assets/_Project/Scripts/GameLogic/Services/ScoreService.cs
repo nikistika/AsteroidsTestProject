@@ -4,7 +4,7 @@ using Zenject;
 
 namespace Managers
 {
-    public class ScoreManager : IInitializable
+    public class ScoreService : IInitializable
     {
         public event Action<int> OnScoreChanged;
 

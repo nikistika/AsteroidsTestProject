@@ -2,7 +2,6 @@ using GameLogic;
 using InputSystem;
 using Shooting;
 using UnityEngine;
-using Zenject;
 
 namespace Player
 {
@@ -19,22 +18,10 @@ namespace Player
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
 
-        [Inject]
-        public void Construct(
-            GameOver gameOver)
-        {
-            _gameOver = gameOver;
-        }
-
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _input = GetComponent<InputKeyboard>();
-        }
-
-        private void Start()
-        {
-            _gameOver.OnGameOver += GameOver;
         }
 
         private void Update()
@@ -43,6 +30,12 @@ namespace Player
             {
                 Input();
             }
+        }
+        
+        public void Initialize(GameOver gameOver)
+        {
+            _gameOver = gameOver;
+            _gameOver.OnGameOver += GameOver;
         }
 
         private void Input()

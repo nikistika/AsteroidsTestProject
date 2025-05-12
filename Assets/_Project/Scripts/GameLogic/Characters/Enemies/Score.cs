@@ -7,22 +7,22 @@ namespace Characters
 {
     public class Score : MonoBehaviour
     {
-        private ScoreManager _scoreManager;
+        private ScoreService _scoreService;
 
         [SerializeField] private int _scoreKill = 5;
 
         [Inject]
         public void Construct(
-            ScoreManager scoreManager)
+            ScoreService scoreService)
         {
-            _scoreManager = scoreManager;
+            _scoreService = scoreService;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
-                _scoreManager.AddScore(_scoreKill);
+                _scoreService.AddScore(_scoreKill);
             }
         }
     }

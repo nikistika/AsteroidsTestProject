@@ -18,7 +18,7 @@ namespace Shooting
         private WaitForSeconds _waitLaserCooldown = new(1);
 
         private AnalyticsController _analyticsController;
-        private KillManager _killManager;
+        private KillService _killService;
 
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
@@ -28,12 +28,12 @@ namespace Shooting
         [field: SerializeField] public int MaxLaserCount { get; private set; } = 3;
         [field: SerializeField] public int LaserCount { get; private set; }
 
-        public void Construct(
+        public void Initilize(
             AnalyticsController analyticsController,
-            KillManager killManager)
+            KillService killService)
         {
             _analyticsController = analyticsController;
-            _killManager = killManager;
+            _killService = killService;
         }
 
         private void Awake()
@@ -54,7 +54,7 @@ namespace Shooting
                 StartCoroutine(ShotDuration());
 
                 UsingLaserEvent();
-                _killManager.AddLaser(1);
+                _killService.AddLaser(1);
             }
         }
 

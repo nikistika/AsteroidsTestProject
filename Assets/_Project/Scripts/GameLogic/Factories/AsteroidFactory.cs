@@ -14,22 +14,22 @@ namespace Factories
     public class AsteroidFactory : EnemyFactory<Asteroid>, IInitializable
     {
         public AsteroidFactory(
-            ScoreManager scoreManager,
+            ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
             Asteroid prefab,
             [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)] PoolSizeSO asteroidPoolSizeData,
-            KillManager killManager,
+            KillService killService,
             IAssetLoader assetLoader) :
-            base(scoreManager, gameOver, screenSize, prefab, asteroidPoolSizeData, killManager, assetLoader)
+            base(scoreService, gameOver, screenSize, prefab, asteroidPoolSizeData, killService, assetLoader)
         {
         }
 
         protected override async UniTask<Asteroid> ActionCreateObject()
         {
             var asteroid = await _assetLoader.CreateAsteroid();
-            asteroid.Construct(GameOver, ScreenSize, _killManager);
-            asteroid.GetComponent<Score>().Construct(ScoreManager);
+            asteroid.Construct(GameOver, ScreenSize, KillService);
+            asteroid.GetComponent<Score>().Construct(ScoreService);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;
         }

@@ -17,7 +17,7 @@ namespace Characters
 
         private bool _flagParent = true;
         private GameOver _gameOver;
-        private KillManager _killManager;
+        private KillService _killService;
         private float _scaleNumber1 = 1;
         private float _scaleNumber1_5 = 1.5f;
         private float _scaleNumber2 = 2f;
@@ -28,11 +28,11 @@ namespace Characters
         public void Construct(
             GameOver gameOver,
             ScreenSize screenSize,
-            KillManager killManager)
+            KillService killService)
         {
-            base.Construct(screenSize);
+            BaseInitialize(screenSize);
             _gameOver = gameOver;
-            _killManager = killManager;
+            _killService = killService;
         }
 
         private void Start()
@@ -68,7 +68,7 @@ namespace Characters
             fragmentAsteroid.Rigidbody.velocity = direction;
         }
 
-        protected override void Initialize()
+        protected void Initialize()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
             RandomScale();
@@ -87,7 +87,7 @@ namespace Characters
                     transform.localScale *= 2;
                 }
 
-                _killManager.AddAsteroid(1);
+                _killService.AddAsteroid(1);
 
                 OnReturnAsteroid?.Invoke(this);
             }

@@ -7,13 +7,13 @@ namespace GameLogic
     public class GameOver
     {
         private readonly SaveController _saveController;
-        private readonly ScoreManager _scoreManager;
+        private readonly ScoreService _scoreService;
 
         public event Action OnGameOver;
 
-        public GameOver(SaveController saveController, ScoreManager scoreManager)
+        public GameOver(SaveController saveController, ScoreService scoreService)
         {
-            _scoreManager = scoreManager;
+            _scoreService = scoreService;
             _saveController = saveController;
         }
 
@@ -26,9 +26,9 @@ namespace GameLogic
         private void SaveData()
         {
             SaveData data = _saveController.GetRecord();
-            if(data.ScoreRecord < _scoreManager.CurrentScore)
+            if(data.ScoreRecord < _scoreService.CurrentScore)
             {
-                data.ScoreRecord = _scoreManager.CurrentScore;
+                data.ScoreRecord = _scoreService.CurrentScore;
                 _saveController.SaveRecord(data);
             }
         }

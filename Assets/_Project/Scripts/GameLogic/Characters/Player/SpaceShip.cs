@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using GameLogic;
 using GameLogic.Analytics;
 using Managers;
 using Shooting;
@@ -11,26 +13,20 @@ namespace Player
     {
         private ShootingMissile _shootingMissile;
         private AnalyticsController _analyticsController;
-        private KillManager _killManager;
+        private KillService _killService;
 
         [SerializeField] private ShootingLaser _shootingLaser;
-
-        public void Construct(
+        
+        public void Initialize(
             AnalyticsController analyticsController,
-            KillManager killManager)
+            KillService killService,
+            ScreenSize screenSize)
         {
+            BaseInitialize(screenSize);
             _analyticsController = analyticsController;
-            _killManager = killManager;
-        }
-
-        private void Start()
-        {
-            _shootingLaser.Construct(_analyticsController, _killManager);
-        }
-
-        protected override void Initialize()
-        {
+            _killService = killService;
             Rigidbody = GetComponent<Rigidbody2D>();
+            _shootingLaser.Initilize(_analyticsController, _killService);
         }
     }
 }

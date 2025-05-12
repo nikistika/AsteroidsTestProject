@@ -1,6 +1,5 @@
 ﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace UI.View
 {
@@ -18,7 +17,7 @@ namespace UI.View
         {
             _currentScoreTMP.text = score;
         }
-        
+
         public void SetRecordScore(string score)
         {
             _recordScoreTMP.text = score;
@@ -44,9 +43,9 @@ namespace UI.View
             _speedTMP.text = speedText;
         }
 
-        public void GameOver(int score)
+        public void OpenRestartPanel()
         {
-            _restartPanel.ActivateRestartPanel(score);
+            _restartPanel.gameObject.SetActive(true);
         }
     }
 }

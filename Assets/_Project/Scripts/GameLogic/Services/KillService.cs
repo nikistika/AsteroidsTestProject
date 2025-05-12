@@ -5,7 +5,7 @@ using Zenject;
 
 namespace Managers
 {
-    public class KillManager : IInitializable
+    public class KillService : IInitializable
     {
         private GameOver _gameOver;
         private readonly AnalyticsController _analyticsController;
@@ -15,7 +15,7 @@ namespace Managers
         private int _quantityKillAsteroids;
         private int _quantityKillUfo;
 
-        public KillManager(
+        public KillService(
             GameOver gameOver,
             AnalyticsController analyticsController)
         {

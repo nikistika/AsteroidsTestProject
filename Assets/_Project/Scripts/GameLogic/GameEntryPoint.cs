@@ -27,9 +27,9 @@ namespace GameLogic
             _analyticsController = analyticsController;
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            _spaceShipSpawner.StartWork();
+            await _spaceShipSpawner.StartWork();
             _uiSpawner.StartWork();
             _asteroidSpawner.StartWork();
             _ufoSpawner.StartWork();

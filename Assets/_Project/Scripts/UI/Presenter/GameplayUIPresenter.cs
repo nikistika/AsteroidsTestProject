@@ -3,39 +3,43 @@ using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
 using Shooting;
-using UI.Model;
 using UI.View;
+using UnityEngine;
 
 namespace UI.Presenter
 {
     public class GameplayUIPresenter
     {
         private readonly GameplayUIView _gameplayUIView;
-        private readonly GameplayUIModel _gameplayUIModel;
         private readonly GameOver _gameOver;
         private readonly ShipRepository _shipRepository;
-        private readonly ScoreManager _scoreManager;
+        private readonly ScoreService _scoreService;
         private readonly SaveController _saveController;
-        
+
         private ShootingLaser _shootingLaser;
-        private int _score;
+        private int _currentScore;
         private int _recordScore;
+        private int _currentLaserCount;
         private int _maxLaserCount;
+        private int _cooldawnLaserCurrentTime;
+        private int _cooldawnLaserMaxTime;
+        private Vector2 _coordinatesShip;
+        private float _rotationShip;
+        private Vector2 _speedShip;
         private bool _flagLaserTime;
-        
+
+
         public GameplayUIPresenter(
-            GameplayUIView gameplayUIView, 
-            GameplayUIModel gameplayUIModel, 
+            GameplayUIView gameplayUIView,
             GameOver gameOver,
-            ShipRepository shipRepository, 
-            ScoreManager scoreManager,
+            ShipRepository shipRepository,
+            ScoreService scoreService,
             SaveController saveController)
         {
             _gameplayUIView = gameplayUIView;
-            _gameplayUIModel = gameplayUIModel;
             _gameOver = gameOver;
             _shipRepository = shipRepository;
-            _scoreManager = scoreManager;
+            _scoreService = scoreService;
             _saveController = saveController;
         }
 
@@ -43,83 +47,90 @@ namespace UI.Presenter
         {
             _shootingLaser = _shipRepository.ShootingLaser;
 
-            _gameplayUIModel.CurrentScoreChanged += UpdateCurrentScore;
-            _gameplayUIModel.CurrentLaserCountChanged += UpdateCurrentLaserCount;
-            _gameplayUIModel.CooldawnLaserCurrentTimeChanged += UpdateCurrentLaserTime;
-            _gameplayUIModel.CoordinatesShipChanged += UpdateCoordinates;
-            _gameplayUIModel.SpeedShipChanged += UpdateSpeed;
-            _gameplayUIModel.RotationShipChanged += UpdateRotation;
+            _scoreService.OnScoreChanged += UpdateCurrentScore;
+            _shootingLaser.OnEditLaserCount += UpdateCurrentLaserCount;
+            _shootingLaser.OnLaserCooldown += UpdateCurrentLaserTime;
 
-            _shootingLaser.OnEditLaserCount += _gameplayUIModel.SetCurrentLaserCount;
-            _shootingLaser.OnLaserCooldown += _gameplayUIModel.SetCooldawnLaserCurrentTime;
-            _scoreManager.OnScoreChanged += _gameplayUIModel.SetCurrentScore;
-
-            _shipRepository.DataSpaceShip.OnGetCoordinates += _gameplayUIModel.SetCoordinates;
-            _shipRepository.DataSpaceShip.OnGetRotation += _gameplayUIModel.SetRotation;
-            _shipRepository.DataSpaceShip.OnGetSpeed += _gameplayUIModel.SetSpeed;
+            _shipRepository.DataSpaceShip.OnGetCoordinates += UpdateCoordinates;
+            _shipRepository.DataSpaceShip.OnGetRotation += UpdateRotation;
+            _shipRepository.DataSpaceShip.OnGetSpeed += UpdateSpeed;
 
             _gameOver.OnGameOver += GameOver;
             _gameOver.OnGameOver += UpdateRecordScore;
 
             _maxLaserCount = _shootingLaser.MaxLaserCount;
-            _score = _gameplayUIModel.CurrentScore;
-
-            _gameplayUIModel.SetInitialValues(_score, _maxLaserCount);
+            _currentLaserCount = _maxLaserCount;
+            _currentScore = 0;
         }
 
-        private void UpdateCurrentScore()
+        private void UpdateCurrentScore(int currentScore)
         {
-            _score = _gameplayUIModel.CurrentScore;
-            _gameplayUIView.SetCurrentScore($"Score: {_gameplayUIModel.CurrentScore}");
+            _currentScore = currentScore;
+            _gameplayUIView.SetCurrentScore($"Score: {_currentScore}");
         }
 
         private void UpdateRecordScore()
         {
-            _gameplayUIModel.SetRecordScore(_saveController.GetRecord().ScoreRecord);
-            _gameplayUIView.SetRecordScore($"Record score: {_gameplayUIModel.RecordScore}");
+            _recordScore = _saveController.GetRecord().ScoreRecord;
+            _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
         }
 
-        private void UpdateCurrentLaserCount()
+        private void UpdateCurrentLaserCount(int currentLaserCount)
         {
+            _currentLaserCount = currentLaserCount;
             _gameplayUIView.SetLaserCount(
-                $"Laser: {_gameplayUIModel.CurrentLaserCount}/{_gameplayUIModel.MaxLaserCount}");
+                $"Laser: {_currentLaserCount}/{_maxLaserCount}");
         }
 
-        private void UpdateCurrentLaserTime()
+        private void UpdateCurrentLaserTime(int cooldawnLaserCurrentTime, int cooldawnLaserMaxTime)
         {
+            _cooldawnLaserCurrentTime = cooldawnLaserCurrentTime;
+            _cooldawnLaserMaxTime = cooldawnLaserMaxTime;
             _gameplayUIView.SetLaserCount(
-                $"Laser: {_gameplayUIModel.CurrentLaserCount}/{_gameplayUIModel.MaxLaserCount}" +
-                $"({_gameplayUIModel.CooldawnLaserCurrentTime}/{_gameplayUIModel.CooldawnLaserMaxTime})"
+                $"Laser: {_currentLaserCount}/{_maxLaserCount}" +
+                $"({_cooldawnLaserCurrentTime}/{_cooldawnLaserMaxTime})"
             );
         }
 
-        private void UpdateCoordinates()
+        private void UpdateCoordinates(Vector2 shipCoordinates)
         {
-            _gameplayUIView.SetCoordinates($"Coordinates: {_gameplayUIModel.CoordinatesShip}");
+            _coordinatesShip = shipCoordinates;
+            _gameplayUIView.SetCoordinates($"Coordinates: {_coordinatesShip}");
         }
 
-        private void UpdateRotation()
+        private void UpdateRotation(float shipRotation)
         {
-            _gameplayUIView.SetRotation($"Rotation: {_gameplayUIModel.RotationShip}");
+            _rotationShip = shipRotation;
+            _gameplayUIView.SetRotation($"Rotation: {_rotationShip}");
         }
 
-        private void UpdateSpeed()
+        private void UpdateSpeed(Vector2 speed)
         {
-            _gameplayUIView.SetSpeed($"Speed: {_gameplayUIModel.SpeedShip}");
+            _speedShip = speed;
+            _gameplayUIView.SetSpeed($"Speed: {_speedShip}");
+        }
+
+        private void OpenRestartPanel()
+        {
+            _gameplayUIView.SetCurrentScore($"Score {_currentScore}");
+            _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
+            _gameplayUIView.OpenRestartPanel();
         }
 
         private void GameOver()
         {
-            _gameplayUIModel.CurrentScoreChanged -= UpdateCurrentScore;
-            _gameplayUIModel.CurrentLaserCountChanged -= UpdateCurrentLaserCount;
-            _gameplayUIModel.CooldawnLaserCurrentTimeChanged -= UpdateCurrentLaserTime;
-            _gameplayUIModel.CoordinatesShipChanged -= UpdateCoordinates;
-            _gameplayUIModel.SpeedShipChanged -= UpdateSpeed;
-            _gameplayUIModel.RotationShipChanged -= UpdateRotation;
+            _scoreService.OnScoreChanged -= UpdateCurrentScore;
+            _shootingLaser.OnEditLaserCount -= UpdateCurrentLaserCount;
+            _shootingLaser.OnLaserCooldown -= UpdateCurrentLaserTime;
+
+            _shipRepository.DataSpaceShip.OnGetCoordinates -= UpdateCoordinates;
+            _shipRepository.DataSpaceShip.OnGetRotation -= UpdateRotation;
+            _shipRepository.DataSpaceShip.OnGetSpeed -= UpdateSpeed;
 
             _gameOver.OnGameOver -= GameOver;
+            _gameOver.OnGameOver -= UpdateRecordScore;
 
-            _gameplayUIView.GameOver(_score);
+            OpenRestartPanel();
         }
     }
 }

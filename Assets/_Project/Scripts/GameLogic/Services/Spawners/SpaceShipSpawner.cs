@@ -24,7 +24,7 @@ namespace Managers
         private readonly PoolSizeSO _missilePoolSizeData;
         private readonly ShipRepository _shipRepository;
         private readonly AnalyticsController _analyticsController;
-        private readonly KillManager _killManager;
+        private readonly KillService _killService;
         private readonly IAssetLoader _assetLoader;
 
         public SpaceShip SpaceShipObject { get; private set; }
@@ -38,7 +38,7 @@ namespace Managers
             [Inject(Id = GameInstallerIDs.MissilePoolSizeData)] PoolSizeSO missilePoolSizeData,
             ShipRepository shipRepository,
             AnalyticsController analyticsController,
-            KillManager killManager,
+            KillService killService,
             IAssetLoader assetLoader) :
             base(gameOver, screenSize)
         {
@@ -46,16 +46,15 @@ namespace Managers
             _missilePoolSizeData = missilePoolSizeData;
             _shipRepository = shipRepository;
             _analyticsController = analyticsController;
-            _killManager = killManager;
+            _killService = killService;
             _assetLoader = assetLoader;
         }
 
         public async UniTask<SpaceShip> SpawnObject()
         {
             var objectSpaceShip = await _assetLoader.CreateSpaceShip();
-            objectSpaceShip.Construct(_analyticsController, _killManager);
             GetComponentsSpaceShip(objectSpaceShip);
-            await DependencyTransfer(objectSpaceShip);
+            DependencyTransfer(objectSpaceShip);
             return objectSpaceShip;
         }
 
@@ -74,17 +73,18 @@ namespace Managers
             _shipRepository.GetSpaceShip(objectSpaceShip, ShootingLaser, DataSpaceShip);
         }
 
-        private async UniTask DependencyTransfer(SpaceShip objectSpaceShip)
+        private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
-            UniTask.NextFrame();
-            objectSpaceShip.Construct(ScreenSize);
-            _inputCharacter.Construct(GameOver);
-
+            objectSpaceShip.Initialize(_analyticsController, _killService, ScreenSize);
+            _inputCharacter.Initialize(GameOver);
+            
             _missileFactory = new MissileFactory(ScreenSize,
                 _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData, _assetLoader);
             _missileFactory.StartWork();
 
-            _shootingMissile.Construct(_missileFactory, _killManager);
+            _shootingMissile.Construct(_missileFactory, _killService);
+            
+            _shootingMissile.Initialize();
         }
     }
 }

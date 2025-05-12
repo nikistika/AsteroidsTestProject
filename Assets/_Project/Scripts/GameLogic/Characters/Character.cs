@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using GameLogic;
 using UnityEngine;
 using Zenject;
@@ -11,17 +12,16 @@ namespace Characters
 
         protected ScreenSize ScreenSize { get; private set; }
 
-        [Inject]
-        public void Construct(
+        protected void BaseInitialize(
             ScreenSize screenSize)
         {
             ScreenSize = screenSize;
         }
 
-        protected void Awake()
-        {
-            Initialize();
-        }
+        // protected void Awake()
+        // {
+        //     Initialize();
+        // }
 
         private void FixedUpdate()
         {
@@ -55,6 +55,7 @@ namespace Characters
             }
         }
 
-        protected abstract void Initialize();
+        // //TODO: мб удалить метод
+        // protected abstract void Initialize();
     }
 }

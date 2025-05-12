@@ -54,9 +54,9 @@ namespace Installers
                 .FromInstance(_missilePoolSizeData).AsCached();
 
             Container.Bind<ScreenSize>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ScoreManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
             Container.Bind<GameOver>().AsSingle();
-            Container.BindInterfacesAndSelfTo<KillManager>().AsSingle();
+            Container.BindInterfacesAndSelfTo<KillService>().AsSingle();
             Container.Bind<UISpawner>().AsSingle();
             Container.Bind<SpaceShipSpawner>().AsSingle();
             Container.BindInterfacesAndSelfTo<AsteroidFactory>().AsSingle();
