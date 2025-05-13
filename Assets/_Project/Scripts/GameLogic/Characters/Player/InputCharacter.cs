@@ -17,11 +17,17 @@ namespace Player
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
-
+        
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _input = GetComponent<InputKeyboard>();
+        }
+        
+        public void Construct(GameOver gameOver)
+        {
+            _gameOver = gameOver;
+            _gameOver.OnGameOver += GameOver;
         }
 
         private void Update()
@@ -32,11 +38,6 @@ namespace Player
             }
         }
         
-        public void Initialize(GameOver gameOver)
-        {
-            _gameOver = gameOver;
-            _gameOver.OnGameOver += GameOver;
-        }
 
         private void Input()
         {

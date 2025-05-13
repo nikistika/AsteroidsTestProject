@@ -30,9 +30,10 @@ namespace GameLogic
         public async void Initialize()
         {
             await _spaceShipSpawner.StartWork();
-            _uiSpawner.StartWork();
-            _asteroidSpawner.StartWork();
-            _ufoSpawner.StartWork();
+            await _uiSpawner.StartWork();
+            await _asteroidSpawner.StartWork();
+            await _ufoSpawner.StartWork();
+
             _analyticsController.StartGameEvent();
         }
     }

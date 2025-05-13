@@ -11,6 +11,8 @@ namespace LoadingAssets
         
         private readonly Dictionary<string, GameObject> _cachedObjects = new();
         
+        
+        //TODO: Думаю, словарь здесь некорректно работает, тк я сохраняю разные объекты с одинаковым id
         protected async Task<T> InstantiateAsset<T>(string assetId) where T : Component
         {
             var handle = Addressables.InstantiateAsync(assetId);

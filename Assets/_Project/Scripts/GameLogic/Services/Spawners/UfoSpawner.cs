@@ -28,7 +28,7 @@ namespace Managers
             _ufoSpawnData = ufoSpawnData;
         }
 
-        public async UniTask<UFO> SpawnObject()
+        private async UniTask<UFO> SpawnObject()
         {
             UFO ufo = await _ufoFactory.SpawnObject();
             ufo.OnReturnUFO += ReturnUFO;

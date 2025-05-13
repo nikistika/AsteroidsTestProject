@@ -75,8 +75,9 @@ namespace Managers
 
         private void DependencyTransfer(SpaceShip objectSpaceShip)
         {
-            objectSpaceShip.Initialize(_analyticsController, _killService, ScreenSize);
-            _inputCharacter.Initialize(GameOver);
+            objectSpaceShip.Construct(_analyticsController, _killService, ScreenSize);
+            objectSpaceShip.StartWork();
+            _inputCharacter.Construct(GameOver);
             
             _missileFactory = new MissileFactory(ScreenSize,
                 _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData, _assetLoader);

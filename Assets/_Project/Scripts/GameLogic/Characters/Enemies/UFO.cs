@@ -26,7 +26,7 @@ namespace Characters
             ScreenSize screenSize,
             KillService killService)
         {
-            BaseInitialize(screenSize);
+            base.Construct(screenSize);
             _gameOver = gameOver;
             _shipRepository = shipRepository;
             _killService = killService;
@@ -45,7 +45,7 @@ namespace Characters
             }
         }
 
-        protected void Initialize()
+        public void Initialize()
         {
             Rigidbody = GetComponent<Rigidbody2D>();
         }

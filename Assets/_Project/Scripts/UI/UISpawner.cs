@@ -31,7 +31,7 @@ namespace UI
             _assetLoader = assetLoader;
         }
 
-        public async void StartWork()
+        public async UniTask StartWork()
         {
             await SpawnUI();
         }

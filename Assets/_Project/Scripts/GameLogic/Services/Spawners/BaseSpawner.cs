@@ -19,11 +19,11 @@ namespace Managers
 
         public async UniTask StartWork()
         {
-            await BaseInitialize();
+            BaseInitialize();
             await Initialize();
         }
 
-        private async UniTask BaseInitialize()
+        private void BaseInitialize()
         {
             GameOver.OnGameOver += GameOverHandler;
         }

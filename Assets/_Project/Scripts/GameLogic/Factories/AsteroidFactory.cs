@@ -29,7 +29,8 @@ namespace Factories
         {
             var asteroid = await _assetLoader.CreateAsteroid();
             asteroid.Construct(GameOver, ScreenSize, KillService);
-            asteroid.GetComponent<Score>().Construct(ScoreService);
+            asteroid.Initialize();
+            asteroid.GetComponent<Score>().Initialize(ScoreService);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();
             return asteroid;
         }

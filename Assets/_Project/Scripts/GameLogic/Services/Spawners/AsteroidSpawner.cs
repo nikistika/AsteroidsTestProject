@@ -27,7 +27,7 @@ namespace Managers
             _asteroidSpawnData = asteroidSpawnData;
         }
 
-        public async UniTask<Asteroid> SpawnObject()
+        private async UniTask<Asteroid> SpawnObject()
         {
             var asteroid = await _asteroidFactory.SpawnObject();
             asteroid.OnReturnAsteroid += ReturnAsteroid;
@@ -37,8 +37,7 @@ namespace Managers
 
         protected override async UniTask Initialize()
         {
-            SpawnAsteroids().Forget();
-            await UniTask.CompletedTask;
+            await SpawnAsteroids();
         }
 
         private async void SpawnAsteroidFragments(int quantity, Asteroid objectParent)

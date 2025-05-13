@@ -28,7 +28,7 @@ namespace Shooting
         [field: SerializeField] public int MaxLaserCount { get; private set; } = 3;
         [field: SerializeField] public int LaserCount { get; private set; }
 
-        public void Initilize(
+        public void Construct(
             AnalyticsController analyticsController,
             KillService killService)
         {

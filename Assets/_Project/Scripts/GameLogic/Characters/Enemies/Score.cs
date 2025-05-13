@@ -11,8 +11,7 @@ namespace Characters
 
         [SerializeField] private int _scoreKill = 5;
 
-        [Inject]
-        public void Construct(
+        public void Initialize(
             ScoreService scoreService)
         {
             _scoreService = scoreService;

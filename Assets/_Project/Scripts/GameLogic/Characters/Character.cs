@@ -1,7 +1,5 @@
-using Cysharp.Threading.Tasks;
 using GameLogic;
 using UnityEngine;
-using Zenject;
 
 namespace Characters
 {
@@ -12,16 +10,16 @@ namespace Characters
 
         protected ScreenSize ScreenSize { get; private set; }
 
-        protected void BaseInitialize(
+        protected void Construct(
             ScreenSize screenSize)
         {
             ScreenSize = screenSize;
         }
 
-        // protected void Awake()
-        // {
-        //     Initialize();
-        // }
+        protected void Awake()
+        {
+            Rigidbody = GetComponent<Rigidbody2D>();
+        }
 
         private void FixedUpdate()
         {
@@ -30,32 +28,32 @@ namespace Characters
 
         protected void GoingAbroad()
         {
-            if (gameObject.transform.position.y > ScreenSize.HalfHeightCamera + 0.5f)
+            if (ScreenSize != null)
             {
-                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
-                    -ScreenSize.HalfHeightCamera));
-            }
+                if (gameObject.transform.position.y > ScreenSize.HalfHeightCamera + 0.5f)
+                {
+                    Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
+                        -ScreenSize.HalfHeightCamera));
+                }
 
-            if (gameObject.transform.position.y < -ScreenSize.HalfHeightCamera - 0.5f)
-            {
-                Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
-                    ScreenSize.HalfHeightCamera));
-            }
+                if (gameObject.transform.position.y < -ScreenSize.HalfHeightCamera - 0.5f)
+                {
+                    Rigidbody.MovePosition(new Vector2(gameObject.transform.position.x,
+                        ScreenSize.HalfHeightCamera));
+                }
 
-            if (gameObject.transform.position.x > ScreenSize.HalfWidthCamera + 0.5f)
-            {
-                Rigidbody.MovePosition(new Vector2(-ScreenSize.HalfWidthCamera,
-                    gameObject.transform.position.y));
-            }
+                if (gameObject.transform.position.x > ScreenSize.HalfWidthCamera + 0.5f)
+                {
+                    Rigidbody.MovePosition(new Vector2(-ScreenSize.HalfWidthCamera,
+                        gameObject.transform.position.y));
+                }
 
-            if (gameObject.transform.position.x < -ScreenSize.HalfWidthCamera - 0.5f)
-            {
-                Rigidbody.MovePosition(new Vector2(ScreenSize.HalfWidthCamera,
-                    gameObject.transform.position.y));
+                if (gameObject.transform.position.x < -ScreenSize.HalfWidthCamera - 0.5f)
+                {
+                    Rigidbody.MovePosition(new Vector2(ScreenSize.HalfWidthCamera,
+                        gameObject.transform.position.y));
+                }
             }
         }
-
-        // //TODO: мб удалить метод
-        // protected abstract void Initialize();
     }
 }

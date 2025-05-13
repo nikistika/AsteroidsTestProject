@@ -30,19 +30,19 @@ namespace Characters
             ScreenSize screenSize,
             KillService killService)
         {
-            BaseInitialize(screenSize);
+            base.Construct(screenSize);
             _gameOver = gameOver;
             _killService = killService;
-        }
-
-        private void Start()
-        {
-            _gameOver.OnGameOver += GameOver;
         }
 
         private void FixedUpdate()
         {
             GoingAbroad();
+        }
+        
+        public void Initialize()
+        {
+            _gameOver.OnGameOver += GameOver;
         }
 
         public void Move()
@@ -68,11 +68,7 @@ namespace Characters
             fragmentAsteroid.Rigidbody.velocity = direction;
         }
 
-        protected void Initialize()
-        {
-            Rigidbody = GetComponent<Rigidbody2D>();
-            RandomScale();
-        }
+
 
         private void OnTriggerEnter2D(Collider2D collision)
         {

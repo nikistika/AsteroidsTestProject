@@ -38,9 +38,9 @@ namespace Factories
         protected override async UniTask<UFO> ActionCreateObject()
         {
             var UFO = await _assetLoader.CreateUFO();
-
             UFO.Construct(GameOver, _shipRepository, ScreenSize, KillService);
-            UFO.GetComponent<Score>().Construct(ScoreService);
+            UFO.Initialize();
+            UFO.GetComponent<Score>().Initialize(ScoreService);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();
             return UFO;
         }
