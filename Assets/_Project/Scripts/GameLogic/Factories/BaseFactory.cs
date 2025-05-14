@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-using Characters;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
@@ -12,32 +10,30 @@ namespace Factories
     public abstract class BaseFactory<T> where T : MonoBehaviour
     {
         protected readonly ScreenSize ScreenSize;
-        protected readonly T Prefab;
         protected readonly IAssetLoader _assetLoader;
 
         private readonly int _defaultPoolSize;
         private readonly int _maxPoolSize;
-        
+
+        protected T Prefab;
         private ObjectPool<T> _pool;
 
         protected BaseFactory(
             ScreenSize screenSize,
-            T prefab,
             PoolSizeSO poolSizeData,
             IAssetLoader assetLoader)
         {
             ScreenSize = screenSize;
-            Prefab = prefab;
-
             _defaultPoolSize = poolSizeData.DefaultPoolSize;
             _maxPoolSize = poolSizeData.MaxPoolSize;
             _assetLoader = assetLoader;
         }
 
-        public void StartWork()
+        public async UniTask StartWork()
         {
             if (_pool == null)
             {
+                await GetPrefab();
                 PoolInitialize();
             }
         }
@@ -45,7 +41,7 @@ namespace Factories
         private void PoolInitialize()
         {
             _pool = new ObjectPool<T>(
-                createFunc: () => ActionCreateObject().GetAwaiter().GetResult(),
+                createFunc: () => { return ActionCreateObject(); },
                 actionOnGet: (obj) => { ActionGetObject(obj); },
                 actionOnRelease: (obj) => { ActionReleaseObject(obj); },
                 actionOnDestroy: (obj) => { Object.Destroy(obj); },
@@ -62,13 +58,15 @@ namespace Factories
             _pool.Release(obj);
         }
 
-        public UniTask<T> SpawnObject()
+        public T SpawnObject()
         {
-            return UniTask.FromResult(_pool.Get());
+            return _pool.Get();
         }
 
-        protected abstract UniTask<T> ActionCreateObject();
+        protected abstract T ActionCreateObject();
 
         protected abstract void ActionGetObject(T obj);
+
+        protected abstract UniTask GetPrefab();
     }
 }

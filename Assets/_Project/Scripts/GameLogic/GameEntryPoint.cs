@@ -31,8 +31,8 @@ namespace GameLogic
         {
             await _spaceShipSpawner.StartWork();
             await _uiSpawner.StartWork();
-            await _asteroidSpawner.StartWork();
-            await _ufoSpawner.StartWork();
+            // await _asteroidSpawner.StartWork();
+            // await _ufoSpawner.StartWork();
 
             _analyticsController.StartGameEvent();
         }

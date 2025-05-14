@@ -8,35 +8,38 @@ namespace LoadingAssets
 {
     public abstract class BaseAssetLoader
     {
-        
-        private readonly Dictionary<string, GameObject> _cachedObjects = new();
-        
-        
-        //TODO: Думаю, словарь здесь некорректно работает, тк я сохраняю разные объекты с одинаковым id
-        protected async Task<T> InstantiateAsset<T>(string assetId) where T : Component
-        {
-            var handle = Addressables.InstantiateAsync(assetId);
-            _cachedObjects[assetId] = await handle.Task;
+        protected readonly Dictionary<string, GameObject> CachedComponent = new();
 
-            if (_cachedObjects[assetId].TryGetComponent(out T loadingAsset) == false)
+        protected async Task<T> LoadPrefab<T>(string assetId) where T : Component
+        {
+            var handle = Addressables.LoadAssetAsync<GameObject>(assetId);
+            var prefab = await handle.Task;
+
+            if (prefab == null)
+            {
+                throw new NullReferenceException($"Addressables.LoadAssetAsync returned null for key '{assetId}'");
+            }
+
+            if (prefab.TryGetComponent(out T component) == false)
             {
                 throw new NullReferenceException(
-                    $"Object of type {typeof(T)} is null on attempt to load it from addressables"
+                    $"Component of type {typeof(T)} not found on prefab '{prefab.name}'"
                 );
             }
 
-            return loadingAsset;
+            CachedComponent[assetId] = prefab;
+            return component;
         }
-
-        protected void ReleaseInstanceAsset(string assetId)
+        
+        protected void ReleasePrefab(string assetId)
         {
-            var obj = _cachedObjects[assetId];
+            var obj = CachedComponent[assetId].gameObject;
             if (obj == null)
                 return;
-            
+
             obj.SetActive(false);
             Addressables.ReleaseInstance(obj);
-            _cachedObjects.Remove(assetId);
+            CachedComponent.Remove(assetId);
         }
     }
 }

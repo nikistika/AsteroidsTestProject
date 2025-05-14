@@ -5,6 +5,8 @@ using LoadingAssets;
 using Managers;
 using Player;
 using UI.Presenter;
+using UI.View;
+using UnityEngine;
 
 namespace UI
 {
@@ -16,6 +18,8 @@ namespace UI
         private GameplayUIPresenter _gameplayUIPresenter;
         private SaveController _saveController;
         private IAssetLoader _assetLoader;
+
+        private GameplayUIView _gameplayUIView;
 
         public UISpawner(
             ScoreService scoreService,
@@ -33,12 +37,18 @@ namespace UI
 
         public async UniTask StartWork()
         {
-            await SpawnUI();
+            await GetPrefab();
+            SpawnUI();
         }
 
-        private async UniTask SpawnUI()
+        private async UniTask GetPrefab()
         {
-            var gameplayUIObject = await _assetLoader.CreateGameplayUIView();
+            _gameplayUIView = await _assetLoader.CreateGameplayUIView();
+        }
+
+        private void SpawnUI()
+        {
+            var gameplayUIObject = Object.Instantiate(_gameplayUIView);
             _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameOver,
                 _shipRepository, _scoreService, _saveController);
 

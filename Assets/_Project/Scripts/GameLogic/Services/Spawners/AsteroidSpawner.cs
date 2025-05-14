@@ -27,9 +27,9 @@ namespace Managers
             _asteroidSpawnData = asteroidSpawnData;
         }
 
-        private async UniTask<Asteroid> SpawnObject()
+        private Asteroid SpawnObject()
         {
-            var asteroid = await _asteroidFactory.SpawnObject();
+            var asteroid = _asteroidFactory.SpawnObject();
             asteroid.OnReturnAsteroid += ReturnAsteroid;
             asteroid.OnGetFragments += SpawnAsteroidFragments;
             return asteroid;
@@ -40,11 +40,11 @@ namespace Managers
             await SpawnAsteroids();
         }
 
-        private async void SpawnAsteroidFragments(int quantity, Asteroid objectParent)
+        private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)
         {
             for (var i = 1; i <= quantity; i++)
             {
-                var fragment =  await SpawnObject();
+                var fragment =  SpawnObject();
                 if (fragment != null)
                 {
                     fragment.IsObjectParent(false);

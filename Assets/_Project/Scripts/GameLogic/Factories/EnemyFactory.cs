@@ -16,11 +16,10 @@ namespace Factories
             ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
-            T prefab,
             PoolSizeSO poolSizeData,
             KillService killService,
             IAssetLoader assetLoader) :
-            base(screenSize, prefab, poolSizeData, assetLoader)
+            base(screenSize, poolSizeData, assetLoader)
         {
             GameOver = gameOver;
             ScoreService = scoreService;

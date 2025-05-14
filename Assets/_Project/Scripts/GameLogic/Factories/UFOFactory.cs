@@ -19,12 +19,11 @@ namespace Factories
             ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
-            UFO prefab,
             ShipRepository shipRepository,
             [Inject(Id = GameInstallerIDs.UFOPoolSizeData)] PoolSizeSO ufoPoolSizeData,
             KillService killService, 
             IAssetLoader assetLoader) :
-            base(scoreService, gameOver, screenSize, prefab, ufoPoolSizeData, killService, assetLoader)
+            base(scoreService, gameOver, screenSize, ufoPoolSizeData, killService, assetLoader)
         {
             _shipRepository = shipRepository;
         }
@@ -35,9 +34,9 @@ namespace Factories
             obj.gameObject.SetActive(false);
         }
 
-        protected override async UniTask<UFO> ActionCreateObject()
+        protected override UFO ActionCreateObject()
         {
-            var UFO = await _assetLoader.CreateUFO();
+            var UFO = Object.Instantiate(Prefab);
             UFO.Construct(GameOver, _shipRepository, ScreenSize, KillService);
             UFO.Initialize();
             UFO.GetComponent<Score>().Initialize(ScoreService);
@@ -45,10 +44,15 @@ namespace Factories
             return UFO;
         }
 
-        protected override void ActionGetObject(UFO obj)
+        protected override async void ActionGetObject(UFO obj)
         {
             obj.gameObject.SetActive(true);
             obj.gameObject.transform.position = GetRandomSpawnPosition();
+        }
+
+        protected override async UniTask GetPrefab()
+        {
+            Prefab = await _assetLoader.CreateUFO();
         }
 
         public void Initialize()

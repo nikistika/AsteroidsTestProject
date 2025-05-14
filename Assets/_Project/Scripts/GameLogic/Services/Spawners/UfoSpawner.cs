@@ -28,9 +28,9 @@ namespace Managers
             _ufoSpawnData = ufoSpawnData;
         }
 
-        private async UniTask<UFO> SpawnObject()
+        private UFO SpawnObject()
         {
-            UFO ufo = await _ufoFactory.SpawnObject();
+            UFO ufo = _ufoFactory.SpawnObject();
             ufo.OnReturnUFO += ReturnUFO;
             return ufo;
         }
@@ -50,7 +50,7 @@ namespace Managers
         {
             while (!FlagGameOver)
             {
-                await SpawnObject();
+                SpawnObject();
                 await UniTask.Delay(TimeSpan.FromSeconds(_ufoSpawnData.RespawnRange));
             }
         }

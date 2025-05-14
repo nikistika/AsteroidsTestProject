@@ -19,8 +19,10 @@ namespace Managers
         private ShootingMissile _shootingMissile;
         private InputKeyboard _inputKeyboard;
         private MissileFactory _missileFactory;
-
-        private readonly Missile _missilePrefab;
+        
+        private  SpaceShip _spaceShipPrefab;
+        
+        
         private readonly PoolSizeSO _missilePoolSizeData;
         private readonly ShipRepository _shipRepository;
         private readonly AnalyticsController _analyticsController;
@@ -34,7 +36,6 @@ namespace Managers
         public SpaceShipSpawner(
             GameOver gameOver,
             ScreenSize screenSize, 
-            Missile missilePrefab,
             [Inject(Id = GameInstallerIDs.MissilePoolSizeData)] PoolSizeSO missilePoolSizeData,
             ShipRepository shipRepository,
             AnalyticsController analyticsController,
@@ -42,25 +43,30 @@ namespace Managers
             IAssetLoader assetLoader) :
             base(gameOver, screenSize)
         {
-            _missilePrefab = missilePrefab;
             _missilePoolSizeData = missilePoolSizeData;
             _shipRepository = shipRepository;
             _analyticsController = analyticsController;
             _killService = killService;
             _assetLoader = assetLoader;
         }
-
-        public async UniTask<SpaceShip> SpawnObject()
+        
+        private async UniTask <SpaceShip> SpawnObject()
         {
-            var objectSpaceShip = await _assetLoader.CreateSpaceShip();
+            var objectSpaceShip = Object.Instantiate(_spaceShipPrefab);
             GetComponentsSpaceShip(objectSpaceShip);
-            DependencyTransfer(objectSpaceShip);
+            await DependencyTransfer(objectSpaceShip);
             return objectSpaceShip;
         }
 
         protected override async UniTask Initialize()
         {
+            await GetPrefab();
             SpaceShipObject = await SpawnObject();
+        }
+        
+        private async UniTask GetPrefab()
+        {
+            _spaceShipPrefab = await _assetLoader.CreateSpaceShip();
         }
 
         private void GetComponentsSpaceShip(SpaceShip objectSpaceShip)
@@ -73,15 +79,15 @@ namespace Managers
             _shipRepository.GetSpaceShip(objectSpaceShip, ShootingLaser, DataSpaceShip);
         }
 
-        private void DependencyTransfer(SpaceShip objectSpaceShip)
+        private async UniTask DependencyTransfer(SpaceShip objectSpaceShip)
         {
             objectSpaceShip.Construct(_analyticsController, _killService, ScreenSize);
             objectSpaceShip.StartWork();
             _inputCharacter.Construct(GameOver);
             
-            _missileFactory = new MissileFactory(ScreenSize,
-                _missilePrefab, objectSpaceShip, _shootingMissile, _missilePoolSizeData, _assetLoader);
-            _missileFactory.StartWork();
+            _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile, _missilePoolSizeData,
+                _assetLoader);
+            await _missileFactory.StartWork();
 
             _shootingMissile.Construct(_missileFactory, _killService);
             

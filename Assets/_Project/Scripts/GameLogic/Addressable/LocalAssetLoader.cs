@@ -6,9 +6,8 @@ using UI.View;
 
 namespace LoadingAssets
 {
-    public class LocalAssetLoader : BaseAssetLoader, IAssetLoader
+    public partial class LocalAssetLoader : BaseAssetLoader, IAssetLoader
     {
-        
         private string _uiGameId = "UIGame";
         private string _spaceShipId = "SpaceShip";
         private string _missileId = "Missile";
@@ -17,54 +16,62 @@ namespace LoadingAssets
 
         public async Task<GameplayUIView> CreateGameplayUIView()
         {
-            return await InstantiateAsset<GameplayUIView>(_uiGameId);
+            return await LoadPrefab<GameplayUIView>(_uiGameId);
         }
 
         public void DestroyGameplayUIView()
         {
-            ReleaseInstanceAsset(_uiGameId);
+            ReleasePrefab(_uiGameId);
         }
-        
+
         public async Task<SpaceShip> CreateSpaceShip()
         {
-            return await InstantiateAsset<SpaceShip>(_spaceShipId);
+            // if (CachedComponent[_spaceShipId] != null)
+            // {
+            //     return CachedComponent[_spaceShipId].GetComponent<SpaceShip>();
+            // }
+
+            return await LoadPrefab<SpaceShip>(_spaceShipId);
         }
 
         public void DestroySpaceShip()
         {
-            ReleaseInstanceAsset(_spaceShipId);
+            ReleasePrefab(_spaceShipId);
         }
-        
+
         public async Task<Missile> CreateMissile()
         {
-            return await InstantiateAsset<Missile>(_missileId);
+            // if (CachedComponent[_missileId] != null)
+            // {
+            //     return CachedComponent[_missileId] as Missile;
+            // }
+
+            return await LoadPrefab<Missile>(_missileId);
         }
 
         public void DestroyMissile()
         {
-            ReleaseInstanceAsset(_missileId);
+            ReleasePrefab(_missileId);
         }
-        
+
         public async Task<Asteroid> CreateAsteroid()
         {
-            return await InstantiateAsset<Asteroid>(_asteroidEnemyId);
+            return await LoadPrefab<Asteroid>(_asteroidEnemyId);
         }
 
         public void DestroyAsteroid()
         {
-            ReleaseInstanceAsset(_asteroidEnemyId);
+            ReleasePrefab(_asteroidEnemyId);
         }
-        
+
         public async Task<UFO> CreateUFO()
         {
-            return await InstantiateAsset<UFO>(_ufoEnemy);
+            return await LoadPrefab<UFO>(_ufoEnemy);
         }
 
         public void DestroyUFO()
         {
-            ReleaseInstanceAsset(_ufoEnemy);
+            ReleasePrefab(_ufoEnemy);
         }
-        
-        
     }
 }

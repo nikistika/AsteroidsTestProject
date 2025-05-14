@@ -17,17 +17,16 @@ namespace Factories
             ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
-            Asteroid prefab,
             [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)] PoolSizeSO asteroidPoolSizeData,
             KillService killService,
             IAssetLoader assetLoader) :
-            base(scoreService, gameOver, screenSize, prefab, asteroidPoolSizeData, killService, assetLoader)
+            base(scoreService, gameOver, screenSize, asteroidPoolSizeData, killService, assetLoader)
         {
         }
-
-        protected override async UniTask<Asteroid> ActionCreateObject()
+        
+        protected override Asteroid ActionCreateObject()
         {
-            var asteroid = await _assetLoader.CreateAsteroid();
+            var asteroid = Object.Instantiate(Prefab);
             asteroid.Construct(GameOver, ScreenSize, KillService);
             asteroid.Initialize();
             asteroid.GetComponent<Score>().Initialize(ScoreService);
@@ -48,10 +47,17 @@ namespace Factories
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.gameObject.SetActive(false);
         }
-
+        
+        protected override async UniTask GetPrefab()
+        {
+            Prefab = await _assetLoader.CreateAsteroid();
+        }
+        
         public void Initialize()
         {
             StartWork();
         }
+
+
     }
 }
