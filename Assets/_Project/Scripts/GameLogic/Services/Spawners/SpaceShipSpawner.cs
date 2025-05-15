@@ -19,10 +19,11 @@ namespace Managers
         private ShootingMissile _shootingMissile;
         private InputKeyboard _inputKeyboard;
         private MissileFactory _missileFactory;
-        
-        private  SpaceShip _spaceShipPrefab;
-        
-        
+        private SpaceShip _spaceShipPrefab;
+
+        private ShootingLaser _shootingLaser;
+        private DataSpaceShip _dataSpaceShip;
+
         private readonly PoolSizeSO _missilePoolSizeData;
         private readonly ShipRepository _shipRepository;
         private readonly AnalyticsController _analyticsController;
@@ -30,13 +31,12 @@ namespace Managers
         private readonly IAssetLoader _assetLoader;
 
         public SpaceShip SpaceShipObject { get; private set; }
-        public ShootingLaser ShootingLaser { get; private set; }
-        public DataSpaceShip DataSpaceShip { get; private set; }
 
         public SpaceShipSpawner(
             GameOver gameOver,
-            ScreenSize screenSize, 
-            [Inject(Id = GameInstallerIDs.MissilePoolSizeData)] PoolSizeSO missilePoolSizeData,
+            ScreenSize screenSize,
+            [Inject(Id = GameInstallerIDs.MissilePoolSizeData)]
+            PoolSizeSO missilePoolSizeData,
             ShipRepository shipRepository,
             AnalyticsController analyticsController,
             KillService killService,
@@ -49,8 +49,8 @@ namespace Managers
             _killService = killService;
             _assetLoader = assetLoader;
         }
-        
-        private async UniTask <SpaceShip> SpawnObject()
+
+        private async UniTask<SpaceShip> SpawnObject()
         {
             var objectSpaceShip = Object.Instantiate(_spaceShipPrefab);
             GetComponentsSpaceShip(objectSpaceShip);
@@ -63,7 +63,7 @@ namespace Managers
             await GetPrefab();
             SpaceShipObject = await SpawnObject();
         }
-        
+
         private async UniTask GetPrefab()
         {
             _spaceShipPrefab = await _assetLoader.CreateSpaceShip();
@@ -73,10 +73,10 @@ namespace Managers
         {
             _inputCharacter = objectSpaceShip.GetComponent<InputCharacter>();
             _shootingMissile = objectSpaceShip.GetComponent<ShootingMissile>();
-            ShootingLaser = objectSpaceShip.GetComponent<ShootingLaser>();
-            DataSpaceShip = objectSpaceShip.GetComponent<DataSpaceShip>();
+            _shootingLaser = objectSpaceShip.GetComponent<ShootingLaser>();
+            _dataSpaceShip = objectSpaceShip.GetComponent<DataSpaceShip>();
 
-            _shipRepository.GetSpaceShip(objectSpaceShip, ShootingLaser, DataSpaceShip);
+            _shipRepository.GetSpaceShip(objectSpaceShip, _shootingLaser, _dataSpaceShip);
         }
 
         private async UniTask DependencyTransfer(SpaceShip objectSpaceShip)
@@ -84,13 +84,13 @@ namespace Managers
             objectSpaceShip.Construct(_analyticsController, _killService, ScreenSize);
             objectSpaceShip.StartWork();
             _inputCharacter.Construct(GameOver);
-            
+
             _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile, _missilePoolSizeData,
                 _assetLoader);
             await _missileFactory.StartWork();
 
             _shootingMissile.Construct(_missileFactory, _killService);
-            
+
             _shootingMissile.Initialize();
         }
     }

@@ -1,5 +1,4 @@
 using System;
-using System.Threading.Tasks;
 using Characters;
 using Cysharp.Threading.Tasks;
 using Factories;
@@ -18,21 +17,21 @@ namespace Managers
         private readonly EnemySpawnManagerSO _ufoSpawnData;
 
         public UfoSpawner(
-            GameOver gameOver, 
-            ScreenSize screenSize, 
+            GameOver gameOver,
+            ScreenSize screenSize,
             UFOFactory ufoFactory,
-            [Inject (Id = GameInstallerIDs.UFOSizeData)] EnemySpawnManagerSO ufoSpawnData) :
+            [Inject(Id = GameInstallerIDs.UFOSizeData)]
+            EnemySpawnManagerSO ufoSpawnData) :
             base(gameOver, screenSize)
         {
             _ufoFactory = ufoFactory;
             _ufoSpawnData = ufoSpawnData;
         }
 
-        private UFO SpawnObject()
+        private void SpawnObject()
         {
             UFO ufo = _ufoFactory.SpawnObject();
             ufo.OnReturnUFO += ReturnUFO;
-            return ufo;
         }
 
         protected override async UniTask Initialize()

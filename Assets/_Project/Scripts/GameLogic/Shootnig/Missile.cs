@@ -1,7 +1,6 @@
 using Characters;
 using GameLogic;
 using UnityEngine;
-using Zenject;
 
 namespace Shooting
 {

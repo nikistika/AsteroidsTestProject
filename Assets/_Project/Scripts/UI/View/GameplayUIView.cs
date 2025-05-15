@@ -5,7 +5,8 @@ namespace UI.View
 {
     public class GameplayUIView : MonoBehaviour
     {
-        [SerializeField] private TMP_Text _currentScoreTMP;
+        [SerializeField] private TMP_Text _currentScoreGameTMP;
+        [SerializeField] private TMP_Text _currentScoreRestartTMP;
         [SerializeField] private TMP_Text _recordScoreTMP;
         [SerializeField] private TMP_Text _laserCountTMP;
         [SerializeField] private TMP_Text _coordinatesTMP;
@@ -15,7 +16,8 @@ namespace UI.View
 
         public void SetCurrentScore(string score)
         {
-            _currentScoreTMP.text = score;
+            _currentScoreGameTMP.text = score;
+            _currentScoreRestartTMP.text = score;
         }
 
         public void SetRecordScore(string score)

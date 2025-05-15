@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using GameLogic.Analytics;
 using Managers;
 using UI;
@@ -29,12 +30,15 @@ namespace GameLogic
 
         public async void Initialize()
         {
+            _analyticsController.StartGameEvent();
+
             await _spaceShipSpawner.StartWork();
             await _uiSpawner.StartWork();
-            // await _asteroidSpawner.StartWork();
-            // await _ufoSpawner.StartWork();
 
-            _analyticsController.StartGameEvent();
+            await UniTask.WhenAll(
+                _asteroidSpawner.StartWork(),
+                _ufoSpawner.StartWork()
+            );
         }
     }
 }

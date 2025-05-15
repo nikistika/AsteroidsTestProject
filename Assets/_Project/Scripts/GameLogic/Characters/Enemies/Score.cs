@@ -1,7 +1,6 @@
 ﻿using Managers;
 using Shooting;
 using UnityEngine;
-using Zenject;
 
 namespace Characters
 {

@@ -6,16 +6,21 @@ using UI.View;
 
 namespace LoadingAssets
 {
-    public partial class LocalAssetLoader : BaseAssetLoader, IAssetLoader
+    public class LocalAssetLoader : BaseAssetLoader, IAssetLoader
     {
         private string _uiGameId = "UIGame";
         private string _spaceShipId = "SpaceShip";
         private string _missileId = "Missile";
         private string _asteroidEnemyId = "AsteroidEnemy";
         private string _ufoEnemy = "UFOEnemy";
-
+        
         public async Task<GameplayUIView> CreateGameplayUIView()
         {
+            if (CachedComponent.TryGetValue(_uiGameId, out var cachedComponent))
+            {
+                return cachedComponent as GameplayUIView;
+            }
+    
             return await LoadPrefab<GameplayUIView>(_uiGameId);
         }
 
@@ -26,10 +31,10 @@ namespace LoadingAssets
 
         public async Task<SpaceShip> CreateSpaceShip()
         {
-            // if (CachedComponent[_spaceShipId] != null)
-            // {
-            //     return CachedComponent[_spaceShipId].GetComponent<SpaceShip>();
-            // }
+            if (CachedComponent.TryGetValue(_spaceShipId, out var cachedComponent))
+            {
+                return cachedComponent as SpaceShip;
+            }
 
             return await LoadPrefab<SpaceShip>(_spaceShipId);
         }
@@ -41,10 +46,10 @@ namespace LoadingAssets
 
         public async Task<Missile> CreateMissile()
         {
-            // if (CachedComponent[_missileId] != null)
-            // {
-            //     return CachedComponent[_missileId] as Missile;
-            // }
+            if (CachedComponent.TryGetValue(_missileId, out var cachedComponent))
+            {
+                return cachedComponent as Missile;
+            }
 
             return await LoadPrefab<Missile>(_missileId);
         }
@@ -56,6 +61,10 @@ namespace LoadingAssets
 
         public async Task<Asteroid> CreateAsteroid()
         {
+            if (CachedComponent.TryGetValue(_asteroidEnemyId, out var cachedComponent))
+            {
+                return cachedComponent as Asteroid;
+            }
             return await LoadPrefab<Asteroid>(_asteroidEnemyId);
         }
 
@@ -66,6 +75,10 @@ namespace LoadingAssets
 
         public async Task<UFO> CreateUFO()
         {
+            if (CachedComponent.TryGetValue(_ufoEnemy, out var cachedComponent))
+            {
+                return cachedComponent as UFO;
+            }
             return await LoadPrefab<UFO>(_ufoEnemy);
         }
 

@@ -1,6 +1,4 @@
-﻿using ModestTree;
-using UnityEngine;
-using UnityEngine.SceneManagement;
+﻿using UnityEngine.SceneManagement;
 using Zenject;
 
 namespace GameLogic

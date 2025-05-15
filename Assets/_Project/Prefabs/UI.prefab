@@ -547,7 +547,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d54ff4c3a1443c6bab118025878f5c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _currentScoreTMP: {fileID: 8746870485210101301}
+  _currentScoreGameTMP: {fileID: 8746870485210101301}
+  _currentScoreRestartTMP: {fileID: 4234992821563211752}
   _recordScoreTMP: {fileID: 8841403271406847156}
   _laserCountTMP: {fileID: 4530593344796773535}
   _coordinatesTMP: {fileID: 1015803844558360888}

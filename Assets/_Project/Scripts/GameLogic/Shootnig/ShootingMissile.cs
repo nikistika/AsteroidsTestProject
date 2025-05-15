@@ -3,7 +3,6 @@ using System.Collections;
 using Factories;
 using Managers;
 using UnityEngine;
-using Zenject;
 
 namespace Shooting
 {

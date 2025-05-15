@@ -1,5 +1,4 @@
 using System;
-using ModestTree;
 using Zenject;
 
 namespace Managers
@@ -18,7 +17,6 @@ namespace Managers
             OnScoreChanged?.Invoke(CurrentScore);
         }
 
-        [Inject]
         public void Initialize()
         {
             if (_startFlag == false)

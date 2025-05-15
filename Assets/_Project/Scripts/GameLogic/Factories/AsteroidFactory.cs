@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Characters;
 using Cysharp.Threading.Tasks;
 using GameLogic;
@@ -17,13 +16,14 @@ namespace Factories
             ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
-            [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)] PoolSizeSO asteroidPoolSizeData,
+            [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)]
+            PoolSizeSO asteroidPoolSizeData,
             KillService killService,
             IAssetLoader assetLoader) :
             base(scoreService, gameOver, screenSize, asteroidPoolSizeData, killService, assetLoader)
         {
         }
-        
+
         protected override Asteroid ActionCreateObject()
         {
             var asteroid = Object.Instantiate(Prefab);
@@ -47,17 +47,15 @@ namespace Factories
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
             obj.gameObject.SetActive(false);
         }
-        
+
         protected override async UniTask GetPrefab()
         {
             Prefab = await _assetLoader.CreateAsteroid();
         }
-        
+
         public void Initialize()
         {
             StartWork();
         }
-
-
     }
 }

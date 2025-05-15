@@ -4,7 +4,6 @@ using Managers;
 using Player;
 using Shooting;
 using UnityEngine;
-using Zenject;
 using Random = UnityEngine.Random;
 
 namespace Characters
@@ -43,6 +42,7 @@ namespace Characters
         public void Initialize()
         {
             _gameOver.OnGameOver += GameOver;
+            RandomScale();
         }
 
         public void Move()

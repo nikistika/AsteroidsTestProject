@@ -1,6 +1,5 @@
 ﻿using GameLogic;
 using GameLogic.Analytics;
-using UnityEngine;
 using Zenject;
 
 namespace Managers
@@ -51,7 +50,8 @@ namespace Managers
         private void GameOver()
         {
             _gameOver.OnGameOver -= GameOver;
-            _analyticsController.GameOverEvent(_quantityMissile, _quantityLaser, _quantityKillAsteroids, _quantityKillUfo);
+            _analyticsController.GameOverEvent(_quantityMissile, _quantityLaser, _quantityKillAsteroids,
+                _quantityKillUfo);
         }
     }
 }

@@ -13,15 +13,16 @@ namespace Factories
 {
     public class UFOFactory : EnemyFactory<UFO>, IInitializable
     {
-        private readonly ShipRepository _shipRepository; 
-        
+        private readonly ShipRepository _shipRepository;
+
         public UFOFactory(
             ScoreService scoreService,
             GameOver gameOver,
             ScreenSize screenSize,
             ShipRepository shipRepository,
-            [Inject(Id = GameInstallerIDs.UFOPoolSizeData)] PoolSizeSO ufoPoolSizeData,
-            KillService killService, 
+            [Inject(Id = GameInstallerIDs.UFOPoolSizeData)]
+            PoolSizeSO ufoPoolSizeData,
+            KillService killService,
             IAssetLoader assetLoader) :
             base(scoreService, gameOver, screenSize, ufoPoolSizeData, killService, assetLoader)
         {
@@ -44,7 +45,7 @@ namespace Factories
             return UFO;
         }
 
-        protected override async void ActionGetObject(UFO obj)
+        protected override void ActionGetObject(UFO obj)
         {
             obj.gameObject.SetActive(true);
             obj.gameObject.transform.position = GetRandomSpawnPosition();

@@ -8,7 +8,7 @@ namespace LoadingAssets
 {
     public abstract class BaseAssetLoader
     {
-        protected readonly Dictionary<string, GameObject> CachedComponent = new();
+        protected readonly Dictionary<string, Component> CachedComponent = new();
 
         protected async Task<T> LoadPrefab<T>(string assetId) where T : Component
         {
@@ -27,7 +27,7 @@ namespace LoadingAssets
                 );
             }
 
-            CachedComponent[assetId] = prefab;
+            CachedComponent[assetId] = component;
             return component;
         }
         

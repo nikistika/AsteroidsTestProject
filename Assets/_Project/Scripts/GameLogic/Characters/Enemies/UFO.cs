@@ -4,7 +4,6 @@ using Managers;
 using Player;
 using Shooting;
 using UnityEngine;
-using Zenject;
 
 namespace Characters
 {

@@ -29,6 +29,5 @@ namespace Player
         {
             _shootingLaser.Construct(_analyticsController, _killService);
         }
-        
     }
 }
