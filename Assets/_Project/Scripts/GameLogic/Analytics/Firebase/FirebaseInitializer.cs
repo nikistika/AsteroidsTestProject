@@ -1,42 +1,21 @@
-﻿using System;  
-using System.Threading.Tasks;  
-using Firebase;  
-using Firebase.Extensions;
+﻿using Cysharp.Threading.Tasks;
+using Firebase;
 using UnityEngine;
-using Zenject;
 
-namespace GameLogic.Analytics  
-{  
-    public class FirebaseInitializer : IInitializable  
-    {  
-        public void Initialize()  
-        {  
-            FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(OnDependencyStatusReceived); 
-            
+namespace GameLogic.Analytics
+{
+    public class FirebaseInitializer
+    {
+        public async UniTask Initialize()
+        {
+            var status = await FirebaseApp.CheckAndFixDependenciesAsync();
+            if (status != DependencyStatus.Available)
+            {
+                Debug.LogError($"Could not resolve all Firebase dependencies: {status}");
+                return;
+            }
+
+            Debug.Log("Firebase initialized successfully!");
         }
-        
-        private void OnDependencyStatusReceived(Task<DependencyStatus> task)  
-        {  
-            try  
-            {  
-                if (!task.IsCompletedSuccessfully)  
-                {  
-                    throw new Exception($"Could not resolve all Firebase dependencies", task.Exception);  
-                }  
-  
-                var status = task.Result;  
-                if (status != DependencyStatus.Available)  
-                {  
-                    throw new Exception($"Could not resolve all Firebase dependencies: {status}");  
-                }
-                
-                Debug.Log("Firebase initialized successfully!");  
-                
-            }  
-            catch (Exception e)  
-            {  
-                Debug.LogException(e);  
-            }  
-        }  
-    }  
+    }
 }

@@ -38,7 +38,6 @@ namespace Player
             }
         }
         
-
         private void Input()
         {
             if (_input.ButtonForward())

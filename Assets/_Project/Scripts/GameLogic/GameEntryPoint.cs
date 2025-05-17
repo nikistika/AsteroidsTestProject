@@ -13,12 +13,14 @@ namespace GameLogic
         private readonly SpaceShipSpawner _spaceShipSpawner;
         private readonly UISpawner _uiSpawner;
         private readonly AnalyticsController _analyticsController;
+        private readonly FirebaseInitializer _firebaseInitializer;
 
         public GameEntryPoint(
             SpaceShipSpawner spaceShipSpawner,
             AsteroidSpawner asteroidSpawner,
             UISpawner uiSpawner,
             UfoSpawner ufoSpawner,
+            FirebaseInitializer firebaseInitializer,
             AnalyticsController analyticsController)
         {
             _spaceShipSpawner = spaceShipSpawner;
@@ -26,12 +28,12 @@ namespace GameLogic
             _uiSpawner = uiSpawner;
             _ufoSpawner = ufoSpawner;
             _analyticsController = analyticsController;
+            _firebaseInitializer = firebaseInitializer;
         }
 
         public async void Initialize()
         {
-            _analyticsController.StartGameEvent();
-
+            await _firebaseInitializer.Initialize();
             await _spaceShipSpawner.StartWork();
             await _uiSpawner.StartWork();
 
@@ -39,6 +41,8 @@ namespace GameLogic
                 _asteroidSpawner.StartWork(),
                 _ufoSpawner.StartWork()
             );
+
+            _analyticsController.StartGameEvent();
         }
     }
 }

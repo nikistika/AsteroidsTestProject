@@ -53,9 +53,9 @@ namespace Factories
             Prefab = await _assetLoader.CreateAsteroid();
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            StartWork();
+            await StartWork();
         }
     }
 }

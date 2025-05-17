@@ -28,7 +28,6 @@ namespace UI.Presenter
         private Vector2 _speedShip;
         private bool _flagLaserTime;
 
-
         public GameplayUIPresenter(
             GameplayUIView gameplayUIView,
             GameOver gameOver,

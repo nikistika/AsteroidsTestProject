@@ -11,9 +11,9 @@ namespace Installers
         {
             Container.Bind<SavePlayerPrefs>().AsSingle();
             Container.BindInterfacesAndSelfTo<SaveController>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
             Container.Bind<IAssetLoader>().To<LocalAssetLoader>().AsSingle();
-            Container.BindInterfacesAndSelfTo<FirebaseInitializer>().AsSingle();
+            Container.Bind<FirebaseInitializer>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
         }
     }
 }

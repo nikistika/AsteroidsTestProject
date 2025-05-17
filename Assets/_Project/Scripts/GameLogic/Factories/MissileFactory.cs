@@ -40,7 +40,7 @@ namespace Factories
             return missile;
         }
 
-        protected override async void ActionGetObject(Missile obj)
+        protected override void ActionGetObject(Missile obj)
         {
             obj.gameObject.SetActive(true);
             obj.transform.position = _spaceShip.transform.position;

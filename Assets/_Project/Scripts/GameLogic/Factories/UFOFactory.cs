@@ -56,9 +56,9 @@ namespace Factories
             Prefab = await _assetLoader.CreateUFO();
         }
 
-        public void Initialize()
+        public async void Initialize()
         {
-            StartWork();
+            await StartWork();
         }
     }
 }
