@@ -34,6 +34,8 @@ namespace Characters
         private void Start()
         {
             _gameOver.OnGameOver += GameOver;
+            _gameOver.OnContinueGame += GameContinue;
+            _gameOver.OnGameExit += GameExit;
         }
 
         private void FixedUpdate()
@@ -69,12 +71,24 @@ namespace Characters
                 _gameOver.EndGame();
             }
         }
-
+        
         private void GameOver()
         {
             _flagGameOver = true;
-            _gameOver.OnGameOver -= GameOver;
             Rigidbody.velocity = Vector2.zero;
+        }
+        
+        private void GameContinue()
+        {
+            gameObject.SetActive(false);
+            _flagGameOver = false;
+        }
+
+        private void GameExit()
+        {
+            _gameOver.OnGameOver -= GameOver;
+            _gameOver.OnGameOver -= GameContinue;
+            _gameOver.OnGameExit -= GameExit;
         }
     }
 }

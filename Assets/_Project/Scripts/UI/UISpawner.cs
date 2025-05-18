@@ -1,5 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 using GameLogic;
+using GameLogic.Ads;
 using GameLogic.SaveLogic.SaveData;
 using LoadingAssets;
 using Managers;
@@ -18,7 +19,8 @@ namespace UI
         private GameplayUIPresenter _gameplayUIPresenter;
         private SaveController _saveController;
         private IAssetLoader _assetLoader;
-
+        private readonly AdsController _adsController;
+        
         private GameplayUIView _gameplayUIView;
 
         public UISpawner(
@@ -26,13 +28,15 @@ namespace UI
             ShipRepository shipRepository,
             GameOver gameOver,
             SaveController saveController,
-            IAssetLoader assetLoader)
+            IAssetLoader assetLoader,
+            AdsController adsController)
         {
             _scoreService = scoreService;
             _shipRepository = shipRepository;
             _gameOver = gameOver;
             _saveController = saveController;
             _assetLoader = assetLoader;
+            _adsController = adsController;
         }
 
         public async UniTask StartWork()
@@ -50,7 +54,7 @@ namespace UI
         {
             var gameplayUIObject = Object.Instantiate(_gameplayUIView);
             _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameOver,
-                _shipRepository, _scoreService, _saveController);
+                _shipRepository, _scoreService, _saveController, _adsController);
 
             _gameplayUIPresenter.StartWork();
         }

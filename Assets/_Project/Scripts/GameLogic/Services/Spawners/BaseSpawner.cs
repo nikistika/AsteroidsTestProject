@@ -26,14 +26,27 @@ namespace Managers
         private void BaseInitialize()
         {
             GameOver.OnGameOver += GameOverHandler;
+            GameOver.OnContinueGame += GameContinue;
+            GameOver.OnGameExit += GameExit;
         }
 
         protected abstract UniTask Initialize();
 
         private void GameOverHandler()
         {
-            GameOver.OnGameOver -= GameOverHandler;
             FlagGameOver = true;
+        }
+
+        private void GameContinue()
+        {
+            FlagGameOver = false;
+        }
+
+        private void GameExit()
+        {
+            GameOver.OnGameOver -= GameOverHandler;
+            GameOver.OnContinueGame -= GameContinue;
+            GameOver.OnGameExit -= GameExit;
         }
     }
 }

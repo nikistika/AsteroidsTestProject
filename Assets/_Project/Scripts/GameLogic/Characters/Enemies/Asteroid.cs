@@ -21,6 +21,7 @@ namespace Characters
         private float _scaleNumber1_5 = 1.5f;
         private float _scaleNumber2 = 2f;
         private float _scaleNumber2_5 = 2.5f;
+        private Vector2 _direction;
 
         [SerializeField] private int _speed = 1;
 
@@ -42,6 +43,8 @@ namespace Characters
         public void Initialize()
         {
             _gameOver.OnGameOver += GameOver;
+            _gameOver.OnContinueGame += GameContinue;
+            _gameOver.OnGameExit += GameExit;
             RandomScale();
         }
 
@@ -115,8 +118,20 @@ namespace Characters
 
         private void GameOver()
         {
-            _gameOver.OnGameOver -= GameOver;
+            _direction = Rigidbody.velocity;
             Rigidbody.velocity = Vector2.zero;
+        }
+        
+        private void GameContinue()
+        {
+            gameObject.SetActive(false);
+        }
+
+        private void GameExit()
+        {
+            _gameOver.OnGameOver -= GameOver;
+            _gameOver.OnGameOver -= GameContinue;
+            _gameOver.OnGameExit -= GameExit;
         }
     }
 }

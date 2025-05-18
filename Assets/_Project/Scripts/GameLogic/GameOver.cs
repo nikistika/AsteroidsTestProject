@@ -10,6 +10,8 @@ namespace GameLogic
         private readonly ScoreService _scoreService;
 
         public event Action OnGameOver;
+        public event Action OnGameExit;
+        public event Action OnContinueGame;
 
         public GameOver(SaveController saveController, ScoreService scoreService)
         {
@@ -21,6 +23,16 @@ namespace GameLogic
         {
             SaveData();
             OnGameOver?.Invoke();
+        }
+        
+        public void ContinueGame()
+        {
+            OnContinueGame?.Invoke();
+        }
+        
+        public void OnOnGameExit()
+        {
+            OnGameExit?.Invoke();
         }
 
         private void SaveData()

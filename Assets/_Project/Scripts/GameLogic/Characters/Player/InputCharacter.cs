@@ -1,3 +1,4 @@
+using System;
 using GameLogic;
 using InputSystem;
 using Shooting;
@@ -12,6 +13,7 @@ namespace Player
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
         private IInput _input;
+        private Vector2 _direction;
 
         [SerializeField] private float _speedMove = 70f;
         [SerializeField] private float _speedRotate = 2f;
@@ -27,7 +29,13 @@ namespace Player
         public void Construct(GameOver gameOver)
         {
             _gameOver = gameOver;
+        }
+
+        private void Start()
+        {
             _gameOver.OnGameOver += GameOver;
+            _gameOver.OnContinueGame += GameContinue;
+            _gameOver.OnGameExit += GameExit;
         }
 
         private void Update()
@@ -69,8 +77,21 @@ namespace Player
         private void GameOver()
         {
             _rigidbody.velocity = Vector2.zero;
-            _gameOver.OnGameOver -= GameOver;
             _flagGameOver = true;
+        }
+
+        private void GameContinue()
+        {
+            _rigidbody.position = Vector2.zero;
+            _rigidbody.rotation = 0f;
+            _flagGameOver = false;
+        }
+
+        private void GameExit()
+        {
+            _gameOver.OnGameOver -= GameOver;
+            _gameOver.OnContinueGame -= GameContinue;
+            _gameOver.OnGameExit -= GameExit;
         }
     }
 }

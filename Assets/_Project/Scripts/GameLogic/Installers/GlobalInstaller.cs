@@ -1,3 +1,4 @@
+using GameLogic.Ads;
 using GameLogic.Analytics;
 using GameLogic.SaveLogic.SaveData;
 using LoadingAssets;
@@ -10,10 +11,13 @@ namespace Installers
         public override void InstallBindings()
         {
             Container.Bind<SavePlayerPrefs>().AsSingle();
-            Container.BindInterfacesAndSelfTo<SaveController>().AsSingle();
             Container.Bind<IAssetLoader>().To<LocalAssetLoader>().AsSingle();
             Container.Bind<FirebaseInitializer>().AsSingle();
+            Container.Bind<AdsInitializer>().AsSingle();
+            
+            Container.BindInterfacesAndSelfTo<SaveController>().AsSingle();
             Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
+            Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();
         }
     }
 }

@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using GameLogic.Ads;
 using GameLogic.Analytics;
 using Managers;
 using UI;
@@ -14,6 +15,8 @@ namespace GameLogic
         private readonly UISpawner _uiSpawner;
         private readonly AnalyticsController _analyticsController;
         private readonly FirebaseInitializer _firebaseInitializer;
+        private readonly AdsController _adsController;
+        private readonly AdsInitializer _adsInitializer;
 
         public GameEntryPoint(
             SpaceShipSpawner spaceShipSpawner,
@@ -21,7 +24,9 @@ namespace GameLogic
             UISpawner uiSpawner,
             UfoSpawner ufoSpawner,
             FirebaseInitializer firebaseInitializer,
-            AnalyticsController analyticsController)
+            AnalyticsController analyticsController,
+            AdsInitializer adsInitializer,
+            AdsController adsController)
         {
             _spaceShipSpawner = spaceShipSpawner;
             _asteroidSpawner = asteroidSpawner;
@@ -29,19 +34,24 @@ namespace GameLogic
             _ufoSpawner = ufoSpawner;
             _analyticsController = analyticsController;
             _firebaseInitializer = firebaseInitializer;
+            _adsInitializer = adsInitializer;
+            _adsController = adsController;
         }
 
         public async void Initialize()
         {
+            _adsInitializer.Initialize();
             await _firebaseInitializer.Initialize();
+            _adsController.Initialize();
+            _adsController.LoadAd();
             await _spaceShipSpawner.StartWork();
             await _uiSpawner.StartWork();
-
+            
             await UniTask.WhenAll(
                 _asteroidSpawner.StartWork(),
                 _ufoSpawner.StartWork()
             );
-
+            
             _analyticsController.StartGameEvent();
         }
     }

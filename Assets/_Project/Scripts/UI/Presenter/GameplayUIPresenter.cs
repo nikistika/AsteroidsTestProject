@@ -1,4 +1,5 @@
 ﻿using GameLogic;
+using GameLogic.Ads;
 using GameLogic.SaveLogic.SaveData;
 using Managers;
 using Player;
@@ -15,7 +16,8 @@ namespace UI.Presenter
         private readonly ShipRepository _shipRepository;
         private readonly ScoreService _scoreService;
         private readonly SaveController _saveController;
-
+        private readonly AdsController _adsController;
+        
         private ShootingLaser _shootingLaser;
         private int _currentScore;
         private int _recordScore;
@@ -33,13 +35,15 @@ namespace UI.Presenter
             GameOver gameOver,
             ShipRepository shipRepository,
             ScoreService scoreService,
-            SaveController saveController)
+            SaveController saveController,
+            AdsController adsController)
         {
             _gameplayUIView = gameplayUIView;
             _gameOver = gameOver;
             _shipRepository = shipRepository;
             _scoreService = scoreService;
             _saveController = saveController;
+            _adsController = adsController;
         }
 
         public void StartWork()
@@ -54,6 +58,9 @@ namespace UI.Presenter
             _shipRepository.DataSpaceShip.OnGetRotation += UpdateRotation;
             _shipRepository.DataSpaceShip.OnGetSpeed += UpdateSpeed;
 
+            _gameplayUIView.OnContinueClicked += ContinueGame;
+            _gameplayUIView.OnRestartClicked += RestartGame;
+            
             _gameOver.OnGameOver += GameOver;
             _gameOver.OnGameOver += UpdateRecordScore;
 
@@ -107,6 +114,18 @@ namespace UI.Presenter
         {
             _speedShip = speed;
             _gameplayUIView.SetSpeed($"Speed: {_speedShip}");
+        }
+
+        private void ContinueGame()
+        {
+            _adsController.ShowAd();
+            _gameplayUIView.CloseRestartPanel();
+            _gameOver.ContinueGame();
+        }
+
+        private void RestartGame()
+        {
+            
         }
 
         private void OpenRestartPanel()
