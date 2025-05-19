@@ -7,13 +7,13 @@ namespace Managers
     {
         protected bool FlagGameOver;
         protected ScreenSize ScreenSize;
-        protected GameOver GameOver;
+        protected GameState GameState;
 
         protected BaseSpawner(
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize)
         {
-            GameOver = gameOver;
+            GameState = gameState;
             ScreenSize = screenSize;
         }
 
@@ -25,28 +25,25 @@ namespace Managers
 
         private void BaseInitialize()
         {
-            GameOver.OnGameOver += GameOverHandler;
-            GameOver.OnContinueGame += GameContinue;
-            GameOver.OnGameExit += GameExit;
+            GameState.OnGameOver += GameStateHandler;
+            GameState.OnGameContinue += GameContinue;
+            GameState.OnGameExit += GameExit;
         }
 
         protected abstract UniTask Initialize();
 
-        private void GameOverHandler()
+        private void GameStateHandler()
         {
             FlagGameOver = true;
         }
 
-        private void GameContinue()
-        {
-            FlagGameOver = false;
-        }
+        protected abstract UniTask GameContinue();
 
         private void GameExit()
         {
-            GameOver.OnGameOver -= GameOverHandler;
-            GameOver.OnContinueGame -= GameContinue;
-            GameOver.OnGameExit -= GameExit;
+            GameState.OnGameOver -= GameStateHandler;
+            GameState.OnGameContinue -= GameContinue;
+            GameState.OnGameExit -= GameExit;
         }
     }
 }

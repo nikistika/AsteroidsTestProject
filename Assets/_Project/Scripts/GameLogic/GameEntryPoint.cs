@@ -44,6 +44,7 @@ namespace GameLogic
             await _firebaseInitializer.Initialize();
             _adsController.Initialize();
             _adsController.LoadAd();
+            _adsController.LoadRewardedAd();
             await _spaceShipSpawner.StartWork();
             await _uiSpawner.StartWork();
             

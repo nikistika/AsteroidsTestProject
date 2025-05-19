@@ -9,19 +9,19 @@ namespace Factories
     public abstract class EnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {
         protected readonly ScoreService ScoreService;
-        protected readonly GameOver GameOver;
+        protected readonly GameState GameState;
         protected readonly KillService KillService;
 
         protected EnemyFactory(
             ScoreService scoreService,
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize,
             PoolSizeSO poolSizeData,
             KillService killService,
             IAssetLoader assetLoader) :
             base(screenSize, poolSizeData, assetLoader)
         {
-            GameOver = gameOver;
+            GameState = gameState;
             ScoreService = scoreService;
             KillService = killService;
         }

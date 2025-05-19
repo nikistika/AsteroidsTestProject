@@ -15,7 +15,7 @@ namespace UI
     {
         private readonly ScoreService _scoreService;
         private readonly ShipRepository _shipRepository;
-        private readonly GameOver _gameOver;
+        private readonly GameState _gameState;
         private GameplayUIPresenter _gameplayUIPresenter;
         private SaveController _saveController;
         private IAssetLoader _assetLoader;
@@ -26,14 +26,14 @@ namespace UI
         public UISpawner(
             ScoreService scoreService,
             ShipRepository shipRepository,
-            GameOver gameOver,
+            GameState gameState,
             SaveController saveController,
             IAssetLoader assetLoader,
             AdsController adsController)
         {
             _scoreService = scoreService;
             _shipRepository = shipRepository;
-            _gameOver = gameOver;
+            _gameState = gameState;
             _saveController = saveController;
             _assetLoader = assetLoader;
             _adsController = adsController;
@@ -53,7 +53,7 @@ namespace UI
         private void SpawnUI()
         {
             var gameplayUIObject = Object.Instantiate(_gameplayUIView);
-            _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameOver,
+            _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameState,
                 _shipRepository, _scoreService, _saveController, _adsController);
 
             _gameplayUIPresenter.StartWork();

@@ -17,12 +17,12 @@ namespace Managers
         private readonly EnemySpawnManagerSO _ufoSpawnData;
 
         public UfoSpawner(
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize,
             UFOFactory ufoFactory,
             [Inject(Id = GameInstallerIDs.UFOSizeData)]
             EnemySpawnManagerSO ufoSpawnData) :
-            base(gameOver, screenSize)
+            base(gameState, screenSize)
         {
             _ufoFactory = ufoFactory;
             _ufoSpawnData = ufoSpawnData;
@@ -36,6 +36,12 @@ namespace Managers
 
         protected override async UniTask Initialize()
         {
+            await SpawnUFOs();
+        }
+        
+        protected override async UniTask GameContinue()
+        {
+            FlagGameOver = false;
             await SpawnUFOs();
         }
 

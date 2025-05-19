@@ -255,8 +255,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6155972648665624693}
-        m_TargetAssemblyTypeName: RestartPanel, Assembly-CSharp
+      - m_Target: {fileID: 1148894501908898936}
+        m_TargetAssemblyTypeName: UI.View.GameplayUIView, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -383,7 +383,6 @@ GameObject:
   - component: {fileID: 665667950163433151}
   - component: {fileID: 3617476422306166724}
   - component: {fileID: 813156332654115473}
-  - component: {fileID: 6155972648665624693}
   m_Layer: 0
   m_Name: RestartPanel
   m_TagString: Untagged
@@ -452,18 +451,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &6155972648665624693
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1655243638021811693}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50e8144250c35ca4da30acc492dd6233, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1690140355929168360
 GameObject:
   m_ObjectHideFlags: 0

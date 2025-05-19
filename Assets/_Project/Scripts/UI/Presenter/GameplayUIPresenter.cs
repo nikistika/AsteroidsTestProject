@@ -1,4 +1,5 @@
-﻿using GameLogic;
+﻿using Cysharp.Threading.Tasks;
+using GameLogic;
 using GameLogic.Ads;
 using GameLogic.SaveLogic.SaveData;
 using Managers;
@@ -6,13 +7,14 @@ using Player;
 using Shooting;
 using UI.View;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace UI.Presenter
 {
     public class GameplayUIPresenter
     {
         private readonly GameplayUIView _gameplayUIView;
-        private readonly GameOver _gameOver;
+        private readonly GameState _gameState;
         private readonly ShipRepository _shipRepository;
         private readonly ScoreService _scoreService;
         private readonly SaveController _saveController;
@@ -32,14 +34,14 @@ namespace UI.Presenter
 
         public GameplayUIPresenter(
             GameplayUIView gameplayUIView,
-            GameOver gameOver,
+            GameState gameState,
             ShipRepository shipRepository,
             ScoreService scoreService,
             SaveController saveController,
             AdsController adsController)
         {
             _gameplayUIView = gameplayUIView;
-            _gameOver = gameOver;
+            _gameState = gameState;
             _shipRepository = shipRepository;
             _scoreService = scoreService;
             _saveController = saveController;
@@ -61,8 +63,8 @@ namespace UI.Presenter
             _gameplayUIView.OnContinueClicked += ContinueGame;
             _gameplayUIView.OnRestartClicked += RestartGame;
             
-            _gameOver.OnGameOver += GameOver;
-            _gameOver.OnGameOver += UpdateRecordScore;
+            _gameState.OnGameOver += GameState;
+            _gameState.OnGameOver += UpdateRecordScore;
 
             _maxLaserCount = _shootingLaser.MaxLaserCount;
             _currentLaserCount = _maxLaserCount;
@@ -116,16 +118,20 @@ namespace UI.Presenter
             _gameplayUIView.SetSpeed($"Speed: {_speedShip}");
         }
 
-        private void ContinueGame()
+        private async UniTask ContinueGame()
         {
-            _adsController.ShowAd();
-            _gameplayUIView.CloseRestartPanel();
-            _gameOver.ContinueGame();
+            bool resilt = await _adsController.ShowAdGetReward();
+            if (resilt)
+            {
+                _gameplayUIView.CloseRestartPanel();
+                _gameState.ContinueGame();
+            }
         }
 
         private void RestartGame()
         {
-            
+            _adsController.ShowAd();
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
         private void OpenRestartPanel()
@@ -135,7 +141,12 @@ namespace UI.Presenter
             _gameplayUIView.OpenRestartPanel();
         }
 
-        private void GameOver()
+        private void GameState()
+        {
+            OpenRestartPanel();
+        }
+
+        private void GameExit()
         {
             _scoreService.OnScoreChanged -= UpdateCurrentScore;
             _shootingLaser.OnEditLaserCount -= UpdateCurrentLaserCount;
@@ -145,10 +156,8 @@ namespace UI.Presenter
             _shipRepository.DataSpaceShip.OnGetRotation -= UpdateRotation;
             _shipRepository.DataSpaceShip.OnGetSpeed -= UpdateSpeed;
 
-            _gameOver.OnGameOver -= GameOver;
-            _gameOver.OnGameOver -= UpdateRecordScore;
-
-            OpenRestartPanel();
+            _gameState.OnGameOver -= GameState;
+            _gameState.OnGameOver -= UpdateRecordScore;
         }
     }
 }

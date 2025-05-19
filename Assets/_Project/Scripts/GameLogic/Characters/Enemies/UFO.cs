@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using GameLogic;
 using Managers;
 using Player;
@@ -13,29 +14,29 @@ namespace Characters
         public event Action<UFO> OnReturnUFO;
 
         private ShipRepository _shipRepository;
-        private GameOver _gameOver;
+        private GameState _gameState;
         private KillService _killService;
         private bool _flagGameOver;
 
         [SerializeField] private int _speed = 1;
 
         public void Construct(
-            GameOver gameOver,
+            GameState gameState,
             ShipRepository shipRepository,
             ScreenSize screenSize,
             KillService killService)
         {
             base.Construct(screenSize);
-            _gameOver = gameOver;
+            _gameState = gameState;
             _shipRepository = shipRepository;
             _killService = killService;
         }
 
         private void Start()
         {
-            _gameOver.OnGameOver += GameOver;
-            _gameOver.OnContinueGame += GameContinue;
-            _gameOver.OnGameExit += GameExit;
+            _gameState.OnGameOver += GameState;
+            _gameState.OnGameContinue += GameContinue;
+            _gameState.OnGameExit += GameExit;
         }
 
         private void FixedUpdate()
@@ -68,27 +69,28 @@ namespace Characters
 
             if (collision.TryGetComponent<SpaceShip>(out _))
             {
-                _gameOver.EndGame();
+                _gameState.EndGame();
             }
         }
         
-        private void GameOver()
+        private void GameState()
         {
             _flagGameOver = true;
             Rigidbody.velocity = Vector2.zero;
         }
         
-        private void GameContinue()
+        private UniTask GameContinue()
         {
             gameObject.SetActive(false);
             _flagGameOver = false;
+            return UniTask.CompletedTask;
         }
 
         private void GameExit()
         {
-            _gameOver.OnGameOver -= GameOver;
-            _gameOver.OnGameOver -= GameContinue;
-            _gameOver.OnGameExit -= GameExit;
+            _gameState.OnGameOver -= GameState;
+            _gameState.OnGameContinue -= GameContinue;
+            _gameState.OnGameExit -= GameExit;
         }
     }
 }

@@ -55,7 +55,7 @@ namespace Installers
 
             Container.Bind<ScreenSize>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
-            Container.Bind<GameOver>().AsSingle();
+            Container.Bind<GameState>().AsSingle();
             Container.BindInterfacesAndSelfTo<KillService>().AsSingle();
             Container.Bind<UISpawner>().AsSingle();
             Container.Bind<SpaceShipSpawner>().AsSingle();

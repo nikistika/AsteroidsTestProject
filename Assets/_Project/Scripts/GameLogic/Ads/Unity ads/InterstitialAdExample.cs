@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Cysharp.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.Advertisements;
 using Zenject;
 
@@ -9,7 +10,9 @@ namespace GameLogic.Ads.Unity_ads
         private string _androidAdUnitId = "Interstitial_Android";
         private string _iOSAdUnitId = "Interstitial_iOS";
         private string _adUnitId;
-
+        
+        private UniTaskCompletionSource<bool> _completionSource;
+        
         public void Initialize()
         {
             // Get the Ad Unit ID for the current platform:
@@ -27,11 +30,13 @@ namespace GameLogic.Ads.Unity_ads
         }
 
         // Show the loaded content in the Ad Unit:
-        public void ShowAd()
+        public async UniTask<bool> ShowAd()
         {
             // Note that if the ad content wasn't previously loaded, this method will fail
             Debug.Log("Showing Ad: " + _adUnitId);
+            _completionSource = new UniTaskCompletionSource<bool>();
             Advertisement.Show(_adUnitId, this);
+            return await _completionSource.Task;
         }
 
         // Implement Load Listener and Show Listener interface methods: 
@@ -60,8 +65,24 @@ namespace GameLogic.Ads.Unity_ads
         {
         }
 
-        public void OnUnityAdsShowComplete(string _adUnitId, UnityAdsShowCompletionState showCompletionState)
+        public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
         {
+            if (adUnitId.Equals(_adUnitId))
+            {
+                if (_completionSource != null)
+                {
+                    if (showCompletionState == UnityAdsShowCompletionState.COMPLETED)
+                    {
+                        Debug.Log("Unity Ads Rewarded Ad Completed");
+                        _completionSource.TrySetResult(true);
+                    }
+                    else
+                    {
+                        Debug.Log("Unity Ads Rewarded AD was not watched to the end");
+                        _completionSource.TrySetResult(false);
+                    }
+                }
+            }
         }
     }
 }

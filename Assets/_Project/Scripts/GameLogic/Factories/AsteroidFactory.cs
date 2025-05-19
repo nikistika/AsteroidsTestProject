@@ -14,20 +14,20 @@ namespace Factories
     {
         public AsteroidFactory(
             ScoreService scoreService,
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize,
             [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)]
             PoolSizeSO asteroidPoolSizeData,
             KillService killService,
             IAssetLoader assetLoader) :
-            base(scoreService, gameOver, screenSize, asteroidPoolSizeData, killService, assetLoader)
+            base(scoreService, gameState, screenSize, asteroidPoolSizeData, killService, assetLoader)
         {
         }
 
         protected override Asteroid ActionCreateObject()
         {
             var asteroid = Object.Instantiate(Prefab);
-            asteroid.Construct(GameOver, ScreenSize, KillService);
+            asteroid.Construct(GameState, ScreenSize, KillService);
             asteroid.Initialize();
             asteroid.GetComponent<Score>().Initialize(ScoreService);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();

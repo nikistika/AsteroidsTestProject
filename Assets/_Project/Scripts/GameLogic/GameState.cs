@@ -1,19 +1,20 @@
 using System;
+using Cysharp.Threading.Tasks;
 using GameLogic.SaveLogic.SaveData;
 using Managers;
 
 namespace GameLogic
 {
-    public class GameOver
+    public class GameState
     {
         private readonly SaveController _saveController;
         private readonly ScoreService _scoreService;
 
         public event Action OnGameOver;
         public event Action OnGameExit;
-        public event Action OnContinueGame;
+        public event Func<UniTask> OnGameContinue;
 
-        public GameOver(SaveController saveController, ScoreService scoreService)
+        public GameState(SaveController saveController, ScoreService scoreService)
         {
             _scoreService = scoreService;
             _saveController = saveController;
@@ -27,7 +28,7 @@ namespace GameLogic
         
         public void ContinueGame()
         {
-            OnContinueGame?.Invoke();
+            OnGameContinue?.Invoke();
         }
         
         public void OnOnGameExit()

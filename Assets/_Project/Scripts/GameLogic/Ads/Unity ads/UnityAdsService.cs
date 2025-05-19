@@ -27,16 +27,14 @@ namespace GameLogic.Ads.Unity_ads
             _interstitialAdExample.ShowAd();
         }
         
-        //TODO: Этот метод походу не выполняется 
         public void LoadRewardedAd()
         {
             _rewardedAdsButton.LoadAd();
         }
         
-        //TODO: На кнопке "Продолжить" походу висит не тот метод (ShowAd()). Переделать.
         public async UniTask<bool> ShowRewardedAds()
         {
-            _rewardedAdsButton.ShowAd();
+            return await _rewardedAdsButton.ShowAd();
         }
     }
 }

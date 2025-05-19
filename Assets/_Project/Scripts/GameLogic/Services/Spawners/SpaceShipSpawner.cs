@@ -33,7 +33,7 @@ namespace Managers
         public SpaceShip SpaceShipObject { get; private set; }
 
         public SpaceShipSpawner(
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize,
             [Inject(Id = GameInstallerIDs.MissilePoolSizeData)]
             PoolSizeSO missilePoolSizeData,
@@ -41,13 +41,19 @@ namespace Managers
             AnalyticsController analyticsController,
             KillService killService,
             IAssetLoader assetLoader) :
-            base(gameOver, screenSize)
+            base(gameState, screenSize)
         {
             _missilePoolSizeData = missilePoolSizeData;
             _shipRepository = shipRepository;
             _analyticsController = analyticsController;
             _killService = killService;
             _assetLoader = assetLoader;
+        }
+        
+        protected override async UniTask Initialize()
+        {
+            await GetPrefab();
+            SpaceShipObject = await SpawnObject();
         }
 
         private async UniTask<SpaceShip> SpawnObject()
@@ -58,12 +64,10 @@ namespace Managers
             return objectSpaceShip;
         }
 
-        protected override async UniTask Initialize()
+        protected override async UniTask GameContinue()
         {
-            await GetPrefab();
-            SpaceShipObject = await SpawnObject();
         }
-
+        
         private async UniTask GetPrefab()
         {
             _spaceShipPrefab = await _assetLoader.CreateSpaceShip();
@@ -83,7 +87,7 @@ namespace Managers
         {
             objectSpaceShip.Construct(_analyticsController, _killService, ScreenSize);
             objectSpaceShip.StartWork();
-            _inputCharacter.Construct(GameOver);
+            _inputCharacter.Construct(GameState);
 
             _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile, _missilePoolSizeData,
                 _assetLoader);

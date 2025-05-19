@@ -1,4 +1,5 @@
 using System;
+using Cysharp.Threading.Tasks;
 using GameLogic;
 using InputSystem;
 using Shooting;
@@ -9,7 +10,7 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class InputCharacter : MonoBehaviour
     {
-        private GameOver _gameOver;
+        private GameState _gameState;
         private Rigidbody2D _rigidbody;
         private bool _flagGameOver;
         private IInput _input;
@@ -26,16 +27,16 @@ namespace Player
             _input = GetComponent<InputKeyboard>();
         }
         
-        public void Construct(GameOver gameOver)
+        public void Construct(GameState gameState)
         {
-            _gameOver = gameOver;
+            _gameState = gameState;
         }
 
         private void Start()
         {
-            _gameOver.OnGameOver += GameOver;
-            _gameOver.OnContinueGame += GameContinue;
-            _gameOver.OnGameExit += GameExit;
+            _gameState.OnGameOver += GameState;
+            _gameState.OnGameContinue += GameContinue;
+            _gameState.OnGameExit += GameExit;
         }
 
         private void Update()
@@ -74,24 +75,25 @@ namespace Player
             }
         }
 
-        private void GameOver()
+        private void GameState()
         {
             _rigidbody.velocity = Vector2.zero;
             _flagGameOver = true;
         }
 
-        private void GameContinue()
+        private UniTask GameContinue()
         {
             _rigidbody.position = Vector2.zero;
             _rigidbody.rotation = 0f;
             _flagGameOver = false;
+            return UniTask.CompletedTask;
         }
 
         private void GameExit()
         {
-            _gameOver.OnGameOver -= GameOver;
-            _gameOver.OnContinueGame -= GameContinue;
-            _gameOver.OnGameExit -= GameExit;
+            _gameState.OnGameOver -= GameState;
+            _gameState.OnGameContinue -= GameContinue;
+            _gameState.OnGameExit -= GameExit;
         }
     }
 }

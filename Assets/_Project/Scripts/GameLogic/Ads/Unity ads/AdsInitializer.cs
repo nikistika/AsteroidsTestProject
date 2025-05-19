@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Advertisements;
  
@@ -10,12 +9,12 @@ public class AdsInitializer :  IUnityAdsInitializationListener
     private bool _testMode = true;
     private string _gameId;
  
-    private TaskCompletionSource<bool> _initializationComplete;
+    private UniTaskCompletionSource<bool> _initializationComplete;
     
  
     public async UniTask<bool> Initialize()
     {
-        _initializationComplete = new TaskCompletionSource<bool>();
+        _initializationComplete = new UniTaskCompletionSource<bool>();
         
         #if UNITY_IOS
             _gameId = _iOSGameId;

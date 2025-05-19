@@ -17,11 +17,11 @@ namespace Managers
         private EnemySpawnManagerSO _asteroidSpawnData;
 
         public AsteroidSpawner(
-            GameOver gameOver,
+            GameState gameState,
             ScreenSize screenSize, 
             AsteroidFactory asteroidFactory,
             [Inject (Id = GameInstallerIDs.AsteroidSizeData)] EnemySpawnManagerSO asteroidSpawnData) :
-            base(gameOver, screenSize)
+            base(gameState, screenSize)
         {
             _asteroidFactory = asteroidFactory;
             _asteroidSpawnData = asteroidSpawnData;
@@ -37,6 +37,12 @@ namespace Managers
 
         protected override async UniTask Initialize()
         {
+            await SpawnAsteroids();
+        }
+
+        protected override async UniTask GameContinue()
+        {
+            FlagGameOver = false;
             await SpawnAsteroids();
         }
 
@@ -70,5 +76,7 @@ namespace Managers
                 await UniTask.Delay(TimeSpan.FromSeconds(_asteroidSpawnData.RespawnRange));
             }
         }
+        
+        
     }
 }

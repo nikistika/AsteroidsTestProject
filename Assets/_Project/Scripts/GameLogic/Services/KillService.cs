@@ -6,7 +6,7 @@ namespace Managers
 {
     public class KillService : IInitializable
     {
-        private GameOver _gameOver;
+        private GameState _gameState;
         private readonly AnalyticsController _analyticsController;
 
         private int _quantityMissile;
@@ -15,16 +15,16 @@ namespace Managers
         private int _quantityKillUfo;
 
         public KillService(
-            GameOver gameOver,
+            GameState gameState,
             AnalyticsController analyticsController)
         {
-            _gameOver = gameOver;
+            _gameState = gameState;
             _analyticsController = analyticsController;
         }
 
         public void Initialize()
         {
-            _gameOver.OnGameOver += GameOver;
+            _gameState.OnGameOver += GameState;
         }
 
         public void AddMissile(int missile)
@@ -47,9 +47,9 @@ namespace Managers
             _quantityKillUfo += ufo;
         }
 
-        private void GameOver()
+        private void GameState()
         {
-            _gameOver.OnGameOver -= GameOver;
+            _gameState.OnGameOver -= GameState;
             _analyticsController.GameOverEvent(_quantityMissile, _quantityLaser, _quantityKillAsteroids,
                 _quantityKillUfo);
         }

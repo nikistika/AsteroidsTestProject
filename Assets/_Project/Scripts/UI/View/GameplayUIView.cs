@@ -1,6 +1,8 @@
 ﻿using System;
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
 
@@ -9,7 +11,7 @@ namespace UI.View
     public class GameplayUIView : MonoBehaviour
     {
         
-        public event Action OnContinueClicked;
+        public event Func<UniTask> OnContinueClicked;
         public event Action OnRestartClicked;
         
         [SerializeField] private Button _continueButton;
