@@ -14,7 +14,7 @@ namespace GameLogic.Analytics
                 Debug.LogError($"Could not resolve all Firebase dependencies: {status}");
                 return;
             }
-
+        
             Debug.Log("Firebase initialized successfully!");
         }
     }
