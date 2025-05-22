@@ -38,7 +38,7 @@ namespace Managers
         {
             await SpawnUFOs();
         }
-        
+
         protected override async UniTask GameContinue()
         {
             FlagGameOver = false;

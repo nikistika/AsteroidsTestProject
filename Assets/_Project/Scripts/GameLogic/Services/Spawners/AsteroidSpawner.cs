@@ -18,9 +18,10 @@ namespace Managers
 
         public AsteroidSpawner(
             GameState gameState,
-            ScreenSize screenSize, 
+            ScreenSize screenSize,
             AsteroidFactory asteroidFactory,
-            [Inject (Id = GameInstallerIDs.AsteroidSizeData)] EnemySpawnManagerSO asteroidSpawnData) :
+            [Inject(Id = GameInstallerIDs.AsteroidSizeData)]
+            EnemySpawnManagerSO asteroidSpawnData) :
             base(gameState, screenSize)
         {
             _asteroidFactory = asteroidFactory;
@@ -50,7 +51,7 @@ namespace Managers
         {
             for (var i = 1; i <= quantity; i++)
             {
-                var fragment =  SpawnObject();
+                var fragment = SpawnObject();
                 if (fragment != null)
                 {
                     fragment.IsObjectParent(false);
@@ -76,7 +77,5 @@ namespace Managers
                 await UniTask.Delay(TimeSpan.FromSeconds(_asteroidSpawnData.RespawnRange));
             }
         }
-        
-        
     }
 }

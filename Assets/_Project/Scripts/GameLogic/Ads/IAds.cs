@@ -7,9 +7,9 @@ namespace GameLogic.Ads
         
         public void Initialize();
 
-        public void LoadAd();
+        public void LoadInterstitialAd();
 
-        public void ShowAd();
+        public UniTask ShowInterstitialAd();
 
         public void LoadRewardedAd();
         public UniTask<bool> ShowRewardedAds();

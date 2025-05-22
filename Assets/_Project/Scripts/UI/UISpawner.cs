@@ -20,7 +20,7 @@ namespace UI
         private SaveController _saveController;
         private IAssetLoader _assetLoader;
         private readonly AdsController _adsController;
-        
+
         private GameplayUIView _gameplayUIView;
 
         public UISpawner(

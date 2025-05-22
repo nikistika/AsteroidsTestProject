@@ -49,7 +49,7 @@ namespace Managers
             _killService = killService;
             _assetLoader = assetLoader;
         }
-        
+
         protected override async UniTask Initialize()
         {
             await GetPrefab();
@@ -64,10 +64,12 @@ namespace Managers
             return objectSpaceShip;
         }
 
-        protected override async UniTask GameContinue()
+        protected override UniTask GameContinue()
         {
+            FlagGameOver = false;
+            return UniTask.CompletedTask;
         }
-        
+
         private async UniTask GetPrefab()
         {
             _spaceShipPrefab = await _assetLoader.CreateSpaceShip();

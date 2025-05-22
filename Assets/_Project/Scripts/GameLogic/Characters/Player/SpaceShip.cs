@@ -12,7 +12,7 @@ namespace Player
     {
         private AnalyticsController _analyticsController;
         private KillService _killService;
-        
+
         [SerializeField] private ShootingLaser _shootingLaser;
 
         public void Construct(
@@ -29,6 +29,5 @@ namespace Player
         {
             _shootingLaser.Construct(_analyticsController, _killService);
         }
-
     }
 }

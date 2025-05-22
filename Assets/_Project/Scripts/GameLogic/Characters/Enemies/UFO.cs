@@ -72,13 +72,13 @@ namespace Characters
                 _gameState.EndGame();
             }
         }
-        
+
         private void GameState()
         {
             _flagGameOver = true;
             Rigidbody.velocity = Vector2.zero;
         }
-        
+
         private UniTask GameContinue()
         {
             gameObject.SetActive(false);

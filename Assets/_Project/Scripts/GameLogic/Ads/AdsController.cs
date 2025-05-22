@@ -16,12 +16,12 @@ namespace GameLogic.Ads
 
         public void LoadAd()
         {
-            _ads.LoadAd();
+            _ads.LoadInterstitialAd();
         }
 
-        public void ShowAd()
+        public async UniTask ShowInterstitialAd()
         {
-            _ads.ShowAd();
+            await _ads.ShowInterstitialAd();
         }
 
         public void LoadRewardedAd()
@@ -29,7 +29,6 @@ namespace GameLogic.Ads
             _ads.LoadRewardedAd();
         }
 
-        //TODO: На кнопке "Продолжить" походу висит не тот метод (ShowAd()). Переделать.
         public async UniTask<bool> ShowAdGetReward()
         {
             return await _ads.ShowRewardedAds();

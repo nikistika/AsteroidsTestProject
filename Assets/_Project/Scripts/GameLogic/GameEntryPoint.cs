@@ -17,7 +17,9 @@ namespace GameLogic
         private readonly FirebaseInitializer _firebaseInitializer;
         private readonly AdsController _adsController;
         private readonly AdsInitializer _adsInitializer;
-
+        
+        private bool _initializedAds;
+        
         public GameEntryPoint(
             SpaceShipSpawner spaceShipSpawner,
             AsteroidSpawner asteroidSpawner,
@@ -40,7 +42,7 @@ namespace GameLogic
 
         public async void Initialize()
         {
-            _adsInitializer.Initialize();
+            await _adsInitializer.Initialize();
             await _firebaseInitializer.Initialize();
             _adsController.Initialize();
             _adsController.LoadAd();

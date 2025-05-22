@@ -5,36 +5,36 @@ namespace GameLogic.Ads.Unity_ads
     public class UnityAdsService : IAds
     {
         
-        private InterstitialAdExample _interstitialAdExample;
-        private RewardedAdsButton _rewardedAdsButton;
+        private InterstitialAd _interstitialAd;
+        private RewardedAds _rewardedAds;
         
         public void Initialize()
         {
-            _interstitialAdExample = new InterstitialAdExample();
-            _rewardedAdsButton = new RewardedAdsButton();
+            _interstitialAd = new InterstitialAd();
+            _rewardedAds = new RewardedAds();
             
-            _interstitialAdExample.Initialize();
-            _rewardedAdsButton.Initialize();
+            _interstitialAd.Initialize();
+            _rewardedAds.Initialize();
         }
         
-        public void LoadAd()
+        public void LoadInterstitialAd()
         {
-            _interstitialAdExample.LoadAd();
+            _interstitialAd.LoadAd();
         }
         
-        public void ShowAd()
+        public async UniTask ShowInterstitialAd()
         {
-            _interstitialAdExample.ShowAd();
+            await _interstitialAd.ShowAd();
         }
         
         public void LoadRewardedAd()
         {
-            _rewardedAdsButton.LoadAd();
+            _rewardedAds.LoadAd();
         }
         
         public async UniTask<bool> ShowRewardedAds()
         {
-            return await _rewardedAdsButton.ShowAd();
+            return await _rewardedAds.ShowAd();
         }
     }
 }

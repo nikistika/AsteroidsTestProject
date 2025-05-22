@@ -8,16 +8,8 @@ namespace GameLogic
     {
         private readonly FirebaseInitializer _firebaseInitializer;
         private readonly AdsInitializer _adsInitializer;
-
-        public BootstrapEntryPoint(
-             FirebaseInitializer firebaseInitializer,
-             AdsInitializer adsInitializer)
-        {
-            _firebaseInitializer = firebaseInitializer;
-            _adsInitializer = adsInitializer;
-        }
         
-        public async void Initialize()
+        public void Initialize()
         {
             SceneManager.LoadScene(1);
         }

@@ -9,7 +9,7 @@ namespace LoadingAssets
     public interface IAssetLoader
     {
         public Task<GameplayUIView> CreateGameplayUIView(); 
-        public void DestroyGameplayUIView(); 
+        public void DestroyGameplayUIView();
         
         public Task<SpaceShip> CreateSpaceShip(); 
         public void DestroySpaceShip(); 

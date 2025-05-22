@@ -2,21 +2,18 @@
 using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace UI.View
 {
     public class GameplayUIView : MonoBehaviour
     {
-        
         public event Func<UniTask> OnContinueClicked;
-        public event Action OnRestartClicked;
-        
+        public event Func<UniTask> OnRestartClicked;
+
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _restartButton;
-        
+
         [SerializeField] private TMP_Text _currentScoreGameTMP;
         [SerializeField] private TMP_Text _currentScoreRestartTMP;
         [SerializeField] private TMP_Text _recordScoreTMP;
@@ -62,17 +59,17 @@ namespace UI.View
             _continueButton.interactable = false;
             OnContinueClicked?.Invoke();
         }
-        
+
         public void RestartGame()
         {
             OnRestartClicked?.Invoke();
         }
-        
+
         public void OpenRestartPanel()
         {
             _restartPanel.gameObject.SetActive(true);
         }
-        
+
         public void CloseRestartPanel()
         {
             _restartPanel.gameObject.SetActive(false);

@@ -19,7 +19,7 @@ namespace UI.Presenter
         private readonly ScoreService _scoreService;
         private readonly SaveController _saveController;
         private readonly AdsController _adsController;
-        
+
         private ShootingLaser _shootingLaser;
         private int _currentScore;
         private int _recordScore;
@@ -62,9 +62,11 @@ namespace UI.Presenter
 
             _gameplayUIView.OnContinueClicked += ContinueGame;
             _gameplayUIView.OnRestartClicked += RestartGame;
-            
+
             _gameState.OnGameOver += GameState;
             _gameState.OnGameOver += UpdateRecordScore;
+
+            _gameState.OnGameExit += GameExit;
 
             _maxLaserCount = _shootingLaser.MaxLaserCount;
             _currentLaserCount = _maxLaserCount;
@@ -120,17 +122,18 @@ namespace UI.Presenter
 
         private async UniTask ContinueGame()
         {
-            bool resilt = await _adsController.ShowAdGetReward();
-            if (resilt)
+            bool result = await _adsController.ShowAdGetReward();
+            if (result)
             {
                 _gameplayUIView.CloseRestartPanel();
                 _gameState.ContinueGame();
             }
         }
 
-        private void RestartGame()
+        private async UniTask RestartGame()
         {
-            _adsController.ShowAd();
+            await _adsController.ShowInterstitialAd();
+            _gameState.OnOnGameExit();
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 

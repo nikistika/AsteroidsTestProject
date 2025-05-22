@@ -1,4 +1,3 @@
-using System;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using InputSystem;
@@ -20,13 +19,13 @@ namespace Player
         [SerializeField] private float _speedRotate = 2f;
         [SerializeField] private ShootingMissile _shootingMissile;
         [SerializeField] private ShootingLaser _shootingLaser;
-        
+
         private void Awake()
         {
             _rigidbody = GetComponent<Rigidbody2D>();
             _input = GetComponent<InputKeyboard>();
         }
-        
+
         public void Construct(GameState gameState)
         {
             _gameState = gameState;
@@ -46,7 +45,7 @@ namespace Player
                 Input();
             }
         }
-        
+
         private void Input()
         {
             if (_input.ButtonForward())

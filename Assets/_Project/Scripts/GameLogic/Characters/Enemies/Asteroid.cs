@@ -40,7 +40,7 @@ namespace Characters
         {
             GoingAbroad();
         }
-        
+
         public void Initialize()
         {
             _gameState.OnGameOver += GameState;
@@ -71,7 +71,6 @@ namespace Characters
             Vector2 direction = Random.insideUnitCircle.normalized;
             fragmentAsteroid.Rigidbody.velocity = direction;
         }
-
 
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -122,7 +121,7 @@ namespace Characters
             _direction = Rigidbody.velocity;
             Rigidbody.velocity = Vector2.zero;
         }
-        
+
         private UniTask GameContinue()
         {
             gameObject.SetActive(false);

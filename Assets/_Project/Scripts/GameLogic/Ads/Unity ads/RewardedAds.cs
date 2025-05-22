@@ -1,11 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Advertisements;
-using UnityEngine.UI;
 
 namespace GameLogic.Ads.Unity_ads
 {
-    public class RewardedAdsButton : IUnityAdsLoadListener, IUnityAdsShowListener
+    public class RewardedAds : IUnityAdsLoadListener, IUnityAdsShowListener
     {
         private string _androidAdUnitId = "Rewarded_Android";
         private string _iOSAdUnitId = "Rewarded_iOS";
@@ -16,7 +15,7 @@ namespace GameLogic.Ads.Unity_ads
         public void Initialize()
         {
 #if UNITY_IOS
-        _adUnitId = _iOSAdUnitId;
+            _adUnitId = _iOSAdUnitId;
 #elif UNITY_ANDROID
             _adUnitId = _androidAdUnitId;
 #else
@@ -52,7 +51,7 @@ namespace GameLogic.Ads.Unity_ads
 
         public void OnUnityAdsShowClick(string placementId)
         {
-            throw new System.NotImplementedException();
+            Debug.Log($"Unity Ads was clicked: {placementId}");
         }
 
         public void OnUnityAdsShowComplete(string adUnitId, UnityAdsShowCompletionState showCompletionState)
@@ -83,22 +82,17 @@ namespace GameLogic.Ads.Unity_ads
 
         public void OnUnityAdsShowStart(string placementId)
         {
-            throw new System.NotImplementedException();
-        }
-
-        public void OnDestroy()
-        {
-            _completionSource?.TrySetResult(false);
+            Debug.Log($"Unity Ads started showing: {placementId}");
         }
 
         public void OnUnityAdsAdLoaded(string placementId)
         {
-            throw new System.NotImplementedException();
+            Debug.Log($"Unity Ads successfully loaded: {placementId}");
         }
 
         public void OnUnityAdsFailedToLoad(string placementId, UnityAdsLoadError error, string message)
         {
-            throw new System.NotImplementedException();
+            Debug.LogError($"Unity Ads failed to load {placementId}: {error.ToString()} - {message}");
         }
     }
 }
