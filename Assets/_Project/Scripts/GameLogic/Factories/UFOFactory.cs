@@ -1,17 +1,18 @@
 using Characters;
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using GameLogic.Enums;
 using LoadingAssets;
 using Managers;
 using Player;
-using SciptableObjects;
+using ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
 namespace Factories
 {
-    public class UFOFactory : EnemyFactory<UFO>, IInitializable
+    public class UFOFactory : EnemyFactory<UFO>
     {
         private readonly ShipRepository _shipRepository;
 
@@ -20,13 +21,18 @@ namespace Factories
             GameState gameState,
             ScreenSize screenSize,
             ShipRepository shipRepository,
-            [Inject(Id = GameInstallerIDs.UFOPoolSizeData)]
-            PoolSizeSO ufoPoolSizeData,
             KillService killService,
-            IAssetLoader assetLoader) :
-            base(scoreService, gameState, screenSize, ufoPoolSizeData, killService, assetLoader)
+            IAssetLoader assetLoader,
+            RemoteConfigController remoteConfigController) :
+            base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigController)
         {
             _shipRepository = shipRepository;
+        }
+
+        protected override void InitializeFactory()
+        {
+            DefaultPoolSize = RemoteConfigController.UFOPoolSizeData.DefaultPoolSize;
+            MaxPoolSize = RemoteConfigController.UFOPoolSizeData.MaxPoolSize;
         }
 
         protected override void ActionReleaseObject(UFO obj)
@@ -53,12 +59,7 @@ namespace Factories
 
         protected override async UniTask GetPrefab()
         {
-            Prefab = await _assetLoader.CreateUFO();
-        }
-
-        public async void Initialize()
-        {
-            await StartWork();
+            Prefab = await AssetLoader.CreateUFO();
         }
     }
 }

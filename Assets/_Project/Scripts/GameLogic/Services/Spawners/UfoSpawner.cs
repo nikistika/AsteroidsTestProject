@@ -1,10 +1,11 @@
 using System;
 using Characters;
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic;
 using GameLogic.Enums;
-using SciptableObjects;
+using ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -14,18 +15,17 @@ namespace Managers
     {
         private WaitForSeconds _waitRespawnUFORange;
         private readonly UFOFactory _ufoFactory;
-        private readonly EnemySpawnManagerSO _ufoSpawnData;
+        private readonly RemoteConfigController _remoteConfigController;
 
         public UfoSpawner(
             GameState gameState,
             ScreenSize screenSize,
             UFOFactory ufoFactory,
-            [Inject(Id = GameInstallerIDs.UFOSizeData)]
-            EnemySpawnManagerSO ufoSpawnData) :
+            RemoteConfigController remoteConfigController) :
             base(gameState, screenSize)
         {
             _ufoFactory = ufoFactory;
-            _ufoSpawnData = ufoSpawnData;
+            _remoteConfigController = remoteConfigController;
         }
 
         private void SpawnObject()
@@ -56,7 +56,7 @@ namespace Managers
             while (!FlagGameOver)
             {
                 SpawnObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(_ufoSpawnData.RespawnRange));
+                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigController.UFoSpawnData.RespawnRange));
             }
         }
     }

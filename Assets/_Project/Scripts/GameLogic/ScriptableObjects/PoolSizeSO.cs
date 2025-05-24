@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace SciptableObjects
+namespace ScriptableObjects
 {
     [CreateAssetMenu(fileName = "NewPoolSizeData", menuName = "PoolSize/NewPoolSizeData")]
     public class PoolSizeSO : ScriptableObject

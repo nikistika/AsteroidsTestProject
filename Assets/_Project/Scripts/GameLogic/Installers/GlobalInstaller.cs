@@ -1,3 +1,4 @@
+using ConfigData;
 using GameLogic.Ads;
 using GameLogic.Analytics;
 using GameLogic.SaveLogic.SaveData;
@@ -14,7 +15,8 @@ namespace Installers
             Container.Bind<IAssetLoader>().To<LocalAssetLoader>().AsSingle();
             Container.Bind<FirebaseInitializer>().AsSingle();
             Container.Bind<AdsInitializer>().AsSingle();
-            
+            Container.Bind<RemoteConfigController>().AsSingle();
+
             Container.BindInterfacesAndSelfTo<SaveController>().AsSingle();
             Container.BindInterfacesAndSelfTo<AnalyticsController>().AsSingle();
             Container.BindInterfacesAndSelfTo<AdsController>().AsSingle();

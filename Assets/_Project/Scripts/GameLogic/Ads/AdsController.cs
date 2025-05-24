@@ -14,7 +14,7 @@ namespace GameLogic.Ads
             _ads.Initialize();
         }
 
-        public void LoadAd()
+        public void LoadInterstitialAd()
         {
             _ads.LoadInterstitialAd();
         }
@@ -29,7 +29,7 @@ namespace GameLogic.Ads
             _ads.LoadRewardedAd();
         }
 
-        public async UniTask<bool> ShowAdGetReward()
+        public async UniTask<bool> ShowRewardedAds()
         {
             return await _ads.ShowRewardedAds();
         }

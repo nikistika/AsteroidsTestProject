@@ -1,8 +1,9 @@
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
 using Player;
-using SciptableObjects;
+using ScriptableObjects;
 using Shooting;
 using UnityEngine;
 
@@ -12,17 +13,25 @@ namespace Factories
     {
         private readonly SpaceShip _spaceShip;
         private readonly ShootingMissile _shootingMissile;
+        private readonly RemoteConfigController _remoteConfigController;
 
         public MissileFactory(
             ScreenSize screenSize,
             SpaceShip spaceShip,
             ShootingMissile shootingMissile,
-            PoolSizeSO missilePoolSizeData,
-            IAssetLoader assetLoader) :
-            base(screenSize, missilePoolSizeData, assetLoader)
+            IAssetLoader assetLoader,
+            RemoteConfigController remoteConfigController) :
+            base(screenSize, assetLoader, remoteConfigController)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
+            _remoteConfigController = remoteConfigController;
+        }
+        
+        protected override void InitializeFactory()
+        {
+            DefaultPoolSize = _remoteConfigController.MissilePoolSizeData.DefaultPoolSize;
+            MaxPoolSize = _remoteConfigController.MissilePoolSizeData.MaxPoolSize;
         }
 
         protected override void ActionReleaseObject(Missile obj)
@@ -49,7 +58,7 @@ namespace Factories
 
         protected override async UniTask GetPrefab()
         {
-            Prefab = await _assetLoader.CreateMissile();
+            Prefab = await AssetLoader.CreateMissile();
         }
     }
 }

@@ -1,7 +1,8 @@
+using ConfigData;
 using GameLogic;
 using LoadingAssets;
 using Managers;
-using SciptableObjects;
+using ScriptableObjects;
 using UnityEngine;
 
 namespace Factories
@@ -16,10 +17,10 @@ namespace Factories
             ScoreService scoreService,
             GameState gameState,
             ScreenSize screenSize,
-            PoolSizeSO poolSizeData,
             KillService killService,
-            IAssetLoader assetLoader) :
-            base(screenSize, poolSizeData, assetLoader)
+            IAssetLoader assetLoader,
+            RemoteConfigController remoteConfigController) :
+            base(screenSize, assetLoader, remoteConfigController)
         {
             GameState = gameState;
             ScoreService = scoreService;

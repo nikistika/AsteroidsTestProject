@@ -1,10 +1,11 @@
 using System;
 using Characters;
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic;
 using GameLogic.Enums;
-using SciptableObjects;
+using ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
@@ -14,18 +15,17 @@ namespace Managers
     {
         private WaitForSeconds _waitRespawnAsteroidRange;
         private AsteroidFactory _asteroidFactory;
-        private EnemySpawnManagerSO _asteroidSpawnData;
+        private readonly RemoteConfigController _remoteConfigController;
 
         public AsteroidSpawner(
             GameState gameState,
             ScreenSize screenSize,
             AsteroidFactory asteroidFactory,
-            [Inject(Id = GameInstallerIDs.AsteroidSizeData)]
-            EnemySpawnManagerSO asteroidSpawnData) :
+            RemoteConfigController remoteConfigController) :
             base(gameState, screenSize)
         {
             _asteroidFactory = asteroidFactory;
-            _asteroidSpawnData = asteroidSpawnData;
+            _remoteConfigController = remoteConfigController;
         }
 
         private Asteroid SpawnObject()
@@ -74,7 +74,7 @@ namespace Managers
             while (!FlagGameOver)
             {
                 SpawnObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(_asteroidSpawnData.RespawnRange));
+                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigController.AsteroidSpawnData.RespawnRange));
             }
         }
     }

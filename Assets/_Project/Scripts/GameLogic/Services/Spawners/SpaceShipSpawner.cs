@@ -1,3 +1,4 @@
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic;
@@ -6,7 +7,7 @@ using GameLogic.Enums;
 using InputSystem;
 using LoadingAssets;
 using Player;
-using SciptableObjects;
+using ScriptableObjects;
 using Shooting;
 using UnityEngine;
 using Zenject;
@@ -23,31 +24,31 @@ namespace Managers
 
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
-
-        private readonly PoolSizeSO _missilePoolSizeData;
+        
         private readonly ShipRepository _shipRepository;
         private readonly AnalyticsController _analyticsController;
         private readonly KillService _killService;
         private readonly IAssetLoader _assetLoader;
+        private readonly RemoteConfigController _remoteConfigController;
 
         public SpaceShip SpaceShipObject { get; private set; }
 
         public SpaceShipSpawner(
             GameState gameState,
             ScreenSize screenSize,
-            [Inject(Id = GameInstallerIDs.MissilePoolSizeData)]
-            PoolSizeSO missilePoolSizeData,
+
             ShipRepository shipRepository,
             AnalyticsController analyticsController,
             KillService killService,
-            IAssetLoader assetLoader) :
+            IAssetLoader assetLoader,
+            RemoteConfigController remoteConfigController) :
             base(gameState, screenSize)
         {
-            _missilePoolSizeData = missilePoolSizeData;
             _shipRepository = shipRepository;
             _analyticsController = analyticsController;
             _killService = killService;
             _assetLoader = assetLoader;
+            _remoteConfigController = remoteConfigController;
         }
 
         protected override async UniTask Initialize()
@@ -91,8 +92,8 @@ namespace Managers
             objectSpaceShip.StartWork();
             _inputCharacter.Construct(GameState);
 
-            _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile, _missilePoolSizeData,
-                _assetLoader);
+            _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile,
+                _assetLoader, _remoteConfigController);
             await _missileFactory.StartWork();
 
             _shootingMissile.Construct(_missileFactory, _killService);

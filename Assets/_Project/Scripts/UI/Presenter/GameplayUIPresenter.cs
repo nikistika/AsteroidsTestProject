@@ -122,7 +122,7 @@ namespace UI.Presenter
 
         private async UniTask ContinueGame()
         {
-            bool result = await _adsController.ShowAdGetReward();
+            bool result = await _adsController.ShowRewardedAds();
             if (result)
             {
                 _gameplayUIView.CloseRestartPanel();

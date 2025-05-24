@@ -4,7 +4,7 @@ using GameLogic;
 using GameLogic.Enums;
 using Managers;
 using Player;
-using SciptableObjects;
+using ScriptableObjects;
 using Shooting;
 using UI;
 using UI.View;
@@ -38,7 +38,8 @@ namespace Installers
 
             Container.Bind<EnemySpawnManagerSO>().WithId(GameInstallerIDs.AsteroidSizeData)
                 .FromInstance(_asteroidSpawnData).AsCached();
-            Container.Bind<EnemySpawnManagerSO>().WithId(GameInstallerIDs.UFOSizeData).FromInstance(_ufoSpawnData).AsCached();
+            Container.Bind<EnemySpawnManagerSO>().WithId(GameInstallerIDs.UFOSizeData).FromInstance(_ufoSpawnData)
+                .AsCached();
 
             Container.Bind<Asteroid>().FromInstance(_asteroidPrefab).AsSingle();
             Container.Bind<UFO>().FromInstance(_ufoPrefab).AsSingle();
@@ -59,8 +60,8 @@ namespace Installers
             Container.BindInterfacesAndSelfTo<KillService>().AsSingle();
             Container.Bind<UISpawner>().AsSingle();
             Container.Bind<SpaceShipSpawner>().AsSingle();
-            Container.BindInterfacesAndSelfTo<AsteroidFactory>().AsSingle();
-            Container.BindInterfacesAndSelfTo<UFOFactory>().AsSingle();
+            Container.Bind<AsteroidFactory>().AsSingle();
+            Container.Bind<UFOFactory>().AsSingle();
             Container.Bind<UfoSpawner>().AsSingle();
             Container.Bind<AsteroidSpawner>().AsSingle();
             Container.Bind<MissileFactory>().AsSingle();

@@ -1,26 +1,24 @@
 using Characters;
+using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using GameLogic.Enums;
 using LoadingAssets;
 using Managers;
-using SciptableObjects;
 using UnityEngine;
-using Zenject;
 
 namespace Factories
 {
-    public class AsteroidFactory : EnemyFactory<Asteroid>, IInitializable
+    public class AsteroidFactory : EnemyFactory<Asteroid>
     {
         public AsteroidFactory(
             ScoreService scoreService,
             GameState gameState,
             ScreenSize screenSize,
-            [Inject(Id = GameInstallerIDs.AsteroidPoolSizeData)]
-            PoolSizeSO asteroidPoolSizeData,
             KillService killService,
-            IAssetLoader assetLoader) :
-            base(scoreService, gameState, screenSize, asteroidPoolSizeData, killService, assetLoader)
+            IAssetLoader assetLoader,
+            RemoteConfigController remoteConfigController) :
+            base(scoreService, gameState, screenSize, killService, assetLoader,
+                remoteConfigController)
         {
         }
 
@@ -42,6 +40,12 @@ namespace Factories
             obj.IsObjectParent(true);
         }
 
+        protected override void InitializeFactory()
+        {
+            DefaultPoolSize = RemoteConfigController.AsteroidPoolSizeData.DefaultPoolSize;
+            MaxPoolSize = RemoteConfigController.AsteroidPoolSizeData.MaxPoolSize;
+        }
+
         protected override void ActionReleaseObject(Asteroid obj)
         {
             obj.gameObject.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -50,12 +54,7 @@ namespace Factories
 
         protected override async UniTask GetPrefab()
         {
-            Prefab = await _assetLoader.CreateAsteroid();
-        }
-
-        public async void Initialize()
-        {
-            await StartWork();
+            Prefab = await AssetLoader.CreateAsteroid();
         }
     }
 }
