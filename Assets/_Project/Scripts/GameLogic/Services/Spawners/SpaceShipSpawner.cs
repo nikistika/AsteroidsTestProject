@@ -29,7 +29,7 @@ namespace Managers
         private readonly AnalyticsController _analyticsController;
         private readonly KillService _killService;
         private readonly IAssetLoader _assetLoader;
-        private readonly RemoteConfigController _remoteConfigController;
+        private readonly RemoteConfigService _remoteConfigService;
 
         public SpaceShip SpaceShipObject { get; private set; }
 
@@ -41,14 +41,14 @@ namespace Managers
             AnalyticsController analyticsController,
             KillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController) :
+            RemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _shipRepository = shipRepository;
             _analyticsController = analyticsController;
             _killService = killService;
             _assetLoader = assetLoader;
-            _remoteConfigController = remoteConfigController;
+            _remoteConfigService = remoteConfigService;
         }
 
         protected override async UniTask Initialize()
@@ -93,7 +93,7 @@ namespace Managers
             _inputCharacter.Construct(GameState);
 
             _missileFactory = new MissileFactory(ScreenSize, objectSpaceShip, _shootingMissile,
-                _assetLoader, _remoteConfigController);
+                _assetLoader, _remoteConfigService);
             await _missileFactory.StartWork();
 
             _shootingMissile.Construct(_missileFactory, _killService);

@@ -23,16 +23,16 @@ namespace Factories
             ShipRepository shipRepository,
             KillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController) :
-            base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigController)
+            RemoteConfigService remoteConfigService) :
+            base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigService)
         {
             _shipRepository = shipRepository;
         }
 
         protected override void InitializeFactory()
         {
-            DefaultPoolSize = RemoteConfigController.UFOPoolSizeData.DefaultPoolSize;
-            MaxPoolSize = RemoteConfigController.UFOPoolSizeData.MaxPoolSize;
+            DefaultPoolSize = RemoteConfigService.UfoPoolSizeConfig.DefaultPoolSize;
+            MaxPoolSize = RemoteConfigService.UfoPoolSizeConfig.MaxPoolSize;
         }
 
         protected override void ActionReleaseObject(UFO obj)

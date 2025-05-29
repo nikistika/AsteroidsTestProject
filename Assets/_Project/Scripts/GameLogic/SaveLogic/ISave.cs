@@ -2,8 +2,7 @@
 {
     public interface ISave
     {
-        public void SetSaveData(SaveData saveData);
-        public SaveData GetSaveData();
-
+        public void SetSaveData(SavedData savedData);
+        public SavedData GetSaveData();
     }
 }

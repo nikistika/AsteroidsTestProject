@@ -19,8 +19,8 @@ namespace Factories
             ScreenSize screenSize,
             KillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController) :
-            base(screenSize, assetLoader, remoteConfigController)
+            RemoteConfigService remoteConfigService) :
+            base(screenSize, assetLoader, remoteConfigService)
         {
             GameState = gameState;
             ScoreService = scoreService;

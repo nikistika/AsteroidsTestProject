@@ -13,25 +13,25 @@ namespace Factories
     {
         private readonly SpaceShip _spaceShip;
         private readonly ShootingMissile _shootingMissile;
-        private readonly RemoteConfigController _remoteConfigController;
+        private readonly RemoteConfigService _remoteConfigService;
 
         public MissileFactory(
             ScreenSize screenSize,
             SpaceShip spaceShip,
             ShootingMissile shootingMissile,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController) :
-            base(screenSize, assetLoader, remoteConfigController)
+            RemoteConfigService remoteConfigService) :
+            base(screenSize, assetLoader, remoteConfigService)
         {
             _spaceShip = spaceShip;
             _shootingMissile = shootingMissile;
-            _remoteConfigController = remoteConfigController;
+            _remoteConfigService = remoteConfigService;
         }
         
         protected override void InitializeFactory()
         {
-            DefaultPoolSize = _remoteConfigController.MissilePoolSizeData.DefaultPoolSize;
-            MaxPoolSize = _remoteConfigController.MissilePoolSizeData.MaxPoolSize;
+            DefaultPoolSize = _remoteConfigService.MissilePoolSizeConfig.DefaultPoolSize;
+            MaxPoolSize = _remoteConfigService.MissilePoolSizeConfig.MaxPoolSize;
         }
 
         protected override void ActionReleaseObject(Missile obj)

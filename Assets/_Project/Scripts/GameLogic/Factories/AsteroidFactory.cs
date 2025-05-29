@@ -16,9 +16,9 @@ namespace Factories
             ScreenSize screenSize,
             KillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController) :
+            RemoteConfigService remoteConfigService) :
             base(scoreService, gameState, screenSize, killService, assetLoader,
-                remoteConfigController)
+                remoteConfigService)
         {
         }
 
@@ -42,8 +42,8 @@ namespace Factories
 
         protected override void InitializeFactory()
         {
-            DefaultPoolSize = RemoteConfigController.AsteroidPoolSizeData.DefaultPoolSize;
-            MaxPoolSize = RemoteConfigController.AsteroidPoolSizeData.MaxPoolSize;
+            DefaultPoolSize = RemoteConfigService.AsteroidPoolSizeConfig.DefaultPoolSize;
+            MaxPoolSize = RemoteConfigService.AsteroidPoolSizeConfig.MaxPoolSize;
         }
 
         protected override void ActionReleaseObject(Asteroid obj)

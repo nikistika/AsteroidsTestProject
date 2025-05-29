@@ -15,17 +15,17 @@ namespace Managers
     {
         private WaitForSeconds _waitRespawnUFORange;
         private readonly UFOFactory _ufoFactory;
-        private readonly RemoteConfigController _remoteConfigController;
+        private readonly RemoteConfigService _remoteConfigService;
 
         public UfoSpawner(
             GameState gameState,
             ScreenSize screenSize,
             UFOFactory ufoFactory,
-            RemoteConfigController remoteConfigController) :
+            RemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _ufoFactory = ufoFactory;
-            _remoteConfigController = remoteConfigController;
+            _remoteConfigService = remoteConfigService;
         }
 
         private void SpawnObject()
@@ -56,7 +56,7 @@ namespace Managers
             while (!FlagGameOver)
             {
                 SpawnObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigController.UFoSpawnData.RespawnRange));
+                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigService.UFoSpawnConfig.RespawnRange));
             }
         }
     }

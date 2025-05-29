@@ -1,4 +1,6 @@
 using System;
+using GameLogic;
+using GameLogic.SaveLogic.SaveData;
 using Zenject;
 
 namespace Managers
@@ -9,7 +11,31 @@ namespace Managers
 
         public int CurrentScore { get; private set; }
 
+        private readonly GameState _gameState;
+        private readonly SaveController _saveController;
+
         private bool _startFlag;
+
+
+        public ScoreService(
+            GameState gameState,
+            SaveController saveController)
+        {
+            _gameState = gameState;
+            _saveController = saveController;
+        }
+
+        public void Initialize()
+        {
+            _gameState.OnGameOver += SaveData;
+            _gameState.OnGameExit += GameExit;
+
+            if (_startFlag == false)
+            {
+                _startFlag = true;
+                AddScore(0);
+            }
+        }
 
         public void AddScore(int score)
         {
@@ -17,13 +43,19 @@ namespace Managers
             OnScoreChanged?.Invoke(CurrentScore);
         }
 
-        public void Initialize()
+        private void SaveData()
         {
-            if (_startFlag == false)
+            SavedData data = _saveController.GetData();
+            if (data.ScoreRecord < CurrentScore)
             {
-                _startFlag = true;
-                AddScore(0);
+                data.ScoreRecord = CurrentScore;
+                _saveController.SetData(data);
             }
+        }
+
+        private void GameExit()
+        {
+            _gameState.OnGameOver -= SaveData;
         }
     }
 }

@@ -15,17 +15,17 @@ namespace Managers
     {
         private WaitForSeconds _waitRespawnAsteroidRange;
         private AsteroidFactory _asteroidFactory;
-        private readonly RemoteConfigController _remoteConfigController;
+        private readonly RemoteConfigService _remoteConfigService;
 
         public AsteroidSpawner(
             GameState gameState,
             ScreenSize screenSize,
             AsteroidFactory asteroidFactory,
-            RemoteConfigController remoteConfigController) :
+            RemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _asteroidFactory = asteroidFactory;
-            _remoteConfigController = remoteConfigController;
+            _remoteConfigService = remoteConfigService;
         }
 
         private Asteroid SpawnObject()
@@ -74,7 +74,7 @@ namespace Managers
             while (!FlagGameOver)
             {
                 SpawnObject();
-                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigController.AsteroidSpawnData.RespawnRange));
+                await UniTask.Delay(TimeSpan.FromSeconds(_remoteConfigService.AsteroidSpawnConfig.RespawnRange));
             }
         }
     }

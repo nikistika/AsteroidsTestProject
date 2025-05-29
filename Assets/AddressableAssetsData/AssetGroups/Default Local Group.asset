@@ -22,6 +22,11 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5da47e1c6b20595458934c72091be1b1
+    m_Address: UIMenu
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6669effd52ddcba43ab2f6ee739c297b
     m_Address: SpaceShip
     m_ReadOnly: 0

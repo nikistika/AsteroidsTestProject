@@ -12,7 +12,7 @@ namespace Factories
     {
         protected readonly ScreenSize ScreenSize;
         protected readonly IAssetLoader AssetLoader;
-        protected readonly RemoteConfigController RemoteConfigController;
+        protected readonly RemoteConfigService RemoteConfigService;
 
         protected int DefaultPoolSize;
         protected int MaxPoolSize;
@@ -23,11 +23,11 @@ namespace Factories
         protected BaseFactory(
             ScreenSize screenSize,
             IAssetLoader assetLoader,
-            RemoteConfigController remoteConfigController)
+            RemoteConfigService remoteConfigService)
         {
             ScreenSize = screenSize;
             AssetLoader = assetLoader;
-            RemoteConfigController = remoteConfigController;
+            RemoteConfigService = remoteConfigService;
         }
 
         public async UniTask StartWork()
