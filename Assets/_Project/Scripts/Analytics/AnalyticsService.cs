@@ -2,7 +2,7 @@
 
 namespace GameLogic.Analytics
 {
-    public class AnalyticsController : IInitializable
+    public class AnalyticsService : IInitializable, IAnalyticsService
     {
         private IAnalytics _analytics;
 

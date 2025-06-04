@@ -3,7 +3,7 @@ using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
-using Managers;
+using Service;
 using UnityEngine;
 
 namespace Factories
@@ -11,21 +11,22 @@ namespace Factories
     public class AsteroidFactory : EnemyFactory<Asteroid>
     {
         public AsteroidFactory(
-            ScoreService scoreService,
+            IScoreService scoreService,
             GameState gameState,
             ScreenSize screenSize,
-            KillService killService,
+            IKillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService) :
+            RemoteConfigService remoteConfigService,
+            IRandomService randomService) :
             base(scoreService, gameState, screenSize, killService, assetLoader,
-                remoteConfigService)
+                remoteConfigService, randomService)
         {
         }
 
         protected override Asteroid ActionCreateObject()
         {
             var asteroid = Object.Instantiate(Prefab);
-            asteroid.Construct(GameState, ScreenSize, KillService);
+            asteroid.Construct(GameState, ScreenSize, KillService, RandomService);
             asteroid.Initialize();
             asteroid.GetComponent<Score>().Initialize(ScoreService);
             asteroid.gameObject.transform.position = GetRandomSpawnPosition();

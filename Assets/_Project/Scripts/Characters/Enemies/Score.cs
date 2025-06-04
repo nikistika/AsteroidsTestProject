@@ -1,4 +1,4 @@
-﻿using Managers;
+﻿using Service;
 using Shooting;
 using UnityEngine;
 
@@ -6,12 +6,12 @@ namespace Characters
 {
     public class Score : MonoBehaviour
     {
-        private ScoreService _scoreService;
+        private IScoreService _scoreService;
 
         [SerializeField] private int _scoreKill = 5;
 
         public void Initialize(
-            ScoreService scoreService)
+            IScoreService scoreService)
         {
             _scoreService = scoreService;
         }

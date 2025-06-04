@@ -9,7 +9,7 @@ using ScriptableObjects;
 using UnityEngine;
 using Zenject;
 
-namespace Managers
+namespace Service
 {
     public class UfoSpawner : BaseSpawner<UFO>
     {

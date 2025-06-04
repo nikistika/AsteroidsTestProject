@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using Managers;
+using Service;
 using Player;
 using Shooting;
 using UnityEngine;
@@ -17,23 +17,21 @@ namespace Characters
 
         private bool _flagParent = true;
         private GameState _gameState;
-        private KillService _killService;
-        private float _scaleNumber1 = 1;
-        private float _scaleNumber1_5 = 1.5f;
-        private float _scaleNumber2 = 2f;
-        private float _scaleNumber2_5 = 2.5f;
-        private Vector2 _direction;
+        private IKillService _killService;
+        private IRandomService _randomService;
 
         [SerializeField] private int _speed = 1;
 
         public void Construct(
             GameState gameState,
             ScreenSize screenSize,
-            KillService killService)
+            IKillService killService,
+            IRandomService randomService)
         {
             base.Construct(screenSize);
             _gameState = gameState;
             _killService = killService;
+            _randomService = randomService;
         }
 
         private void FixedUpdate()
@@ -48,17 +46,10 @@ namespace Characters
             _gameState.OnGameExit += GameExit;
             RandomScale();
         }
-
+        
         public void Move()
         {
-            if (transform.position.y > ScreenSize.HalfHeightCamera)
-                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), -1.0f) * _speed;
-            else if (transform.position.y < -ScreenSize.HalfHeightCamera)
-                Rigidbody.velocity = new Vector2(Random.Range(0, 0.5f), 1.0f) * _speed;
-            else if (transform.position.x > ScreenSize.HalfWidthCamera)
-                Rigidbody.velocity = new Vector2(-1.0f, Random.Range(0, 0.5f)) * _speed;
-            else if (transform.position.x < -ScreenSize.HalfWidthCamera)
-                Rigidbody.velocity = new Vector2(1.0f, Random.Range(0, 0.5f)) * _speed;
+            Rigidbody.velocity = _randomService.GetRandomDirection(transform.position.y, transform.position.x) * _speed;
         }
 
         public void IsObjectParent(bool isObjectParent)
@@ -68,8 +59,7 @@ namespace Characters
 
         public void MoveFragment(Asteroid fragmentAsteroid)
         {
-            Vector2 direction = Random.insideUnitCircle.normalized;
-            fragmentAsteroid.Rigidbody.velocity = direction;
+            fragmentAsteroid.Rigidbody.velocity = _randomService.GetRandomFragmentDirection();
         }
 
 
@@ -96,19 +86,10 @@ namespace Characters
                 _gameState.EndGame();
             }
         }
-
+        
         private void RandomScale()
         {
-            if (Random.value > 0.5f)
-            {
-                transform.localScale = new Vector3(Random.Range(_scaleNumber1, _scaleNumber1_5),
-                    Random.Range(_scaleNumber1, _scaleNumber1_5), _scaleNumber2);
-            }
-            else
-            {
-                transform.localScale = new Vector3(Random.Range(_scaleNumber1_5, _scaleNumber2_5),
-                    Random.Range(_scaleNumber1_5, _scaleNumber2_5), _scaleNumber2);
-            }
+            transform.localScale = _randomService.GetRandomScale();
         }
 
         private void Crushing()
@@ -118,7 +99,6 @@ namespace Characters
 
         private void GameState()
         {
-            _direction = Rigidbody.velocity;
             Rigidbody.velocity = Vector2.zero;
         }
 

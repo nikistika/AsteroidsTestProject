@@ -2,13 +2,10 @@ using Characters;
 using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using GameLogic.Enums;
 using LoadingAssets;
-using Managers;
+using Service;
 using Player;
-using ScriptableObjects;
 using UnityEngine;
-using Zenject;
 
 namespace Factories
 {
@@ -17,14 +14,15 @@ namespace Factories
         private readonly ShipRepository _shipRepository;
 
         public UFOFactory(
-            ScoreService scoreService,
+            IScoreService scoreService,
             GameState gameState,
             ScreenSize screenSize,
             ShipRepository shipRepository,
-            KillService killService,
+            IKillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService) :
-            base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigService)
+            RemoteConfigService remoteConfigService,
+            IRandomService randomService) :
+            base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigService, randomService)
         {
             _shipRepository = shipRepository;
         }

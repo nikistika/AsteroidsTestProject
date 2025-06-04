@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using Factories;
-using Managers;
+using Service;
 using UnityEngine;
 
 namespace Shooting
@@ -13,13 +13,13 @@ namespace Shooting
         private bool _shotToggle;
         private WaitForSeconds _waitDelayShotTimes;
         private MissileFactory _missileFactory;
-        private KillService _killService;
+        private IKillService _killService;
         
         [SerializeField] private float _delayShotTimes = 1;
 
         public void Construct(
         MissileFactory missileFactory,
-        KillService killService)
+        IKillService killService)
         {
             _missileFactory = missileFactory;
             _killService = killService;

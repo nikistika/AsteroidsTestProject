@@ -3,7 +3,7 @@ using Cysharp.Threading.Tasks;
 using GameLogic.SaveLogic.SaveData;
 using IAP;
 using LoadingAssets;
-using Managers;
+using Service;
 using Object = UnityEngine.Object;
 
 namespace _Project.Scripts.UI.MenuScene
@@ -12,8 +12,8 @@ namespace _Project.Scripts.UI.MenuScene
     {
         private readonly IAssetLoader _assetLoader;
         private readonly ISceneService _sceneService;
-        private readonly IAPService _iapService;
-        private readonly SaveController _saveController;
+        private readonly IIAPService _iapService;
+        private readonly ILocalSaveService _localSaveService;
 
         private MenuUIPresenter _menuUIPresenter;
         private MenuUIView _menuUIView;
@@ -21,13 +21,13 @@ namespace _Project.Scripts.UI.MenuScene
         public MenuUISpawner(
             IAssetLoader assetLoader,
             ISceneService sceneService,
-            IAPService iapService,
-            SaveController saveController)
+            IIAPService iapService,
+            ILocalSaveService localSaveService)
         {
             _assetLoader = assetLoader;
             _sceneService = sceneService;
             _iapService = iapService;
-            _saveController = saveController;
+            _localSaveService = localSaveService;
         }
 
         public async UniTask StartWork()
@@ -44,7 +44,7 @@ namespace _Project.Scripts.UI.MenuScene
         private void SpawnUI()
         {
             var gameplayUIObject = Object.Instantiate(_menuUIView);
-            _menuUIPresenter = new MenuUIPresenter(gameplayUIObject, _sceneService, _iapService, _saveController);
+            _menuUIPresenter = new MenuUIPresenter(gameplayUIObject, _sceneService, _iapService, _localSaveService);
             _menuUIPresenter.StartWork();
         }
 

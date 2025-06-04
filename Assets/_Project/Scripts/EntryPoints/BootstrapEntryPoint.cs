@@ -1,29 +1,34 @@
 ﻿using GameLogic.Ads;
 using GameLogic.Analytics;
-using Managers;
+using SaveLogic;
+using Service;
 using Zenject;
 
 namespace EntryPoints
 {
     public class BootstrapEntryPoint : IInitializable
     {
-        private readonly AdsController _adsController;
+        private readonly IAdsService _adsService;
         private readonly ISceneService _sceneService;
+        private readonly ICloudSaveService _cloudSaveService;
 
         public BootstrapEntryPoint(
-            AdsController adsController,
-            ISceneService sceneService)
+            IAdsService adsService,
+            ISceneService sceneService,
+            ICloudSaveService cloudSaveService)
         {
-            _adsController = adsController;
+            _adsService = adsService;
             _sceneService = sceneService;
+            _cloudSaveService = cloudSaveService;
         }
         
-        public void Initialize()
+        public async void Initialize()
         {
-            _adsController.LoadInterstitialAd();
-            _adsController.LoadRewardedAd();
+            await _cloudSaveService.Initialize();
+            _adsService.LoadInterstitialAd();
+            _adsService.LoadRewardedAd();
             
-            _sceneService.NextScene();
+            _sceneService.GoToMenu();
         }
     }
 }

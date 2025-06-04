@@ -1,7 +1,7 @@
 using System;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using Managers;
+using Service;
 using Player;
 using Shooting;
 using UnityEngine;
@@ -15,7 +15,7 @@ namespace Characters
 
         private ShipRepository _shipRepository;
         private GameState _gameState;
-        private KillService _killService;
+        private IKillService _killService;
         private bool _flagGameOver;
 
         [SerializeField] private int _speed = 1;
@@ -24,7 +24,7 @@ namespace Characters
             GameState gameState,
             ShipRepository shipRepository,
             ScreenSize screenSize,
-            KillService killService)
+            IKillService killService)
         {
             base.Construct(screenSize);
             _gameState = gameState;

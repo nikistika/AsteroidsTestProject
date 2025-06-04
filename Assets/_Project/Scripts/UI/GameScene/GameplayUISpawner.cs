@@ -3,7 +3,7 @@ using GameLogic;
 using GameLogic.Ads;
 using GameLogic.SaveLogic.SaveData;
 using LoadingAssets;
-using Managers;
+using Service;
 using Player;
 using UI.Presenter;
 using UI.View;
@@ -13,32 +13,32 @@ namespace UI
 {
     public class GameplayUISpawner
     {
-        private readonly ScoreService _scoreService;
+        private readonly IScoreService _scoreService;
         private readonly ShipRepository _shipRepository;
         private readonly GameState _gameState;
-        private readonly AdsController _adsController;
+        private readonly AdsService _adsService;
         private readonly ISceneService _sceneService;
 
         private GameplayUIView _gameplayUIView;
         private GameplayUIPresenter _gameplayUIPresenter;
-        private SaveController _saveController;
+        private ILocalSaveService _localSaveService;
         private IAssetLoader _assetLoader;
         
         public GameplayUISpawner(
-            ScoreService scoreService,
+            IScoreService scoreService,
             ShipRepository shipRepository,
             GameState gameState,
-            SaveController saveController,
+            ILocalSaveService localSaveService,
             IAssetLoader assetLoader,
-            AdsController adsController,
+            AdsService adsService,
             ISceneService sceneService)
         {
             _scoreService = scoreService;
             _shipRepository = shipRepository;
             _gameState = gameState;
-            _saveController = saveController;
+            _localSaveService = localSaveService;
             _assetLoader = assetLoader;
-            _adsController = adsController;
+            _adsService = adsService;
             _sceneService = sceneService;
         }
 
@@ -57,7 +57,7 @@ namespace UI
         {
             var gameplayUIObject = Object.Instantiate(_gameplayUIView);
             _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameState,
-                _shipRepository, _scoreService, _saveController, _adsController, _sceneService);
+                _shipRepository, _scoreService, _localSaveService, _adsService, _sceneService);
 
             _gameplayUIPresenter.StartWork();
         }

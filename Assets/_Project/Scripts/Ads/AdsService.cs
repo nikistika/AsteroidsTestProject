@@ -4,7 +4,7 @@ using Zenject;
 
 namespace GameLogic.Ads
 {
-    public class AdsController : IInitializable
+    public class AdsService : IInitializable, IAdsService
     {
         private IAds _ads;
 

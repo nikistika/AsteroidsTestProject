@@ -12,7 +12,7 @@ using Shooting;
 using UnityEngine;
 using Zenject;
 
-namespace Managers
+namespace Service
 {
     public class SpaceShipSpawner : BaseSpawner<SpaceShip>
     {
@@ -26,8 +26,8 @@ namespace Managers
         private DataSpaceShip _dataSpaceShip;
         
         private readonly ShipRepository _shipRepository;
-        private readonly AnalyticsController _analyticsController;
-        private readonly KillService _killService;
+        private readonly IAnalyticsService _analyticsService;
+        private readonly IKillService _killService;
         private readonly IAssetLoader _assetLoader;
         private readonly RemoteConfigService _remoteConfigService;
 
@@ -38,14 +38,14 @@ namespace Managers
             ScreenSize screenSize,
 
             ShipRepository shipRepository,
-            AnalyticsController analyticsController,
-            KillService killService,
+            IAnalyticsService analyticsService,
+            IKillService killService,
             IAssetLoader assetLoader,
             RemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _shipRepository = shipRepository;
-            _analyticsController = analyticsController;
+            _analyticsService = analyticsService;
             _killService = killService;
             _assetLoader = assetLoader;
             _remoteConfigService = remoteConfigService;
@@ -88,7 +88,7 @@ namespace Managers
 
         private async UniTask DependencyTransfer(SpaceShip objectSpaceShip)
         {
-            objectSpaceShip.Construct(_analyticsController, _killService, ScreenSize);
+            objectSpaceShip.Construct(_analyticsService, _killService, ScreenSize);
             objectSpaceShip.StartWork();
             _inputCharacter.Construct(GameState);
 

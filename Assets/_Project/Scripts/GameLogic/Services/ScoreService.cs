@@ -1,33 +1,43 @@
 using System;
+using Cysharp.Threading.Tasks;
 using GameLogic;
 using GameLogic.SaveLogic.SaveData;
+using GameLogic.SaveLogic.SaveData.Save;
+using GameLogic.SaveLogic.SaveData.Time;
+using SaveLogic;
+using UnityEngine;
 using Zenject;
 
-namespace Managers
+namespace Service
 {
-    public class ScoreService : IInitializable
+    public class ScoreService : IInitializable, IScoreService
     {
         public event Action<int> OnScoreChanged;
+        private event Action SaveHandler;
 
+        
         public int CurrentScore { get; private set; }
 
         private readonly GameState _gameState;
-        private readonly SaveController _saveController;
+        private readonly ITimeService _timeService;
+        private readonly ISaveService _saveService;
 
         private bool _startFlag;
 
-
         public ScoreService(
             GameState gameState,
-            SaveController saveController)
+            ISaveService saveService,
+            ITimeService timeService)
         {
             _gameState = gameState;
-            _saveController = saveController;
+            _saveService = saveService;
+            _timeService = timeService;
         }
 
         public void Initialize()
         {
-            _gameState.OnGameOver += SaveData;
+            SaveHandler = () => SaveData().Forget();
+            _gameState.OnGameOver += SaveHandler;
             _gameState.OnGameExit += GameExit;
 
             if (_startFlag == false)
@@ -43,19 +53,30 @@ namespace Managers
             OnScoreChanged?.Invoke(CurrentScore);
         }
 
-        private void SaveData()
+        private async UniTask SaveData()
         {
-            SavedData data = _saveController.GetData();
-            if (data.ScoreRecord < CurrentScore)
+            SaveConfig cloudData = await _cloudSaveService.LoadData();
+            SaveConfig localData = _localSaveService.GetData();
+
+            DateTime timeCloudData = _timeService.ConvertToDateTime(cloudData.SavingTime);
+            DateTime timeLocalData = _timeService.ConvertToDateTime(localData.SavingTime);
+            
+            if (timeCloudData < timeLocalData)
             {
-                data.ScoreRecord = CurrentScore;
-                _saveController.SetData(data);
+                
+            }
+            
+            if (localData.ScoreRecord < CurrentScore)
+            {
+                localData.ScoreRecord = CurrentScore;
+                _localSaveService.SetData(localData);
+                await _cloudSaveService.SaveData(localData);
             }
         }
-
+        
         private void GameExit()
         {
-            _gameState.OnGameOver -= SaveData;
+            _gameState.OnGameOver -= SaveHandler;
         }
     }
 }

@@ -5,7 +5,7 @@ using GameLogic.RemoteConfig;
 
 namespace ConfigData
 {
-    public class RemoteConfigService
+    public class RemoteConfigService : IRemoteConfigService
     {
         private IRemoteConfig _remoteConfigFirebase;
 

@@ -2,7 +2,7 @@ using ConfigData;
 using Cysharp.Threading.Tasks;
 using Factories;
 using GameLogic.Analytics;
-using Managers;
+using Service;
 using UI;
 using Zenject;
 
@@ -15,7 +15,7 @@ namespace GameLogic
         private readonly SpaceShipSpawner _spaceShipSpawner;
         private readonly GameplayUISpawner _gameplayUISpawner;
         private readonly RemoteConfigService _remoteConfigService;
-        private readonly AnalyticsController _analyticsController;
+        private readonly IAnalyticsService _analyticsService;
         private readonly AsteroidFactory _asteroidFactory;
         private readonly UFOFactory _ufoFactory;
 
@@ -27,7 +27,7 @@ namespace GameLogic
             RemoteConfigService remoteConfigService,
             AsteroidFactory asteroidFactory,
             UFOFactory ufoFactory,
-            AnalyticsController analyticsController)
+            IAnalyticsService analyticsService)
         {
             _spaceShipSpawner = spaceShipSpawner;
             _asteroidSpawner = asteroidSpawner;
@@ -36,7 +36,7 @@ namespace GameLogic
             _remoteConfigService = remoteConfigService;
             _asteroidFactory = asteroidFactory;
             _ufoFactory = ufoFactory;
-            _analyticsController = analyticsController;
+            _analyticsService = analyticsService;
         }
 
         public async void Initialize()
@@ -52,7 +52,7 @@ namespace GameLogic
                 _ufoSpawner.StartWork()
             );
 
-            _analyticsController.StartGameEvent();
+            _analyticsService.StartGameEvent();
         }
     }
 }

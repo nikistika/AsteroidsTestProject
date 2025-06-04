@@ -1,9 +1,9 @@
-﻿namespace Managers
+﻿namespace Service
 {
     public interface ISceneService
     {
         public void RestartScene();
-        public void NextScene();
-        public void PreviousScene();
+        public void GoToMenu();
+        public void GoToGame();
     }
 }

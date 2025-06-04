@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/_Project/Scenes/Menu.unity
     guid: 240cc04af7da16f40a88078fff28ea0c
   - enabled: 1
-    path: Assets/_Project/Scenes/AsteroidsGame.unity
+    path: Assets/_Project/Scenes/Game.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 2a3de0a665a9f8742ac7ecca132d2e5d, type: 2}

@@ -1,7 +1,7 @@
 ﻿using GameLogic;
 using GameLogic.SaveLogic.SaveData;
 using IAP;
-using Managers;
+using Service;
 
 namespace _Project.Scripts.UI.MenuScene
 {
@@ -9,27 +9,27 @@ namespace _Project.Scripts.UI.MenuScene
     {
         private readonly ISceneService _sceneService;
         private readonly MenuUIView _menuUIView;
-        private readonly IAPService _iapService;
-        private readonly SaveController _saveController;
+        private readonly IIAPService _iapService;
+        private readonly ILocalSaveService _localSaveService;
         private readonly GameState _gameState;
 
         public MenuUIPresenter(
             MenuUIView menuUIView,
             ISceneService sceneService,
-            IAPService iapService,
-            SaveController saveController)
+            IIAPService iapService,
+            ILocalSaveService localSaveService)
         {
             _menuUIView = menuUIView;
             _sceneService = sceneService;
             _iapService = iapService;
-            _saveController = saveController;
+            _localSaveService = localSaveService;
         }
 
         public void StartWork()
         {
             _menuUIView.OnStartGame += StartGame;
             _menuUIView.OnRemoveAds += RemoveAds;
-            _saveController.OnSaveDataChanged += HideAdsButton;
+            _localSaveService.OnSaveDataChanged += HideAdsButton;
 
             HideAdsButton();
         }
@@ -38,12 +38,12 @@ namespace _Project.Scripts.UI.MenuScene
         {
             _menuUIView.OnStartGame -= StartGame;
             _menuUIView.OnRemoveAds -= RemoveAds;
-            _saveController.OnSaveDataChanged -= HideAdsButton;
+            _localSaveService.OnSaveDataChanged -= HideAdsButton;
         }
 
         private void StartGame()
         {
-            _sceneService.NextScene();
+            _sceneService.GoToGame();
         }
 
         private void RemoveAds()
@@ -53,7 +53,7 @@ namespace _Project.Scripts.UI.MenuScene
 
         private void HideAdsButton()
         {
-            if (_saveController.GetData().AdsRemoved)
+            if (_localSaveService.GetData().AdsRemoved)
             {
                 _menuUIView.HideRemoveAdsButton();
             }

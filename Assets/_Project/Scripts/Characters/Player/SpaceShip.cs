@@ -1,6 +1,6 @@
 using GameLogic;
 using GameLogic.Analytics;
-using Managers;
+using Service;
 using Shooting;
 using UnityEngine;
 using Character = Characters.Character;
@@ -10,24 +10,24 @@ namespace Player
     [RequireComponent(typeof(Rigidbody2D))]
     public class SpaceShip : Character
     {
-        private AnalyticsController _analyticsController;
-        private KillService _killService;
+        private IAnalyticsService _analyticsService;
+        private IKillService _killService;
 
         [SerializeField] private ShootingLaser _shootingLaser;
 
         public void Construct(
-            AnalyticsController analyticsController,
-            KillService killService,
+            IAnalyticsService analyticsService,
+            IKillService killService,
             ScreenSize screenSize)
         {
             base.Construct(screenSize);
-            _analyticsController = analyticsController;
+            _analyticsService = analyticsService;
             _killService = killService;
         }
 
         public void StartWork()
         {
-            _shootingLaser.Construct(_analyticsController, _killService);
+            _shootingLaser.Construct(_analyticsService, _killService);
         }
     }
 }

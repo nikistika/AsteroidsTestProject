@@ -1,7 +1,7 @@
 using Cysharp.Threading.Tasks;
 using GameLogic;
 
-namespace Managers
+namespace Service
 {
     public abstract class BaseSpawner<T>
     {

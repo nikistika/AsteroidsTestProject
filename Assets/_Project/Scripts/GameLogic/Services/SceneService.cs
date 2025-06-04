@@ -1,6 +1,6 @@
 ﻿using UnityEngine.SceneManagement;
 
-namespace Managers
+namespace Service
 {
     public class SceneService : ISceneService
     {
@@ -9,14 +9,14 @@ namespace Managers
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
-        public void NextScene()
+        public void GoToMenu()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+            SceneManager.LoadScene(1);
         }
-
-        public void PreviousScene()
+        
+        public void GoToGame()
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+            SceneManager.LoadScene(2);
         }
     }
 }

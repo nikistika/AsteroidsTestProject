@@ -2,12 +2,12 @@
 using GameLogic.Analytics;
 using Zenject;
 
-namespace Managers
+namespace Service
 {
-    public class KillService : IInitializable
+    public class KillService : IInitializable, IKillService
     {
         private GameState _gameState;
-        private readonly AnalyticsController _analyticsController;
+        private readonly IAnalyticsService _analyticsService;
 
         private int _quantityMissile;
         private int _quantityLaser;
@@ -16,10 +16,10 @@ namespace Managers
 
         public KillService(
             GameState gameState,
-            AnalyticsController analyticsController)
+            IAnalyticsService analyticsService)
         {
             _gameState = gameState;
-            _analyticsController = analyticsController;
+            _analyticsService = analyticsService;
         }
 
         public void Initialize()
@@ -50,7 +50,7 @@ namespace Managers
         private void GameState()
         {
             _gameState.OnGameOver -= GameState;
-            _analyticsController.GameOverEvent(_quantityMissile, _quantityLaser, _quantityKillAsteroids,
+            _analyticsService.GameOverEvent(_quantityMissile, _quantityLaser, _quantityKillAsteroids,
                 _quantityKillUfo);
         }
     }

@@ -1,8 +1,8 @@
+using _Project.Scripts.RemoteConfig;
 using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
-using ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -49,9 +49,9 @@ namespace Factories
         {
             return _pool.Get();
         }
-        
+
         protected abstract void InitializeFactory();
-        
+
         protected abstract void ActionReleaseObject(T obj);
 
         protected abstract T ActionCreateObject();
@@ -59,7 +59,7 @@ namespace Factories
         protected abstract void ActionGetObject(T obj);
 
         protected abstract UniTask GetPrefab();
-        
+
         private void PoolInitialize()
         {
             _pool = new ObjectPool<T>(

@@ -2,7 +2,7 @@
 using Factories;
 using GameLogic;
 using GameLogic.Enums;
-using Managers;
+using Service;
 using Player;
 using ScriptableObjects;
 using Shooting;
@@ -55,6 +55,7 @@ namespace Installers
                 .FromInstance(_missilePoolSizeData).AsCached();
 
             Container.Bind<ScreenSize>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RandomService>().AsSingle();
             Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
             Container.Bind<GameState>().AsSingle();
             Container.BindInterfacesAndSelfTo<KillService>().AsSingle();

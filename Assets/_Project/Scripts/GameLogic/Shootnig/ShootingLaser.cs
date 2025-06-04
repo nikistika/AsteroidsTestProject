@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using GameLogic.Analytics;
-using Managers;
+using Service;
 using UnityEngine;
 
 namespace Shooting
@@ -17,8 +17,8 @@ namespace Shooting
         private WaitForSeconds _waitLaserDelay;
         private WaitForSeconds _waitLaserCooldown = new(1);
 
-        private AnalyticsController _analyticsController;
-        private KillService _killService;
+        private IAnalyticsService _analyticsService;
+        private IKillService _killService;
 
         [SerializeField] private Laser _laserObject;
         [SerializeField] private float _laserDuration = 1;
@@ -29,10 +29,10 @@ namespace Shooting
         [field: SerializeField] public int LaserCount { get; private set; }
 
         public void Construct(
-            AnalyticsController analyticsController,
-            KillService killService)
+            IAnalyticsService analyticsService,
+            IKillService killService)
         {
-            _analyticsController = analyticsController;
+            _analyticsService = analyticsService;
             _killService = killService;
         }
 
@@ -60,7 +60,7 @@ namespace Shooting
 
         private void UsingLaserEvent()
         {
-            _analyticsController.UsingLaserEvent();
+            _analyticsService.UsingLaserEvent();
         }
 
         private void AddLaserCount(int count)

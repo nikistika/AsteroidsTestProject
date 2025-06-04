@@ -2,7 +2,7 @@
 using GameLogic;
 using GameLogic.Ads;
 using GameLogic.SaveLogic.SaveData;
-using Managers;
+using Service;
 using Player;
 using Shooting;
 using UI.View;
@@ -15,9 +15,9 @@ namespace UI.Presenter
         private readonly GameplayUIView _gameplayUIView;
         private readonly GameState _gameState;
         private readonly ShipRepository _shipRepository;
-        private readonly ScoreService _scoreService;
-        private readonly SaveController _saveController;
-        private readonly AdsController _adsController;
+        private readonly IScoreService _scoreService;
+        private readonly ILocalSaveService _localSaveService;
+        private readonly AdsService _adsService;
         private readonly ISceneService _sceneService;
 
         private ShootingLaser _shootingLaser;
@@ -36,17 +36,17 @@ namespace UI.Presenter
             GameplayUIView gameplayUIView,
             GameState gameState,
             ShipRepository shipRepository,
-            ScoreService scoreService,
-            SaveController saveController,
-            AdsController adsController,
+            IScoreService scoreService,
+            ILocalSaveService localSaveService,
+            AdsService adsService,
             ISceneService sceneService)
         {
             _gameplayUIView = gameplayUIView;
             _gameState = gameState;
             _shipRepository = shipRepository;
             _scoreService = scoreService;
-            _saveController = saveController;
-            _adsController = adsController;
+            _localSaveService = localSaveService;
+            _adsService = adsService;
             _sceneService = sceneService;
         }
 
@@ -84,7 +84,7 @@ namespace UI.Presenter
 
         private void UpdateRecordScore()
         {
-            _recordScore = _saveController.GetData().ScoreRecord;
+            _recordScore = _localSaveService.GetData().ScoreRecord;
             _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
         }
 
@@ -125,9 +125,9 @@ namespace UI.Presenter
 
         private async UniTask ContinueGame()
         {
-            if (!_saveController.GetData().AdsRemoved)
+            if (!_localSaveService.GetData().AdsRemoved)
             {
-                bool result = await _adsController.ShowRewardedAds();
+                bool result = await _adsService.ShowRewardedAds();
                 if (result)
                 {
                     _gameplayUIView.CloseRestartPanel();
@@ -139,14 +139,14 @@ namespace UI.Presenter
         private void ReturnToMenu()
         {
             _gameState.GameExit();
-            _sceneService.PreviousScene();
+            _sceneService.GoToMenu();
         }
 
         private async UniTask RestartGame()
         {
-            if (!_saveController.GetData().AdsRemoved)
+            if (!_localSaveService.GetData().AdsRemoved)
             {
-                await _adsController.ShowInterstitialAd();
+                await _adsService.ShowInterstitialAd();
             }
 
             _gameState.GameExit();
@@ -158,7 +158,7 @@ namespace UI.Presenter
             _gameplayUIView.SetCurrentScore($"Score {_currentScore}");
             _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
 
-            if (_saveController.GetData().AdsRemoved)
+            if (_localSaveService.GetData().AdsRemoved)
             {
                 _gameplayUIView.HideContinueButton();
             }
