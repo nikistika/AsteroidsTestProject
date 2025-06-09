@@ -1,4 +1,4 @@
-﻿namespace IAP
+﻿namespace _Project.Scripts.IAP
 {
     public interface IIAPService
     {

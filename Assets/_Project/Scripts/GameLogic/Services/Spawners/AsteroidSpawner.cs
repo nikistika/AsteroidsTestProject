@@ -1,15 +1,12 @@
 using System;
-using Characters;
-using ConfigData;
+using _Project.Scripts.Characters.Enemies;
+using _Project.Scripts.GameLogic.Factories;
+using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using Factories;
 using GameLogic;
-using GameLogic.Enums;
-using ScriptableObjects;
 using UnityEngine;
-using Zenject;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services.Spawners
 {
     public class AsteroidSpawner : BaseSpawner<Asteroid>
     {

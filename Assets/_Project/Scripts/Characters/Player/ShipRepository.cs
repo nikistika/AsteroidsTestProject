@@ -1,6 +1,6 @@
 ﻿using Shooting;
 
-namespace Player
+namespace _Project.Scripts.Characters.Player
 {
     public class ShipRepository
     {

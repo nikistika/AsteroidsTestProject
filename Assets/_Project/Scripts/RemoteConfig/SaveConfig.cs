@@ -1,4 +1,4 @@
-﻿namespace GameLogic.SaveLogic.SaveData
+﻿namespace _Project.Scripts.RemoteConfig
 {
     public class SaveConfig
     {

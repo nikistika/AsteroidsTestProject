@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Player
+namespace _Project.Scripts.Characters.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class DataSpaceShip : MonoBehaviour

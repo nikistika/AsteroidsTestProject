@@ -1,4 +1,4 @@
-﻿namespace ConfigKeys
+﻿namespace _Project.Scripts.Enums.ConfigKeys
 {
     public enum PoolSizeKeys
     {

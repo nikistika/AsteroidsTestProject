@@ -1,7 +1,7 @@
-﻿namespace GameLogic.Enums
+﻿namespace _Project.Scripts.Enums
 {
     public enum SaveKeys
     {
-        GeneralData1
+        GeneralData2
     }
 }

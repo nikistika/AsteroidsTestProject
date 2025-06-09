@@ -1,8 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
-using GameLogic.SaveLogic.SaveData;
+﻿using _Project.Scripts.RemoteConfig;
+using Cysharp.Threading.Tasks;
 using GameLogic.SaveLogic.SaveData.Time;
 
-namespace SaveLogic
+namespace _Project.Scripts.Save.CloudSave
 {
     public class UnityCloudSaveService : ICloudSaveService
     {

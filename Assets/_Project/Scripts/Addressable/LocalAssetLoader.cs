@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using _Project.Scripts.Characters.Enemies;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.UI.GameScene;
 using _Project.Scripts.UI.MenuScene;
-using Characters;
-using Player;
 using Shooting;
-using UI.View;
 
 namespace LoadingAssets
 {

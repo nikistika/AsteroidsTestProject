@@ -1,13 +1,12 @@
-﻿using Cysharp.Threading.Tasks;
-using GameLogic.SaveLogic.SaveData;
+﻿using _Project.Scripts.RemoteConfig;
+using Cysharp.Threading.Tasks;
 
-namespace SaveLogic
+namespace _Project.Scripts.Save.CloudSave
 {
     public interface IUnityCloudSave
     {
         public UniTask Initialize();
         public UniTask SaveData(SaveConfig saveData);
         public UniTask<SaveConfig> LoadData();
-
     }
 }

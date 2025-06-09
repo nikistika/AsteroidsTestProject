@@ -1,4 +1,4 @@
-using Characters;
+using _Project.Scripts.Characters.Enemies;
 using GameLogic;
 using UnityEngine;
 

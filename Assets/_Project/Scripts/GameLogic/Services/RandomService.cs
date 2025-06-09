@@ -1,7 +1,8 @@
 ﻿using GameLogic;
+using Service;
 using UnityEngine;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public class RandomService : IRandomService
     {
@@ -15,7 +16,7 @@ namespace Service
         private const float DIRECTION_DOWN = 1.0f;
         private const float DIRECTION_LEFT = -1.0f;
         private const float DIRECTION_RIGHT = 1.0f;
-            
+
         private readonly ScreenSize _screenSize;
 
         public RandomService(

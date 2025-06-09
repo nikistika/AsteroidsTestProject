@@ -1,11 +1,9 @@
 using System;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.RemoteConfig;
+using _Project.Scripts.Save;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using GameLogic.SaveLogic.SaveData;
-using GameLogic.SaveLogic.SaveData.Save;
-using GameLogic.SaveLogic.SaveData.Time;
-using SaveLogic;
-using UnityEngine;
 using Zenject;
 
 namespace Service
@@ -15,23 +13,20 @@ namespace Service
         public event Action<int> OnScoreChanged;
         private event Action SaveHandler;
 
-        
+
         public int CurrentScore { get; private set; }
 
         private readonly GameState _gameState;
-        private readonly ITimeService _timeService;
         private readonly ISaveService _saveService;
 
         private bool _startFlag;
 
         public ScoreService(
             GameState gameState,
-            ISaveService saveService,
-            ITimeService timeService)
+            ISaveService saveService)
         {
             _gameState = gameState;
             _saveService = saveService;
-            _timeService = timeService;
         }
 
         public void Initialize()
@@ -55,25 +50,15 @@ namespace Service
 
         private async UniTask SaveData()
         {
-            SaveConfig cloudData = await _cloudSaveService.LoadData();
-            SaveConfig localData = _localSaveService.GetData();
-
-            DateTime timeCloudData = _timeService.ConvertToDateTime(cloudData.SavingTime);
-            DateTime timeLocalData = _timeService.ConvertToDateTime(localData.SavingTime);
-            
-            if (timeCloudData < timeLocalData)
+            SaveConfig data = await _saveService.GetData();
+            var dataScore = data.ScoreRecord;
+            if (dataScore < CurrentScore)
             {
-                
-            }
-            
-            if (localData.ScoreRecord < CurrentScore)
-            {
-                localData.ScoreRecord = CurrentScore;
-                _localSaveService.SetData(localData);
-                await _cloudSaveService.SaveData(localData);
+                data.ScoreRecord = CurrentScore;
+                await _saveService.SaveData(data);
             }
         }
-        
+
         private void GameExit()
         {
             _gameState.OnGameOver -= SaveHandler;

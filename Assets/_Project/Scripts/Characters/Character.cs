@@ -1,7 +1,7 @@
 using GameLogic;
 using UnityEngine;
 
-namespace Characters
+namespace _Project.Scripts.Characters
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public abstract class Character : MonoBehaviour

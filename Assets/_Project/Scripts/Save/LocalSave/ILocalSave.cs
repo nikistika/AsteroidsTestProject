@@ -1,4 +1,6 @@
-﻿namespace GameLogic.SaveLogic.SaveData
+﻿using _Project.Scripts.RemoteConfig;
+
+namespace _Project.Scripts.Save.LocalSave
 {
     public interface ILocalSave
     {

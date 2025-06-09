@@ -1,26 +1,21 @@
-﻿using Cysharp.Threading.Tasks;
-using GameLogic.Enums;
-using GameLogic.SaveLogic.SaveData;
-using SaveLogic;
+﻿using _Project.Scripts.Enums;
+using _Project.Scripts.Save;
 using UnityEngine;
 using UnityEngine.Purchasing;
 
-namespace IAP
+namespace _Project.Scripts.IAP
 {
     public class IAPInitializer : IStoreListener
     {
-        private readonly ILocalSaveService _localSaveService;
-        private readonly ICloudSaveService _cloudSaveService;
+        private readonly ISaveService _saveService;
 
         public IStoreController storeController { get; private set; }
         public IExtensionProvider storeExtensionProvider { get; private set; }
 
         public IAPInitializer(
-            ILocalSaveService localSaveService,
-            ICloudSaveService cloudSaveService)
+            ISaveService saveService)
         {
-            _localSaveService = localSaveService;
-            _cloudSaveService = cloudSaveService;
+            _saveService = saveService;
         }
 
         public void Initialize()
@@ -60,12 +55,10 @@ namespace IAP
 
             if (args.purchasedProduct.definition.id == IAPID.RemoveAds.ToString())
             {
-                SaveConfig data = _localSaveService.GetData();
-                if (data.AdsRemoved == false)
+                if (_saveService.CurrentSaveData.AdsRemoved == false)
                 {
-                    data.AdsRemoved = true;
-                    _localSaveService.SetData(data);
-                    _cloudSaveService.SaveData(data).Forget();
+                    _saveService.CurrentSaveData.AdsRemoved = true;
+                    _saveService.SaveData(_saveService.CurrentSaveData);
                 }
             }
 

@@ -1,14 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _Project.Scripts.Ads;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.Save;
+using Cysharp.Threading.Tasks;
 using GameLogic;
-using GameLogic.Ads;
-using GameLogic.SaveLogic.SaveData;
-using Service;
-using Player;
 using Shooting;
-using UI.View;
 using UnityEngine;
 
-namespace UI.Presenter
+namespace _Project.Scripts.UI.GameScene
 {
     public class GameplayUIPresenter
     {
@@ -16,7 +15,7 @@ namespace UI.Presenter
         private readonly GameState _gameState;
         private readonly ShipRepository _shipRepository;
         private readonly IScoreService _scoreService;
-        private readonly ILocalSaveService _localSaveService;
+        private readonly ISaveService _saveService;
         private readonly AdsService _adsService;
         private readonly ISceneService _sceneService;
 
@@ -37,7 +36,7 @@ namespace UI.Presenter
             GameState gameState,
             ShipRepository shipRepository,
             IScoreService scoreService,
-            ILocalSaveService localSaveService,
+            ISaveService saveService,
             AdsService adsService,
             ISceneService sceneService)
         {
@@ -45,7 +44,7 @@ namespace UI.Presenter
             _gameState = gameState;
             _shipRepository = shipRepository;
             _scoreService = scoreService;
-            _localSaveService = localSaveService;
+            _saveService = saveService;
             _adsService = adsService;
             _sceneService = sceneService;
         }
@@ -84,7 +83,15 @@ namespace UI.Presenter
 
         private void UpdateRecordScore()
         {
-            _recordScore = _localSaveService.GetData().ScoreRecord;
+            if (_currentScore > _saveService.CurrentSaveData.ScoreRecord)
+            {
+                _recordScore = _currentScore;
+            }
+            else
+            {
+                _recordScore = _saveService.CurrentSaveData.ScoreRecord;
+            }
+
             _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
         }
 
@@ -125,7 +132,7 @@ namespace UI.Presenter
 
         private async UniTask ContinueGame()
         {
-            if (!_localSaveService.GetData().AdsRemoved)
+            if (!_saveService.CurrentSaveData.AdsRemoved)
             {
                 bool result = await _adsService.ShowRewardedAds();
                 if (result)
@@ -144,7 +151,7 @@ namespace UI.Presenter
 
         private async UniTask RestartGame()
         {
-            if (!_localSaveService.GetData().AdsRemoved)
+            if (!_saveService.CurrentSaveData.AdsRemoved)
             {
                 await _adsService.ShowInterstitialAd();
             }
@@ -158,7 +165,7 @@ namespace UI.Presenter
             _gameplayUIView.SetCurrentScore($"Score {_currentScore}");
             _gameplayUIView.SetRecordScore($"Record score: {_recordScore}");
 
-            if (_localSaveService.GetData().AdsRemoved)
+            if (_saveService.CurrentSaveData.AdsRemoved)
             {
                 _gameplayUIView.HideContinueButton();
             }

@@ -1,10 +1,9 @@
-﻿using System;
-using Cysharp.Threading.Tasks;
+﻿using Cysharp.Threading.Tasks;
 using Firebase;
 using UnityEngine;
 using Zenject;
 
-namespace GameLogic.Analytics
+namespace _Project.Scripts.Analytics.Firebase
 {
     public class FirebaseInitializer : IInitializable
     {

@@ -1,8 +1,8 @@
-﻿using Cysharp.Threading.Tasks;
-using GameLogic.Ads.Unity_ads;
+﻿using _Project.Scripts.Ads.Unity_ads;
+using Cysharp.Threading.Tasks;
 using Zenject;
 
-namespace GameLogic.Ads
+namespace _Project.Scripts.Ads
 {
     public class AdsService : IInitializable, IAdsService
     {

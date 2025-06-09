@@ -1,19 +1,32 @@
 ﻿using System;
+using _Project.Scripts.RemoteConfig;
+using _Project.Scripts.Save;
+using _Project.Scripts.Save.CloudSave;
 using Cysharp.Threading.Tasks;
 using GameLogic.SaveLogic.SaveData.Time;
-using SaveLogic;
 using UnityEngine;
-using Zenject;
 
 namespace GameLogic.SaveLogic.SaveData.Save
 {
-    public class SaveService : IInitializable ,ISaveService
+    public class SaveService : ISaveService
     {
         private readonly ILocalSaveService _localSaveService;
         private readonly ICloudSaveService _cloudSaveService;
         private readonly ITimeService _timeService;
 
-        public SaveConfig CurrentSaveData { get; private set; }
+        private SaveConfig _currentSaveData;
+
+        SaveConfig ISaveService.CurrentSaveData
+        {
+            get => _currentSaveData;
+            set => _currentSaveData = value;
+        }
+
+        public SaveConfig CurrentSaveData
+        {
+            get => _currentSaveData;
+            private set => _currentSaveData = value;
+        }
         
         public SaveService(
             ILocalSaveService localSaveService,
@@ -24,14 +37,16 @@ namespace GameLogic.SaveLogic.SaveData.Save
             _cloudSaveService = cloudSaveService;
             _timeService = timeService;
         }
-        
-        public async void Initialize()
+
+        public async UniTask Initialize()
         {
             await GetData();
         }
 
         public async UniTask SaveData(SaveConfig data)
         {
+            data.SavingTime = _timeService.GetCurrentTime();
+
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
                 _localSaveService.SetData(data);
@@ -43,9 +58,10 @@ namespace GameLogic.SaveLogic.SaveData.Save
                 await _cloudSaveService.SaveData(data);
                 Debug.Log("SaveService.SaveData(): The Internet is available.");
             }
+
             CurrentSaveData = data;
         }
-        
+
         public async UniTask<SaveConfig> GetData()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
@@ -57,10 +73,10 @@ namespace GameLogic.SaveLogic.SaveData.Save
             {
                 SaveConfig cloudData = await _cloudSaveService.LoadData();
                 SaveConfig localData = _localSaveService.GetData();
-                
+
                 DateTime timeCloudData = _timeService.ConvertToDateTime(cloudData.SavingTime);
                 DateTime timeLocalData = _timeService.ConvertToDateTime(localData.SavingTime);
-                
+
                 if (timeCloudData < timeLocalData)
                 {
                     CurrentSaveData = localData;
@@ -69,12 +85,11 @@ namespace GameLogic.SaveLogic.SaveData.Save
                 {
                     CurrentSaveData = cloudData;
                 }
-                
+
                 Debug.Log("SaveService.GetData(): The Internet is available.");
             }
-            
+
             return CurrentSaveData;
         }
-
     }
 }

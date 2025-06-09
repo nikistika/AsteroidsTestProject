@@ -1,13 +1,13 @@
-using Characters;
-using ConfigData;
+using _Project.Scripts.Characters.Enemies;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
-using Service;
-using Player;
 using UnityEngine;
 
-namespace Factories
+namespace _Project.Scripts.GameLogic.Factories
 {
     public class UFOFactory : EnemyFactory<UFO>
     {

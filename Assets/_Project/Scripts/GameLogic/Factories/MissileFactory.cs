@@ -1,13 +1,12 @@
-using ConfigData;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
-using Player;
-using ScriptableObjects;
 using Shooting;
 using UnityEngine;
 
-namespace Factories
+namespace _Project.Scripts.GameLogic.Factories
 {
     public class MissileFactory : BaseFactory<Missile>
     {

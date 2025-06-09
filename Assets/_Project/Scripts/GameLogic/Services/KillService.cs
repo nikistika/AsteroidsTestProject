@@ -1,8 +1,9 @@
-﻿using GameLogic;
-using GameLogic.Analytics;
+﻿using _Project.Scripts.Analytics;
+using GameLogic;
+using Service;
 using Zenject;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public class KillService : IInitializable, IKillService
     {

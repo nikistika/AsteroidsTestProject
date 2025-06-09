@@ -1,4 +1,4 @@
-﻿namespace GameLogic.Analytics
+﻿namespace _Project.Scripts.Analytics
 {
     public interface IAnalytics
     {

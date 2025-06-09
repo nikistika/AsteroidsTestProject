@@ -1,6 +1,6 @@
 ﻿using Cysharp.Threading.Tasks;
 
-namespace GameLogic.Ads
+namespace _Project.Scripts.Ads
 {
     public interface IAds
     {

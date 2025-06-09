@@ -1,7 +1,7 @@
 ﻿using _Project.Scripts.UI.MenuScene;
 using Zenject;
 
-namespace EntryPoints
+namespace _Project.Scripts.EntryPoints
 {
     public class MenuEntryPoint : IInitializable
     {

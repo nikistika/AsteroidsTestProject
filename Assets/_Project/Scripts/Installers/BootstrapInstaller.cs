@@ -1,7 +1,7 @@
-﻿using EntryPoints;
+﻿using _Project.Scripts.EntryPoints;
 using Zenject;
 
-namespace Installers
+namespace _Project.Scripts.Installers
 {
     public class BootstrapInstaller : MonoInstaller
     {

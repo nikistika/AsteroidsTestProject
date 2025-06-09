@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public interface IScoreService
     {

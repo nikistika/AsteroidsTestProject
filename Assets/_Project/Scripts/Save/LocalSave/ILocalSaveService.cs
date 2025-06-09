@@ -1,4 +1,5 @@
 ﻿using System;
+using _Project.Scripts.RemoteConfig;
 
 namespace GameLogic.SaveLogic.SaveData
 {

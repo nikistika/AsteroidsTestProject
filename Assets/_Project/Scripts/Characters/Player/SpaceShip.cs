@@ -1,14 +1,14 @@
+using _Project.Scripts.Analytics;
+using _Project.Scripts.GameLogic.Services;
 using GameLogic;
-using GameLogic.Analytics;
-using Service;
 using Shooting;
 using UnityEngine;
-using Character = Characters.Character;
+using Characters_Character = _Project.Scripts.Characters.Character;
 
-namespace Player
+namespace _Project.Scripts.Characters.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public class SpaceShip : Character
+    public class SpaceShip : Characters_Character
     {
         private IAnalyticsService _analyticsService;
         private IKillService _killService;

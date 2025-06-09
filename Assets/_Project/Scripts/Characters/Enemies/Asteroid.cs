@@ -1,13 +1,12 @@
 using System;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Services;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using Service;
-using Player;
 using Shooting;
 using UnityEngine;
-using Random = UnityEngine.Random;
 
-namespace Characters
+namespace _Project.Scripts.Characters.Enemies
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Asteroid : Character

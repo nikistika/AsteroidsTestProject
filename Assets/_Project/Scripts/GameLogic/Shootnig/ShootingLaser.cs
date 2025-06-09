@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using GameLogic.Analytics;
+using _Project.Scripts.Analytics;
+using _Project.Scripts.GameLogic.Services;
 using Service;
 using UnityEngine;
 

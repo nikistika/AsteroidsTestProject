@@ -1,4 +1,4 @@
-﻿namespace ConfigData
+﻿namespace _Project.Scripts.RemoteConfig.ConfigData
 {
     public class PoolSizeConfig
     {

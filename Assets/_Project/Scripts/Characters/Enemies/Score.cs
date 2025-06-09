@@ -1,8 +1,8 @@
-﻿using Service;
+﻿using _Project.Scripts.GameLogic.Services;
 using Shooting;
 using UnityEngine;
 
-namespace Characters
+namespace _Project.Scripts.Characters.Enemies
 {
     public class Score : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace InputSystem
+namespace _Project.Scripts.InputSystem
 {
     public class InputKeyboard : MonoBehaviour, IInput
     {

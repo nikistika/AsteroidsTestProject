@@ -1,4 +1,4 @@
-namespace InputSystem
+namespace _Project.Scripts.InputSystem
 {
     public interface IInput
     {

@@ -1,18 +1,20 @@
-﻿using Characters;
-using Factories;
+﻿using _Project.Scripts.Characters.Enemies;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.EntryPoints;
+using _Project.Scripts.Enums;
+using _Project.Scripts.GameLogic.Factories;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.GameLogic.Services.Spawners;
+using _Project.Scripts.UI.GameScene;
 using GameLogic;
-using GameLogic.Enums;
-using Service;
-using Player;
 using ScriptableObjects;
+using Service;
 using Shooting;
-using UI;
-using UI.View;
 using UnityEngine;
 using Zenject;
-using Asteroid = Characters.Asteroid;
+using Asteroid = _Project.Scripts.Characters.Enemies.Asteroid;
 
-namespace Installers
+namespace _Project.Scripts.Installers
 {
     public sealed class GameInstaller : MonoInstaller
     {

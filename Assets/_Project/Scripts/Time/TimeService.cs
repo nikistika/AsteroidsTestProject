@@ -12,6 +12,11 @@ namespace GameLogic.SaveLogic.SaveData.Time
 
         public DateTime ConvertToDateTime(string time)
         {
+            if (string.IsNullOrEmpty(time))
+            {
+                return DateTime.Now;
+            }
+
             return DateTime.Parse(time, null, DateTimeStyles.RoundtripKind);
         }
     }

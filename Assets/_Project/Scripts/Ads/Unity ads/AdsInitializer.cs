@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Advertisements;
 using Zenject;
 
-namespace GameLogic.Ads.Unity_ads
+namespace _Project.Scripts.Ads.Unity_ads
 {
     public class AdsInitializer : IUnityAdsInitializationListener, IInitializable
     {

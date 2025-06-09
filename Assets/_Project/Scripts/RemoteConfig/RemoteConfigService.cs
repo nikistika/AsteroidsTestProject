@@ -1,9 +1,8 @@
-﻿using _Project.Scripts.RemoteConfig;
-using ConfigKeys;
+﻿using _Project.Scripts.Enums.ConfigKeys;
+using _Project.Scripts.RemoteConfig.ConfigData;
 using Cysharp.Threading.Tasks;
-using GameLogic.RemoteConfig;
 
-namespace ConfigData
+namespace _Project.Scripts.RemoteConfig
 {
     public class RemoteConfigService : IRemoteConfigService
     {

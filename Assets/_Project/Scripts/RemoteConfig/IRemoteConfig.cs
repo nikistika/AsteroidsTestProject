@@ -1,5 +1,5 @@
-﻿using ConfigData;
-using ConfigKeys;
+﻿using _Project.Scripts.Enums.ConfigKeys;
+using _Project.Scripts.RemoteConfig.ConfigData;
 using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.RemoteConfig

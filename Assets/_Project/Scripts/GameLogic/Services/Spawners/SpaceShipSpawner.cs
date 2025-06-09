@@ -1,18 +1,15 @@
-using ConfigData;
+using _Project.Scripts.Analytics;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Factories;
+using _Project.Scripts.InputSystem;
+using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using Factories;
 using GameLogic;
-using GameLogic.Analytics;
-using GameLogic.Enums;
-using InputSystem;
 using LoadingAssets;
-using Player;
-using ScriptableObjects;
 using Shooting;
 using UnityEngine;
-using Zenject;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services.Spawners
 {
     public class SpaceShipSpawner : BaseSpawner<SpaceShip>
     {
@@ -24,7 +21,7 @@ namespace Service
 
         private ShootingLaser _shootingLaser;
         private DataSpaceShip _dataSpaceShip;
-        
+
         private readonly ShipRepository _shipRepository;
         private readonly IAnalyticsService _analyticsService;
         private readonly IKillService _killService;
@@ -36,7 +33,6 @@ namespace Service
         public SpaceShipSpawner(
             GameState gameState,
             ScreenSize screenSize,
-
             ShipRepository shipRepository,
             IAnalyticsService analyticsService,
             IKillService killService,

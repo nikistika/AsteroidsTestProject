@@ -1,6 +1,7 @@
-﻿using Zenject;
+﻿using _Project.Scripts.Analytics.Firebase;
+using Zenject;
 
-namespace GameLogic.Analytics
+namespace _Project.Scripts.Analytics
 {
     public class AnalyticsService : IInitializable, IAnalyticsService
     {

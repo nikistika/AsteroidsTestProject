@@ -1,7 +1,5 @@
 using System;
 using Cysharp.Threading.Tasks;
-using GameLogic.SaveLogic.SaveData;
-using Service;
 
 namespace GameLogic
 {

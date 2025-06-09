@@ -1,10 +1,10 @@
-using ConfigData;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.RemoteConfig;
 using GameLogic;
 using LoadingAssets;
-using Service;
 using UnityEngine;
 
-namespace Factories
+namespace _Project.Scripts.GameLogic.Factories
 {
     public abstract class EnemyFactory<T> : BaseFactory<T> where T : MonoBehaviour
     {

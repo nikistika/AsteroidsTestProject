@@ -1,12 +1,11 @@
 ﻿using System;
-using _Project.Scripts.RemoteConfig;
-using ConfigData;
-using ConfigKeys;
+using _Project.Scripts.Enums.ConfigKeys;
+using _Project.Scripts.RemoteConfig.ConfigData;
 using Cysharp.Threading.Tasks;
 using Firebase.RemoteConfig;
 using UnityEngine;
 
-namespace GameLogic.RemoteConfig
+namespace _Project.Scripts.RemoteConfig
 {
     public class RemoteConfigFirebase : IRemoteConfig
     {

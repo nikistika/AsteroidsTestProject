@@ -1,12 +1,12 @@
-using Characters;
-using ConfigData;
+using _Project.Scripts.Characters.Enemies;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
-using Service;
 using UnityEngine;
 
-namespace Factories
+namespace _Project.Scripts.GameLogic.Factories
 {
     public class AsteroidFactory : EnemyFactory<Asteroid>
     {

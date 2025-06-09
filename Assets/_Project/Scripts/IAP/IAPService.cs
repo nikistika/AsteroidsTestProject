@@ -1,35 +1,32 @@
-﻿using GameLogic.Enums;
+﻿using _Project.Scripts.Enums;
+using _Project.Scripts.Save;
 using GameLogic.SaveLogic.SaveData;
-using SaveLogic;
 using UnityEngine;
 using Zenject;
 
-namespace IAP
+namespace _Project.Scripts.IAP
 {
     public class IAPService : IInitializable, IIAPService
     {
-        private readonly ILocalSaveService _localSaveService;
-        private readonly ICloudSaveService _cloudSaveService;
+        private readonly ISaveService _saveService;
 
         private IAPInitializer _iapInitializer;
 
         public IAPService(
-            ILocalSaveService localSaveService,
-            ICloudSaveService cloudSaveService)
+            ISaveService saveService)
         {
-            _localSaveService = localSaveService;
-            _cloudSaveService = cloudSaveService;
+            _saveService = saveService;
         }
 
         public void Initialize()
         {
-            _iapInitializer = new IAPInitializer(_localSaveService, _cloudSaveService);
+            _iapInitializer = new IAPInitializer(_saveService);
             _iapInitializer.Initialize();
         }
 
         public void RemoveAds()
         {
-            if (_iapInitializer.storeController != null && _localSaveService.GetData().AdsRemoved == false)
+            if (_iapInitializer.storeController != null && _saveService.CurrentSaveData.AdsRemoved == false)
             {
                 _iapInitializer.storeController.InitiatePurchase(IAPID.RemoveAds.ToString());
             }

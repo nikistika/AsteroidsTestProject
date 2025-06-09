@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
-using Factories;
+using _Project.Scripts.GameLogic.Factories;
+using _Project.Scripts.GameLogic.Services;
 using Service;
 using UnityEngine;
 

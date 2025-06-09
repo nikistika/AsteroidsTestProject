@@ -1,13 +1,15 @@
-using SaveLogic;
-using ConfigData;
-using GameLogic.Ads;
-using GameLogic.Ads.Unity_ads;
-using GameLogic.Analytics;
-using GameLogic.SaveLogic.SaveData;
+using _Project.Scripts.Ads;
+using _Project.Scripts.Ads.Unity_ads;
+using _Project.Scripts.Analytics;
+using _Project.Scripts.Analytics.Firebase;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.IAP;
+using _Project.Scripts.RemoteConfig;
+using _Project.Scripts.Save.CloudSave;
+using _Project.Scripts.Save.LocalSave;
+using GameLogic.SaveLogic.SaveData.Save;
 using GameLogic.SaveLogic.SaveData.Time;
-using IAP;
 using LoadingAssets;
-using Service;
 using Zenject;
 
 namespace Installers
@@ -18,17 +20,18 @@ namespace Installers
         {
             Container.Bind<LocalSavePlayerPrefs>().AsSingle();
             Container.Bind<IAssetLoader>().To<LocalAssetLoader>().AsSingle();
-            Container.Bind<RemoteConfigService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<RemoteConfigService>().AsSingle();
             Container.Bind<ISceneService>().To<SceneService>().AsSingle();
 
             Container.BindInterfacesAndSelfTo<TimeService>().AsSingle();
             Container.BindInterfacesAndSelfTo<UnityCloudSaveService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AdsInitializer>().AsSingle();
             Container.BindInterfacesAndSelfTo<FirebaseInitializer>().AsSingle();
-            Container.BindInterfacesAndSelfTo<LocalLocalSaveService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LocalSaveService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AnalyticsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<AdsService>().AsSingle();
             Container.BindInterfacesAndSelfTo<IAPService>().AsSingle();
+            Container.BindInterfacesAndSelfTo<SaveService>().AsSingle();
         }
     }
 }

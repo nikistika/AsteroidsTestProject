@@ -1,7 +1,7 @@
-﻿using GameLogic;
+﻿using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.IAP;
+using GameLogic;
 using GameLogic.SaveLogic.SaveData;
-using IAP;
-using Service;
 
 namespace _Project.Scripts.UI.MenuScene
 {

@@ -1,6 +1,6 @@
 ﻿using Firebase.Analytics;
 
-namespace GameLogic.Analytics
+namespace _Project.Scripts.Analytics.Firebase
 {
     public class FirebaseAnalyticsService : IAnalytics
     {

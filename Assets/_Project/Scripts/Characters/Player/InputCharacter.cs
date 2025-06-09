@@ -1,10 +1,10 @@
+using _Project.Scripts.InputSystem;
 using Cysharp.Threading.Tasks;
 using GameLogic;
-using InputSystem;
 using Shooting;
 using UnityEngine;
 
-namespace Player
+namespace _Project.Scripts.Characters.Player
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class InputCharacter : MonoBehaviour

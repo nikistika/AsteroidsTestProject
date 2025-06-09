@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public interface IRandomService
     {

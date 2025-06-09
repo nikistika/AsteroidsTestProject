@@ -1,12 +1,11 @@
 using _Project.Scripts.RemoteConfig;
-using ConfigData;
 using Cysharp.Threading.Tasks;
 using GameLogic;
 using LoadingAssets;
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Factories
+namespace _Project.Scripts.GameLogic.Factories
 {
     public abstract class BaseFactory<T> where T : MonoBehaviour
     {

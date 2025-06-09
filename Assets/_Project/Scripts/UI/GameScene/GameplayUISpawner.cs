@@ -1,15 +1,13 @@
-﻿using Cysharp.Threading.Tasks;
+﻿using _Project.Scripts.Ads;
+using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.Save;
+using Cysharp.Threading.Tasks;
 using GameLogic;
-using GameLogic.Ads;
-using GameLogic.SaveLogic.SaveData;
 using LoadingAssets;
-using Service;
-using Player;
-using UI.Presenter;
-using UI.View;
 using UnityEngine;
 
-namespace UI
+namespace _Project.Scripts.UI.GameScene
 {
     public class GameplayUISpawner
     {
@@ -21,14 +19,14 @@ namespace UI
 
         private GameplayUIView _gameplayUIView;
         private GameplayUIPresenter _gameplayUIPresenter;
-        private ILocalSaveService _localSaveService;
+        private ISaveService _saveService;
         private IAssetLoader _assetLoader;
-        
+
         public GameplayUISpawner(
             IScoreService scoreService,
             ShipRepository shipRepository,
             GameState gameState,
-            ILocalSaveService localSaveService,
+            ISaveService saveService,
             IAssetLoader assetLoader,
             AdsService adsService,
             ISceneService sceneService)
@@ -36,7 +34,7 @@ namespace UI
             _scoreService = scoreService;
             _shipRepository = shipRepository;
             _gameState = gameState;
-            _localSaveService = localSaveService;
+            _saveService = saveService;
             _assetLoader = assetLoader;
             _adsService = adsService;
             _sceneService = sceneService;
@@ -57,7 +55,7 @@ namespace UI
         {
             var gameplayUIObject = Object.Instantiate(_gameplayUIView);
             _gameplayUIPresenter = new GameplayUIPresenter(gameplayUIObject, _gameState,
-                _shipRepository, _scoreService, _localSaveService, _adsService, _sceneService);
+                _shipRepository, _scoreService, _saveService, _adsService, _sceneService);
 
             _gameplayUIPresenter.StartWork();
         }

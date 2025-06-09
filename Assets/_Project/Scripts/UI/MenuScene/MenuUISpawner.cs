@@ -1,9 +1,9 @@
 ﻿using System;
+using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.IAP;
 using Cysharp.Threading.Tasks;
 using GameLogic.SaveLogic.SaveData;
-using IAP;
 using LoadingAssets;
-using Service;
 using Object = UnityEngine.Object;
 
 namespace _Project.Scripts.UI.MenuScene

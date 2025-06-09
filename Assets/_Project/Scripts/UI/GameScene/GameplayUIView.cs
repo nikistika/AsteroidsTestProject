@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.View
+namespace _Project.Scripts.UI.GameScene
 {
     public class GameplayUIView : MonoBehaviour
     {

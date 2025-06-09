@@ -1,6 +1,7 @@
-﻿using UnityEngine.SceneManagement;
+﻿using Service;
+using UnityEngine.SceneManagement;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public class SceneService : ISceneService
     {

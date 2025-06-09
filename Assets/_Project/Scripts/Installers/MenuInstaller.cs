@@ -1,8 +1,8 @@
-﻿using _Project.Scripts.UI.MenuScene;
-using EntryPoints;
+﻿using _Project.Scripts.EntryPoints;
+using _Project.Scripts.UI.MenuScene;
 using Zenject;
 
-namespace Installers
+namespace _Project.Scripts.Installers
 {
     public class MenuInstaller : MonoInstaller
     {
