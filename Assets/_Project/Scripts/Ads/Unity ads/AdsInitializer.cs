@@ -19,7 +19,7 @@ namespace _Project.Scripts.Ads.Unity_ads
             await StartWork();
         }
 
-        public async UniTask StartWork()
+        private async UniTask StartWork()
         {
             _initializationComplete = new UniTaskCompletionSource<bool>();
 

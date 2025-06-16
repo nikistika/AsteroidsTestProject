@@ -1,22 +1,18 @@
-﻿using System;
-using _Project.Scripts.RemoteConfig;
-using GameLogic.SaveLogic.SaveData;
-using GameLogic.SaveLogic.SaveData.Time;
-using Zenject;
+﻿using _Project.Scripts.Time;
+using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.Save.LocalSave
 {
-    public class LocalSaveService : IInitializable, ILocalSaveService
+    public class LocalSaveService : ISave
     {
-        public event Action OnSaveDataChanged;
-
-        private ILocalSave _localSavePlayerPrefs;
+        private ISave _localSavePlayerPrefs;
 
         private readonly ITimeService _timeService;
 
-        public void Initialize()
+        public UniTask Initialize()
         {
             _localSavePlayerPrefs = new LocalSavePlayerPrefs();
+            return UniTask.CompletedTask;
         }
 
         public LocalSaveService(ITimeService timeService)
@@ -24,21 +20,24 @@ namespace _Project.Scripts.Save.LocalSave
             _timeService = timeService;
         }
 
-        public void SetData(SaveConfig saveData)
+        public UniTask SaveData(SaveData saveData)
         {
             saveData.SavingTime = _timeService.GetCurrentTime();
-            _localSavePlayerPrefs.SetSaveData(saveData);
-            OnSaveDataChanged?.Invoke();
+            _localSavePlayerPrefs.SaveData(saveData);
+            return UniTask.CompletedTask;
         }
 
-        public SaveConfig GetData()
+        public async UniTask<SaveData> GetData()
         {
-            if (_localSavePlayerPrefs.GetSaveData() != null)
+            try
             {
-                return _localSavePlayerPrefs.GetSaveData();
+                var saveData = await _localSavePlayerPrefs.GetData();
+                return saveData ?? new SaveData();
             }
-
-            return new SaveConfig();
+            catch
+            {
+                return new SaveData();
+            }
         }
     }
 }

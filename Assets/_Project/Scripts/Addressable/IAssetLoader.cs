@@ -1,11 +1,12 @@
 ﻿using System.Threading.Tasks;
+using _Project.Scripts.Audio;
 using _Project.Scripts.Characters.Enemies;
 using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Shootnig;
 using _Project.Scripts.UI.GameScene;
 using _Project.Scripts.UI.MenuScene;
-using Shooting;
 
-namespace LoadingAssets
+namespace _Project.Scripts.Addressable
 {
     public interface IAssetLoader
     {
@@ -29,5 +30,8 @@ namespace LoadingAssets
         public Task<UFO> CreateUFO();
 
         public void DestroyUFO();
+
+        public Task<AudioController> CreateAudioSources();
+        public void DestroyAudioSources();
     }
 }

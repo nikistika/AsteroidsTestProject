@@ -1,5 +1,5 @@
 ﻿using _Project.Scripts.GameLogic.Services;
-using Shooting;
+using _Project.Scripts.GameLogic.Shootnig;
 using UnityEngine;
 
 namespace _Project.Scripts.Characters.Enemies

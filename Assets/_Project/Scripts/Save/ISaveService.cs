@@ -1,14 +1,16 @@
-﻿using _Project.Scripts.RemoteConfig;
+﻿using System;
 using Cysharp.Threading.Tasks;
 
 namespace _Project.Scripts.Save
 {
     public interface ISaveService
     {
-        public SaveConfig CurrentSaveData { get; set; }
+        public event Action OnSaveDataChanged;
+
+        public SaveData CurrentSaveData { get; set; }
         public UniTask Initialize();
-        public UniTask SaveData(SaveConfig data);
-        public UniTask<SaveConfig> GetData();
+        public UniTask SaveData(SaveData data);
+        public UniTask<SaveData> GetData();
 
     }
 }

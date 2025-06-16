@@ -1,7 +1,5 @@
 ﻿using _Project.Scripts.Enums;
 using _Project.Scripts.Save;
-using GameLogic.SaveLogic.SaveData;
-using UnityEngine;
 using Zenject;
 
 namespace _Project.Scripts.IAP
@@ -10,7 +8,7 @@ namespace _Project.Scripts.IAP
     {
         private readonly ISaveService _saveService;
 
-        private IAPInitializer _iapInitializer;
+        private IAPTransactionListener _iapTransactionListener;
 
         public IAPService(
             ISaveService saveService)
@@ -20,19 +18,43 @@ namespace _Project.Scripts.IAP
 
         public void Initialize()
         {
-            _iapInitializer = new IAPInitializer(_saveService);
-            _iapInitializer.Initialize();
+            _iapTransactionListener = new IAPTransactionListener();
+            _iapTransactionListener.Initialize();
+            _iapTransactionListener.OnPurchaseCompleted += HandlePurchaseCompleted;
         }
 
-        public void RemoveAds()
+        public void MakePurchase(string productId)
         {
-            if (_iapInitializer.storeController != null && _saveService.CurrentSaveData.AdsRemoved == false)
+            if (_iapTransactionListener.StoreController != null)
             {
-                _iapInitializer.storeController.InitiatePurchase(IAPID.RemoveAds.ToString());
+                if (productId == IAPID.RemoveAds.ToString())
+                {
+                    if (_saveService.CurrentSaveData.AdsRemoved == false)
+                    {
+                        _iapTransactionListener.StoreController.InitiatePurchase(productId);
+                    }
+                }
+                else
+                {
+                    _iapTransactionListener.StoreController.InitiatePurchase(productId);
+                }
             }
-            else
+        }
+
+        private void HandlePurchaseCompleted(string productId)
+        {
+            if (productId == IAPID.RemoveAds.ToString())
             {
-                Debug.LogWarning("Store not initialized.");
+                RemoveAds();
+            }
+        }
+
+        private void RemoveAds()
+        {
+            if (_saveService.CurrentSaveData.AdsRemoved == false)
+            {
+                _saveService.CurrentSaveData.AdsRemoved = true;
+                _saveService.SaveData(_saveService.CurrentSaveData);
             }
         }
     }

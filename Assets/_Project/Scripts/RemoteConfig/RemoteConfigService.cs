@@ -8,11 +8,71 @@ namespace _Project.Scripts.RemoteConfig
     {
         private IRemoteConfig _remoteConfigFirebase;
 
-        public PoolSizeConfig AsteroidPoolSizeConfig { get; private set; }
-        public PoolSizeConfig UfoPoolSizeConfig { get; private set; }
-        public PoolSizeConfig MissilePoolSizeConfig { get; private set; }
-        public SpawnConfig AsteroidSpawnConfig { get; private set; }
-        public SpawnConfig UFoSpawnConfig { get; private set; }
+        public PoolSizeConfig AsteroidPoolSizeConfig
+        {
+            get => _asteroidPoolSizeConfig;
+            private set => _asteroidPoolSizeConfig = value;
+        }
+
+        PoolSizeConfig IRemoteConfigService.AsteroidPoolSizeConfig
+        {
+            get => _asteroidPoolSizeConfig;
+            set => _asteroidPoolSizeConfig = value;
+        }
+
+        public PoolSizeConfig UfoPoolSizeConfig
+        {
+            get => _ufoPoolSizeConfig;
+            private set => _ufoPoolSizeConfig = value;
+        }
+
+        PoolSizeConfig IRemoteConfigService.UfoPoolSizeConfig
+        {
+            get => _ufoPoolSizeConfig;
+            set => _ufoPoolSizeConfig = value;
+        }
+
+        public PoolSizeConfig MissilePoolSizeConfig
+        {
+            get => _missilePoolSizeConfig;
+            private set => _missilePoolSizeConfig = value;
+        }
+
+        PoolSizeConfig IRemoteConfigService.MissilePoolSizeConfig
+        {
+            get => _missilePoolSizeConfig;
+            set => _missilePoolSizeConfig = value;
+        }
+
+        public SpawnConfig AsteroidSpawnConfig
+        {
+            get => _asteroidSpawnConfig;
+            private set => _asteroidSpawnConfig = value;
+        }
+
+        SpawnConfig IRemoteConfigService.AsteroidSpawnConfig
+        {
+            get => _asteroidSpawnConfig;
+            set => _asteroidSpawnConfig = value;
+        }
+
+        public SpawnConfig UFoSpawnConfig
+        {
+            get => _ufoSpawnConfig;
+            private set => _ufoSpawnConfig = value;
+        }
+
+        SpawnConfig IRemoteConfigService.UFoSpawnConfig
+        {
+            get => _ufoSpawnConfig;
+            set => _ufoSpawnConfig = value;
+        }
+
+        private PoolSizeConfig _asteroidPoolSizeConfig;
+        private PoolSizeConfig _ufoPoolSizeConfig;
+        private PoolSizeConfig _missilePoolSizeConfig;
+        private SpawnConfig _asteroidSpawnConfig;
+        private SpawnConfig _ufoSpawnConfig;
 
         public async UniTask Initialize()
         {

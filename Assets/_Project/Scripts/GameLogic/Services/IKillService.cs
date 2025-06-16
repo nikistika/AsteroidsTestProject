@@ -6,7 +6,5 @@
         public void AddLaser(int laser);
         public void AddAsteroid(int asteroid);
         public void AddUFO(int ufo);
-
-
     }
 }

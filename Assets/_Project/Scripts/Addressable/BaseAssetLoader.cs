@@ -4,14 +4,23 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 
-namespace LoadingAssets
+namespace _Project.Scripts.Addressable
 {
     public abstract class BaseAssetLoader
     {
         protected readonly Dictionary<string, Component> CachedComponent = new();
 
-        protected async Task<T> LoadPrefab<T>(string assetId) where T : Component
+        protected async Task<T> LoadAssetComponent<T>(string assetId) where T : Component
         {
+            if (CachedComponent.TryGetValue(assetId, out var cachedComponent) && cachedComponent != null)
+            {
+                if (cachedComponent is T typedComponent)
+                    return typedComponent;
+
+                throw new InvalidCastException(
+                    $"Cached component of type {cachedComponent.GetType()} cannot be cast to {typeof(T)}");
+            }
+
             var handle = Addressables.LoadAssetAsync<GameObject>(assetId);
             var prefab = await handle.Task;
 
@@ -30,7 +39,7 @@ namespace LoadingAssets
             CachedComponent[assetId] = component;
             return component;
         }
-        
+
         protected void ReleasePrefab(string assetId)
         {
             var obj = CachedComponent[assetId].gameObject;

@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
+using _Project.Scripts.AnimationControllers;
+using _Project.Scripts.Audio;
 using _Project.Scripts.GameLogic.Factories;
 using _Project.Scripts.GameLogic.Services;
-using Service;
 using UnityEngine;
 
-namespace Shooting
+namespace _Project.Scripts.GameLogic.Shootnig
 {
     public class ShootingMissile : MonoBehaviour
     {
@@ -15,15 +16,21 @@ namespace Shooting
         private WaitForSeconds _waitDelayShotTimes;
         private MissileFactory _missileFactory;
         private IKillService _killService;
-        
+        private IAudioService _audioService;
+        private ShootingAnimationController _shootingAnimationController;
+
         [SerializeField] private float _delayShotTimes = 1;
 
         public void Construct(
         MissileFactory missileFactory,
-        IKillService killService)
+        IKillService killService,
+        IAudioService audioService,
+        ShootingAnimationController shootingAnimationController)
         {
             _missileFactory = missileFactory;
             _killService = killService;
+            _audioService = audioService;
+            _shootingAnimationController = shootingAnimationController;
         }
 
         public void Initialize()
@@ -40,7 +47,9 @@ namespace Shooting
                 var missile = _missileFactory.SpawnObject();
                 if (missile != null)
                 {
+                    _audioService.PlayMissileShotAudio();
                     _killService.AddMissile(1);
+                     _shootingAnimationController.ActivateShooting();
                 }
             }
         }

@@ -1,4 +1,4 @@
-﻿using Shooting;
+﻿using _Project.Scripts.GameLogic.Shootnig;
 
 namespace _Project.Scripts.Characters.Player
 {

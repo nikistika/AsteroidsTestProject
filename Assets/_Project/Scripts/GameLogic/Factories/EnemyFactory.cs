@@ -1,7 +1,6 @@
+using _Project.Scripts.Addressable;
 using _Project.Scripts.GameLogic.Services;
 using _Project.Scripts.RemoteConfig;
-using GameLogic;
-using LoadingAssets;
 using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Factories
@@ -19,7 +18,7 @@ namespace _Project.Scripts.GameLogic.Factories
             ScreenSize screenSize,
             IKillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService,
+            IRemoteConfigService remoteConfigService,
             IRandomService randomService) :
             base(screenSize, assetLoader, remoteConfigService)
         {

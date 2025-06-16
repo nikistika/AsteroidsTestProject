@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Globalization;
 
-namespace GameLogic.SaveLogic.SaveData.Time
+namespace _Project.Scripts.Time
 {
     public class TimeService : ITimeService
     {

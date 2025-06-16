@@ -1,4 +1,4 @@
-using GameLogic;
+using _Project.Scripts.GameLogic;
 using UnityEngine;
 
 namespace _Project.Scripts.Characters

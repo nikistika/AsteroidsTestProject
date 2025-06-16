@@ -3,22 +3,19 @@ using _Project.Scripts.Characters.Enemies;
 using _Project.Scripts.GameLogic.Factories;
 using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Services.Spawners
 {
     public class UfoSpawner : BaseSpawner<UFO>
     {
-        private WaitForSeconds _waitRespawnUFORange;
         private readonly UFOFactory _ufoFactory;
-        private readonly RemoteConfigService _remoteConfigService;
+        private readonly IRemoteConfigService _remoteConfigService;
 
         public UfoSpawner(
             GameState gameState,
             ScreenSize screenSize,
             UFOFactory ufoFactory,
-            RemoteConfigService remoteConfigService) :
+            IRemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _ufoFactory = ufoFactory;

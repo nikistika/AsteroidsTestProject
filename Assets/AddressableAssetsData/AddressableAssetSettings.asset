@@ -15,9 +15,9 @@ MonoBehaviour:
   m_DefaultGroup: 3609c055ebddecd42b626b317dc12a86
   m_currentHash:
     serializedVersion: 2
-    Hash: 00000000000000000000000000000000
+    Hash: e8abadb47d925dc8ec34cac36ebc2ef4
   m_OptimizeCatalogSize: 0
-  m_BuildRemoteCatalog: 0
+  m_BuildRemoteCatalog: 1
   m_BundleLocalCatalog: 0
   m_CatalogRequestsTimeout: 0
   m_DisableCatalogUpdateOnStart: 0
@@ -35,10 +35,10 @@ MonoBehaviour:
   m_CheckForContentUpdateRestrictionsOption: 0
   m_MonoScriptBundleCustomNaming: 
   m_RemoteCatalogBuildPath:
-    m_Id: 
+    m_Id: 71a95d32811a29e4db8ebffbb289fc52
   m_RemoteCatalogLoadPath:
-    m_Id: 
-  m_ContentStateBuildPathProfileVariableName: 
+    m_Id: 6a918871a745ec6499d3047a63436834
+  m_ContentStateBuildPathProfileVariableName: <default settings path>
   m_CustomContentStateBuildPath: 
   m_ContentStateBuildPath: 
   m_BuildAddressablesWithPlayerBuild: 0
@@ -46,6 +46,7 @@ MonoBehaviour:
   m_GroupAssets:
   - {fileID: 11400000, guid: 3e86b6e2b9216d14083efd4edc42c293, type: 2}
   - {fileID: 11400000, guid: 02f607249918b1746bde7a3975535da2, type: 2}
+  - {fileID: 11400000, guid: 1658b9fe595c8a14dac737c0a06c8257, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -62,7 +63,21 @@ MonoBehaviour:
       - m_Id: 5f320ef01e3ef694c9d57ca3f17d52c7
         m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
       - m_Id: 6a918871a745ec6499d3047a63436834
-        m_Value: http://[PrivateIpAddress]:[HostingServicePort]
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 71a95d32811a29e4db8ebffbb289fc52
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: d7fac7cc8f131e44094565123ce9ff1f
+        m_Value: '[UnityEditor.EditorUserBuildSettings.activeBuildTarget]'
+    - m_InheritedParent: 
+      m_Id: ff444e06025de2146bba39c1c68d2415
+      m_ProfileName: RemoteProfile
+      m_Values:
+      - m_Id: 245d52f374309744182f8f8ea96b0175
+        m_Value: '{UnityEngine.AddressableAssets.Addressables.RuntimePath}/[BuildTarget]'
+      - m_Id: 5f320ef01e3ef694c9d57ca3f17d52c7
+        m_Value: '[UnityEngine.AddressableAssets.Addressables.BuildPath]/[BuildTarget]'
+      - m_Id: 6a918871a745ec6499d3047a63436834
+        m_Value: https://storage.yandexcloud.net/asteroids1337/[BuildTarget]
       - m_Id: 71a95d32811a29e4db8ebffbb289fc52
         m_Value: ServerData/[BuildTarget]
       - m_Id: d7fac7cc8f131e44094565123ce9ff1f
@@ -100,7 +115,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c16fcaae0508c2e4e80cc1bd6bc6e79d, type: 2}
   - {fileID: 11400000, guid: ed66298e929c0fb42b6b81faf3828e43, type: 2}
   - {fileID: 11400000, guid: ccd549b643777a2419f8b6210a3fd768, type: 2}
-  m_ActiveProfileId: ef1a2b2da444e534ea98ac19cbf531c4
+  m_ActiveProfileId: ff444e06025de2146bba39c1c68d2415
   m_HostingServicesManager:
     m_HostingServiceInfos: []
     m_Settings: {fileID: 11400000}

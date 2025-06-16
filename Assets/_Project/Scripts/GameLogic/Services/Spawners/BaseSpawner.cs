@@ -1,14 +1,13 @@
 using Cysharp.Threading.Tasks;
-using GameLogic;
 
 namespace _Project.Scripts.GameLogic.Services.Spawners
 {
     public abstract class BaseSpawner<T>
     {
         protected bool FlagGameOver;
-        protected ScreenSize ScreenSize;
-        protected GameState GameState;
-
+        protected readonly ScreenSize ScreenSize;
+        protected readonly GameState GameState;
+        
         protected BaseSpawner(
             GameState gameState,
             ScreenSize screenSize)

@@ -1,8 +1,7 @@
 using _Project.Scripts.Characters.Enemies;
-using GameLogic;
 using UnityEngine;
 
-namespace Shooting
+namespace _Project.Scripts.GameLogic.Shootnig
 {
     [RequireComponent(typeof(Rigidbody2D))]
     public class Missile : MonoBehaviour

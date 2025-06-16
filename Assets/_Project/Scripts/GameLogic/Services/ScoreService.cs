@@ -1,12 +1,9 @@
 using System;
-using _Project.Scripts.GameLogic.Services;
-using _Project.Scripts.RemoteConfig;
 using _Project.Scripts.Save;
 using Cysharp.Threading.Tasks;
-using GameLogic;
 using Zenject;
 
-namespace Service
+namespace _Project.Scripts.GameLogic.Services
 {
     public class ScoreService : IInitializable, IScoreService
     {
@@ -50,7 +47,7 @@ namespace Service
 
         private async UniTask SaveData()
         {
-            SaveConfig data = await _saveService.GetData();
+            SaveData data = await _saveService.GetData();
             var dataScore = data.ScoreRecord;
             if (dataScore < CurrentScore)
             {

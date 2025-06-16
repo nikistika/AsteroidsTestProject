@@ -8,13 +8,12 @@ namespace _Project.Scripts.UI.MenuScene
     {
         public event Action OnStartGame;
         public event Action OnRemoveAds;
-
-        private MenuUIPresenter _menuUIPresenter;
-
+        public event Action OnQuitGame;
+        
         [SerializeField] private Image RemoveAdsPanel;
         [SerializeField] private Button RemoveAdsButton;
         [SerializeField] private Button BuyButton;
-
+        [SerializeField] private Button ExitButton;
 
         public void StartGame()
         {
@@ -40,6 +39,11 @@ namespace _Project.Scripts.UI.MenuScene
         {
             RemoveAdsButton.interactable = false;
             BuyButton.interactable = false;
+        }
+        
+        public void QuitGame()
+        {
+            OnQuitGame?.Invoke();
         }
     }
 }

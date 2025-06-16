@@ -2,6 +2,6 @@
 {
     public interface IIAPService
     {
-        public void RemoveAds();
+        public void MakePurchase(string productId);
     }
 }

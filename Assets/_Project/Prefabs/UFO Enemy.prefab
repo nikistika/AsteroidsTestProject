@@ -14,13 +14,15 @@ GameObject:
   - component: {fileID: 1020523353175193945}
   - component: {fileID: 8307710009982620948}
   - component: {fileID: 975948765993044589}
+  - component: {fileID: 5657832645274673162}
+  - component: {fileID: 3580440266263232752}
   m_Layer: 0
   m_Name: UFO Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1244353928072924450
 Transform:
   m_ObjectHideFlags: 0
@@ -176,3 +178,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _scoreKill: 15
+--- !u!114 &5657832645274673162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4117814180324629382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbd1e034d10421d86cdf8308e4f1321, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 3580440266263232752}
+--- !u!95 &3580440266263232752
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4117814180324629382}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ed89aa20aa56da045afae8329f0e211a, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

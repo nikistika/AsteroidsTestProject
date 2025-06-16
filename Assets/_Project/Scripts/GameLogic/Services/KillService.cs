@@ -1,13 +1,11 @@
 ﻿using _Project.Scripts.Analytics;
-using GameLogic;
-using Service;
 using Zenject;
 
 namespace _Project.Scripts.GameLogic.Services
 {
     public class KillService : IInitializable, IKillService
     {
-        private GameState _gameState;
+        private readonly GameState _gameState;
         private readonly IAnalyticsService _analyticsService;
 
         private int _quantityMissile;

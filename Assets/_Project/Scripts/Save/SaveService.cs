@@ -1,36 +1,39 @@
 ﻿using System;
-using _Project.Scripts.RemoteConfig;
-using _Project.Scripts.Save;
-using _Project.Scripts.Save.CloudSave;
+using _Project.Scripts.Enums;
+using _Project.Scripts.Time;
 using Cysharp.Threading.Tasks;
-using GameLogic.SaveLogic.SaveData.Time;
 using UnityEngine;
+using Zenject;
 
-namespace GameLogic.SaveLogic.SaveData.Save
+namespace _Project.Scripts.Save
 {
     public class SaveService : ISaveService
     {
-        private readonly ILocalSaveService _localSaveService;
-        private readonly ICloudSaveService _cloudSaveService;
+        public event Action OnSaveDataChanged;
+
+        private readonly ISave _localSaveService;
+        private readonly ISave _cloudSaveService;
         private readonly ITimeService _timeService;
 
-        private SaveConfig _currentSaveData;
+        private SaveData _currentSaveData;
 
-        SaveConfig ISaveService.CurrentSaveData
+        SaveData ISaveService.CurrentSaveData
         {
             get => _currentSaveData;
             set => _currentSaveData = value;
         }
 
-        public SaveConfig CurrentSaveData
+        public SaveData CurrentSaveData
         {
             get => _currentSaveData;
             private set => _currentSaveData = value;
         }
-        
+
         public SaveService(
-            ILocalSaveService localSaveService,
-            ICloudSaveService cloudSaveService,
+            [Inject(Id = GlobalInstallerIDs.SaveLocalService)]
+            ISave localSaveService,
+            [Inject(Id = GlobalInstallerIDs.SaveCloudService)]
+            ISave cloudSaveService,
             ITimeService timeService)
         {
             _localSaveService = localSaveService;
@@ -40,39 +43,42 @@ namespace GameLogic.SaveLogic.SaveData.Save
 
         public async UniTask Initialize()
         {
+            await _localSaveService.Initialize();
+            await _cloudSaveService.Initialize();
             await GetData();
         }
 
-        public async UniTask SaveData(SaveConfig data)
+        public async UniTask SaveData(SaveData data)
         {
             data.SavingTime = _timeService.GetCurrentTime();
 
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                _localSaveService.SetData(data);
+                _localSaveService.SaveData(data);
                 Debug.LogWarning("SaveService.SaveData(): No internet connection.");
             }
             else
             {
-                _localSaveService.SetData(data);
+                _localSaveService.SaveData(data);
                 await _cloudSaveService.SaveData(data);
                 Debug.Log("SaveService.SaveData(): The Internet is available.");
             }
 
             CurrentSaveData = data;
+            OnSaveDataChanged?.Invoke();
         }
 
-        public async UniTask<SaveConfig> GetData()
+        public async UniTask<SaveData> GetData()
         {
             if (Application.internetReachability == NetworkReachability.NotReachable)
             {
-                CurrentSaveData = _localSaveService.GetData();
+                CurrentSaveData = await _localSaveService.GetData();
                 Debug.LogWarning("SaveService.GetData(): No internet connection.");
             }
             else
             {
-                SaveConfig cloudData = await _cloudSaveService.LoadData();
-                SaveConfig localData = _localSaveService.GetData();
+                SaveData cloudData = await _cloudSaveService.GetData();
+                SaveData localData = await _localSaveService.GetData();
 
                 DateTime timeCloudData = _timeService.ConvertToDateTime(cloudData.SavingTime);
                 DateTime timeLocalData = _timeService.ConvertToDateTime(localData.SavingTime);

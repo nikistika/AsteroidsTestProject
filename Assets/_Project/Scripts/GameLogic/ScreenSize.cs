@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace GameLogic
+namespace _Project.Scripts.GameLogic
 {
     public class ScreenSize
     {

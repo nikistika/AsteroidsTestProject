@@ -1,6 +1,4 @@
-﻿using GameLogic;
-using Service;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Services
 {

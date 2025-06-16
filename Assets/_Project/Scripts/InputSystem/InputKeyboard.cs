@@ -4,27 +4,27 @@ namespace _Project.Scripts.InputSystem
 {
     public class InputKeyboard : MonoBehaviour, IInput
     {
-        public bool ButtonForward()
+        public bool IsPressedForwardButton()
         {
             return Input.GetKey(KeyCode.W);
         }
 
-        public bool ButtonLeft()
+        public bool IsPressedLeftButton()
         {
             return Input.GetKey(KeyCode.A);
         }
 
-        public bool ButtonRight()
+        public bool IsPressedRightButton()
         {
             return Input.GetKey(KeyCode.D);
         }
 
-        public bool ButtonShootingMissile()
+        public bool IsPressedMissileShootButton()
         {
             return Input.GetKey(KeyCode.Space);
         }
 
-        public bool ButtonShootingLaser()
+        public bool IsPressedLaserShootButton()
         {
             return Input.GetKey(KeyCode.G);
         }

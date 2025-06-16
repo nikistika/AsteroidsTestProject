@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using _Project.Scripts.Enums;
-using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
 using Unity.Services.Authentication;
 using Unity.Services.CloudSave;
@@ -9,7 +8,7 @@ using UnityEngine;
 
 namespace _Project.Scripts.Save.CloudSave
 {
-    public class UnityCloudSave : IUnityCloudSave
+    public class UnityCloudSave : ISave
     {
         public async UniTask Initialize()
         {
@@ -22,7 +21,7 @@ namespace _Project.Scripts.Save.CloudSave
             await AuthenticationService.Instance.SignInAnonymouslyAsync();
         }
 
-        public async UniTask SaveData(SaveConfig saveData)
+        public async UniTask SaveData(SaveData saveData)
         {
             string jsonSave = JsonUtility.ToJson(saveData);
 
@@ -54,9 +53,9 @@ namespace _Project.Scripts.Save.CloudSave
             }
         }
 
-        public async UniTask<SaveConfig> LoadData()
+        public async UniTask<SaveData> GetData()
         {
-            SaveConfig saveData = new SaveConfig();
+            SaveData saveData = new SaveData();
             string saveKey = SaveKeys.GeneralData2.ToString();
 
             var keysToLoad = new HashSet<string>
@@ -69,7 +68,7 @@ namespace _Project.Scripts.Save.CloudSave
 
                 if (loadedData.TryGetValue(saveKey, out var data))
                 {
-                    saveData = JsonUtility.FromJson<SaveConfig>(data);
+                    saveData = JsonUtility.FromJson<SaveData>(data);
                     Debug.Log("Loaded saved data: " + data);
                 }
                 else

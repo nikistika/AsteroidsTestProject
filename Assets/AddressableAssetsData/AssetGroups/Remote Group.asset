@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Remote Group
+  m_EditorClassIdentifier: 
+  m_GroupName: Remote Group
+  m_Data:
+    m_SerializedData: []
+  m_GUID: db5d8e12ff0f32b489a17ff04a43837e
+  m_SerializeEntries:
+  - m_GUID: 28f6c4f45e8114d44b08e2d1366cc993
+    m_Address: AsteroidEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6669effd52ddcba43ab2f6ee739c297b
+    m_Address: SpaceShip
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d8f6dd3f95cc5264aa047d2642c6b985
+    m_Address: Missile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: de5576463dbcec940b6d92821ec78325
+    m_Address: UFOEnemy
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 082fec67e363b684a9410672537cb7ff, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 018512cb5dd7f7740914229791362cef, type: 2}
+    - {fileID: 11400000, guid: 26bf4eb4fd0b8f645aa7696e82a90144, type: 2}

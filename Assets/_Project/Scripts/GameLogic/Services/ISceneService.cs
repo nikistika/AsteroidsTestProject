@@ -5,5 +5,7 @@
         public void RestartScene();
         public void GoToMenu();
         public void GoToGame();
+        public void QuitGame();
+
     }
 }

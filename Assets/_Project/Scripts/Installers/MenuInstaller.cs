@@ -8,7 +8,7 @@ namespace _Project.Scripts.Installers
     {
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<MenuUISpawner>().AsSingle();
+            Container.BindInterfacesAndSelfTo<MenuUIFactory>().AsSingle();
             Container.BindInterfacesAndSelfTo<MenuEntryPoint>().AsSingle();
         }
     }

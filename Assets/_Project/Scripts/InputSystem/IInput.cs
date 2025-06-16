@@ -2,10 +2,10 @@ namespace _Project.Scripts.InputSystem
 {
     public interface IInput
     {
-        public bool ButtonForward();
-        public bool ButtonLeft();
-        public bool ButtonRight();
-        public bool ButtonShootingMissile();
-        public bool ButtonShootingLaser();
+        public bool IsPressedForwardButton();
+        public bool IsPressedLeftButton();
+        public bool IsPressedRightButton();
+        public bool IsPressedMissileShootButton();
+        public bool IsPressedLaserShootButton();
     }
 }

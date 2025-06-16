@@ -5,17 +5,17 @@ namespace _Project.Scripts.EntryPoints
 {
     public class MenuEntryPoint : IInitializable
     {
-        private readonly MenuUISpawner _menuUISpawner;
+        private readonly MenuUIFactory _menuUIFactory;
 
         public MenuEntryPoint(
-            MenuUISpawner menuUISpawner)
+            MenuUIFactory menuUIFactory)
         {
-            _menuUISpawner = menuUISpawner;
+            _menuUIFactory = menuUIFactory;
         }
 
         public async void Initialize()
         {
-            await _menuUISpawner.StartWork();
+            await _menuUIFactory.StartWork();
         }
     }
 }

@@ -1,9 +1,11 @@
 using System;
+using _Project.Scripts.AnimationControllers;
+using _Project.Scripts.Audio;
 using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic;
 using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.GameLogic.Shootnig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using Shooting;
 using UnityEngine;
 
 namespace _Project.Scripts.Characters.Enemies
@@ -18,6 +20,10 @@ namespace _Project.Scripts.Characters.Enemies
         private GameState _gameState;
         private IKillService _killService;
         private IRandomService _randomService;
+        private IAudioService _audioService;
+        private EnemyAnimationController _enemyAnimationController;
+        
+        private Collider2D _collider2D;
 
         [SerializeField] private int _speed = 1;
 
@@ -25,12 +31,16 @@ namespace _Project.Scripts.Characters.Enemies
             GameState gameState,
             ScreenSize screenSize,
             IKillService killService,
-            IRandomService randomService)
+            IRandomService randomService,
+            IAudioService audioService,
+            EnemyAnimationController enemyAnimationController)
         {
             base.Construct(screenSize);
             _gameState = gameState;
             _killService = killService;
             _randomService = randomService;
+            _audioService = audioService;
+            _enemyAnimationController = enemyAnimationController;
         }
 
         private void FixedUpdate()
@@ -40,6 +50,8 @@ namespace _Project.Scripts.Characters.Enemies
 
         public void Initialize()
         {
+            _collider2D = GetComponent<Collider2D>();
+            
             _gameState.OnGameOver += GameState;
             _gameState.OnGameContinue += GameContinue;
             _gameState.OnGameExit += GameExit;
@@ -62,7 +74,7 @@ namespace _Project.Scripts.Characters.Enemies
         }
 
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private async void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
@@ -72,12 +84,18 @@ namespace _Project.Scripts.Characters.Enemies
                 }
                 else if (!_flagParent)
                 {
-                    transform.localScale *= 2;
+                    transform.localScale = Vector3.one;
                 }
-
+                
                 _killService.AddAsteroid(1);
-
+                _audioService.PlayExplosionAudio();
+                
+                _collider2D.enabled = false;
+                await _enemyAnimationController.ActivateExplosion();
+                _collider2D.enabled = true;
+                
                 OnReturnAsteroid?.Invoke(this);
+
             }
 
             if (collision.TryGetComponent<SpaceShip>(out _))

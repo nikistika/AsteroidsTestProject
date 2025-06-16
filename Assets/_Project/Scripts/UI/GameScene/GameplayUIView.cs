@@ -12,7 +12,6 @@ namespace _Project.Scripts.UI.GameScene
         public event Func<UniTask> OnRestartClicked;
         public event Action OnMenuClicked;
         
-
         [SerializeField] private Button _continueButton;
         [SerializeField] private Button _restartButton;
         [SerializeField] private Button _menuButton;

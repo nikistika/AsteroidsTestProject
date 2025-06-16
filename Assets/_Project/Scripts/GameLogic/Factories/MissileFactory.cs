@@ -1,9 +1,8 @@
+using _Project.Scripts.Addressable;
 using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic.Shootnig;
 using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using LoadingAssets;
-using Shooting;
 using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Factories
@@ -12,14 +11,14 @@ namespace _Project.Scripts.GameLogic.Factories
     {
         private readonly SpaceShip _spaceShip;
         private readonly ShootingMissile _shootingMissile;
-        private readonly RemoteConfigService _remoteConfigService;
+        private readonly IRemoteConfigService _remoteConfigService;
 
         public MissileFactory(
             ScreenSize screenSize,
             SpaceShip spaceShip,
             ShootingMissile shootingMissile,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService) :
+            IRemoteConfigService remoteConfigService) :
             base(screenSize, assetLoader, remoteConfigService)
         {
             _spaceShip = spaceShip;

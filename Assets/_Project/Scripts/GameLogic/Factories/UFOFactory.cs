@@ -1,10 +1,12 @@
+using _Project.Scripts.Addressable;
+using _Project.Scripts.AnimationControllers;
+using _Project.Scripts.Audio;
+using _Project.Scripts.Characters;
 using _Project.Scripts.Characters.Enemies;
 using _Project.Scripts.Characters.Player;
 using _Project.Scripts.GameLogic.Services;
 using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using LoadingAssets;
 using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Factories
@@ -12,6 +14,7 @@ namespace _Project.Scripts.GameLogic.Factories
     public class UFOFactory : EnemyFactory<UFO>
     {
         private readonly ShipRepository _shipRepository;
+        private readonly IAudioService _audioService;
 
         public UFOFactory(
             IScoreService scoreService,
@@ -20,11 +23,13 @@ namespace _Project.Scripts.GameLogic.Factories
             ShipRepository shipRepository,
             IKillService killService,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService,
-            IRandomService randomService) :
+            IRemoteConfigService remoteConfigService,
+            IRandomService randomService,
+            IAudioService audioService) :
             base(scoreService, gameState, screenSize, killService, assetLoader, remoteConfigService, randomService)
         {
             _shipRepository = shipRepository;
+            _audioService = audioService;
         }
 
         protected override void InitializeFactory()
@@ -42,7 +47,8 @@ namespace _Project.Scripts.GameLogic.Factories
         protected override UFO ActionCreateObject()
         {
             var UFO = Object.Instantiate(Prefab);
-            UFO.Construct(GameState, _shipRepository, ScreenSize, KillService);
+            var _animationController = UFO.GetComponent<EnemyAnimationController>();
+            UFO.Construct(GameState, _shipRepository, ScreenSize, KillService, _audioService, _animationController);
             UFO.Initialize();
             UFO.GetComponent<Score>().Initialize(ScoreService);
             UFO.gameObject.transform.position = GetRandomSpawnPosition();

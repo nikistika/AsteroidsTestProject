@@ -1,10 +1,11 @@
-﻿using _Project.Scripts.Ads;
+﻿using _Project.Scripts.Addressable;
+using _Project.Scripts.Ads;
 using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic;
 using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.GameLogic.Shootnig;
 using _Project.Scripts.Save;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using Shooting;
 using UnityEngine;
 
 namespace _Project.Scripts.UI.GameScene
@@ -16,8 +17,9 @@ namespace _Project.Scripts.UI.GameScene
         private readonly ShipRepository _shipRepository;
         private readonly IScoreService _scoreService;
         private readonly ISaveService _saveService;
-        private readonly AdsService _adsService;
+        private readonly IAdsService _adsService;
         private readonly ISceneService _sceneService;
+        private readonly IAssetLoader _assetLoader;
 
         private ShootingLaser _shootingLaser;
         private int _currentScore;
@@ -37,8 +39,9 @@ namespace _Project.Scripts.UI.GameScene
             ShipRepository shipRepository,
             IScoreService scoreService,
             ISaveService saveService,
-            AdsService adsService,
-            ISceneService sceneService)
+            IAdsService adsService,
+            ISceneService sceneService,
+            IAssetLoader assetLoader)
         {
             _gameplayUIView = gameplayUIView;
             _gameState = gameState;
@@ -47,6 +50,7 @@ namespace _Project.Scripts.UI.GameScene
             _saveService = saveService;
             _adsService = adsService;
             _sceneService = sceneService;
+            _assetLoader = assetLoader;
         }
 
         public void StartWork()
@@ -146,6 +150,14 @@ namespace _Project.Scripts.UI.GameScene
         private void ReturnToMenu()
         {
             _gameState.GameExit();
+            
+            _assetLoader.DestroyGameplayUIView();
+            _assetLoader.DestroySpaceShip();
+            _assetLoader.DestroyAsteroid();
+            _assetLoader.DestroyUFO();
+            _assetLoader.DestroyMissile();
+            _assetLoader.DestroyAudioSources();
+            
             _sceneService.GoToMenu();
         }
 

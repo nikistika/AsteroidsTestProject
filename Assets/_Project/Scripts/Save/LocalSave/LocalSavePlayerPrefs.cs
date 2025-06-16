@@ -1,22 +1,28 @@
 ﻿using _Project.Scripts.Enums;
-using _Project.Scripts.RemoteConfig;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 namespace _Project.Scripts.Save.LocalSave
 {
-    public class LocalSavePlayerPrefs : ILocalSave
+    public class LocalSavePlayerPrefs : ISave
     {
-        public void SetSaveData(SaveConfig saveData)
+        public UniTask Initialize()
+        {
+            return UniTask.CompletedTask;
+        }
+
+        public UniTask SaveData(SaveData saveData)
         {
             string jsonSave = JsonUtility.ToJson(saveData);
             PlayerPrefs.SetString(SaveKeys.GeneralData2.ToString(), jsonSave);
+            return UniTask.CompletedTask;
         }
 
-        public SaveConfig GetSaveData()
+        public UniTask<SaveData> GetData()
         {
             string jsonSave = PlayerPrefs.GetString(SaveKeys.GeneralData2.ToString());
-            SaveConfig saveData = JsonUtility.FromJson<SaveConfig>(jsonSave);
-            return saveData;
+            SaveData saveData = JsonUtility.FromJson<SaveData>(jsonSave);
+            return UniTask.FromResult(saveData);
         }
     }
 }

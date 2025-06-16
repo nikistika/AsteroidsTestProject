@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GameLogic.SaveLogic.SaveData.Time
+namespace _Project.Scripts.Time
 {
     public interface ITimeService
     {

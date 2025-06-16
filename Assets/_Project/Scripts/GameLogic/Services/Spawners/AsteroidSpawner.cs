@@ -3,22 +3,19 @@ using _Project.Scripts.Characters.Enemies;
 using _Project.Scripts.GameLogic.Factories;
 using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using UnityEngine;
 
 namespace _Project.Scripts.GameLogic.Services.Spawners
 {
     public class AsteroidSpawner : BaseSpawner<Asteroid>
     {
-        private WaitForSeconds _waitRespawnAsteroidRange;
-        private AsteroidFactory _asteroidFactory;
-        private readonly RemoteConfigService _remoteConfigService;
+        private readonly AsteroidFactory _asteroidFactory;
+        private readonly IRemoteConfigService _remoteConfigService;
 
         public AsteroidSpawner(
             GameState gameState,
             ScreenSize screenSize,
             AsteroidFactory asteroidFactory,
-            RemoteConfigService remoteConfigService) :
+            IRemoteConfigService remoteConfigService) :
             base(gameState, screenSize)
         {
             _asteroidFactory = asteroidFactory;
@@ -46,6 +43,8 @@ namespace _Project.Scripts.GameLogic.Services.Spawners
 
         private void SpawnAsteroidFragments(int quantity, Asteroid objectParent)
         {
+            float parentScale = objectParent.transform.localScale.x;
+
             for (var i = 1; i <= quantity; i++)
             {
                 var fragment = SpawnObject();
@@ -53,7 +52,7 @@ namespace _Project.Scripts.GameLogic.Services.Spawners
                 {
                     fragment.IsObjectParent(false);
                     fragment.transform.position = objectParent.transform.position;
-                    fragment.transform.localScale = objectParent.transform.localScale / 2;
+                    fragment.transform.localScale /= 2;
                     fragment.MoveFragment(fragment);
                 }
             }

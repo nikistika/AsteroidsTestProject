@@ -1,15 +1,15 @@
-﻿using _Project.Scripts.Characters.Enemies;
+﻿using _Project.Scripts.Audio;
+using _Project.Scripts.Characters.Enemies;
 using _Project.Scripts.Characters.Player;
 using _Project.Scripts.EntryPoints;
 using _Project.Scripts.Enums;
+using _Project.Scripts.GameLogic;
 using _Project.Scripts.GameLogic.Factories;
 using _Project.Scripts.GameLogic.Services;
 using _Project.Scripts.GameLogic.Services.Spawners;
+using _Project.Scripts.GameLogic.Shootnig;
+using _Project.Scripts.ScriptableObjects;
 using _Project.Scripts.UI.GameScene;
-using GameLogic;
-using ScriptableObjects;
-using Service;
-using Shooting;
 using UnityEngine;
 using Zenject;
 using Asteroid = _Project.Scripts.Characters.Enemies.Asteroid;
@@ -25,11 +25,11 @@ namespace _Project.Scripts.Installers
         [SerializeField] private Missile _missilePrefab;
         [SerializeField] private SpaceShip _spaceShipPrefab;
         [SerializeField] private GameplayUIView _gameplayUIView;
-        [SerializeField] private EnemySpawnManagerSO _asteroidSpawnData;
-        [SerializeField] private EnemySpawnManagerSO _ufoSpawnData;
-        [SerializeField] private PoolSizeSO _asteroidPoolSizeData;
-        [SerializeField] private PoolSizeSO _ufoPoolSizeData;
-        [SerializeField] private PoolSizeSO _missilePoolSizeData;
+        [SerializeField] private EnemySpawnManagerConfig _asteroidSpawnData;
+        [SerializeField] private EnemySpawnManagerConfig _ufoSpawnData;
+        [SerializeField] private PoolSizeConfig _asteroidPoolSizeData;
+        [SerializeField] private PoolSizeConfig _ufoPoolSizeData;
+        [SerializeField] private PoolSizeConfig _missilePoolSizeData;
 
         public override void InstallBindings()
         {
@@ -38,9 +38,9 @@ namespace _Project.Scripts.Installers
 
             Container.Bind<ShipRepository>().AsSingle();
 
-            Container.Bind<EnemySpawnManagerSO>().WithId(GameInstallerIDs.AsteroidSizeData)
+            Container.Bind<EnemySpawnManagerConfig>().WithId(GameInstallerIDs.AsteroidSizeData)
                 .FromInstance(_asteroidSpawnData).AsCached();
-            Container.Bind<EnemySpawnManagerSO>().WithId(GameInstallerIDs.UFOSizeData).FromInstance(_ufoSpawnData)
+            Container.Bind<EnemySpawnManagerConfig>().WithId(GameInstallerIDs.UFOSizeData).FromInstance(_ufoSpawnData)
                 .AsCached();
 
             Container.Bind<Asteroid>().FromInstance(_asteroidPrefab).AsSingle();
@@ -49,27 +49,30 @@ namespace _Project.Scripts.Installers
             Container.Bind<SpaceShip>().FromInstance(_spaceShipPrefab).AsSingle();
             Container.Bind<GameplayUIView>().FromInstance(_gameplayUIView).AsSingle();
 
-            Container.Bind<PoolSizeSO>().WithId(GameInstallerIDs.AsteroidPoolSizeData)
+            Container.Bind<PoolSizeConfig>().WithId(GameInstallerIDs.AsteroidPoolSizeData)
                 .FromInstance(_asteroidPoolSizeData).AsCached();
-            Container.Bind<PoolSizeSO>().WithId(GameInstallerIDs.UFOPoolSizeData)
+            Container.Bind<PoolSizeConfig>().WithId(GameInstallerIDs.UFOPoolSizeData)
                 .FromInstance(_ufoPoolSizeData).AsCached();
-            Container.Bind<PoolSizeSO>().WithId(GameInstallerIDs.MissilePoolSizeData)
+            Container.Bind<PoolSizeConfig>().WithId(GameInstallerIDs.MissilePoolSizeData)
                 .FromInstance(_missilePoolSizeData).AsCached();
 
             Container.Bind<ScreenSize>().AsSingle();
-            Container.BindInterfacesAndSelfTo<RandomService>().AsSingle();
-            Container.BindInterfacesAndSelfTo<ScoreService>().AsSingle();
+            Container.BindInterfacesTo<RandomService>().AsSingle();
+            Container.BindInterfacesTo<ScoreService>().AsSingle();
             Container.Bind<GameState>().AsSingle();
-            Container.BindInterfacesAndSelfTo<KillService>().AsSingle();
-            Container.Bind<GameplayUISpawner>().AsSingle();
+            Container.BindInterfacesTo<KillService>().AsSingle();
+            Container.Bind<GameplayUIFactory>().AsSingle();
             Container.Bind<SpaceShipSpawner>().AsSingle();
             Container.Bind<AsteroidFactory>().AsSingle();
             Container.Bind<UFOFactory>().AsSingle();
             Container.Bind<UfoSpawner>().AsSingle();
             Container.Bind<AsteroidSpawner>().AsSingle();
             Container.Bind<MissileFactory>().AsSingle();
+            
+            Container.Bind<AudioControllerSpawner>().AsSingle();
+            Container.BindInterfacesTo<AudioService>().AsSingle();
 
-            Container.BindInterfacesAndSelfTo<GameEntryPoint>().AsSingle();
+            Container.BindInterfacesTo<GameEntryPoint>().AsSingle();
         }
     }
 }

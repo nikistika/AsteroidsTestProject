@@ -1,7 +1,6 @@
+using _Project.Scripts.Addressable;
 using _Project.Scripts.RemoteConfig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using LoadingAssets;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -11,7 +10,7 @@ namespace _Project.Scripts.GameLogic.Factories
     {
         protected readonly ScreenSize ScreenSize;
         protected readonly IAssetLoader AssetLoader;
-        protected readonly RemoteConfigService RemoteConfigService;
+        protected readonly IRemoteConfigService RemoteConfigService;
 
         protected int DefaultPoolSize;
         protected int MaxPoolSize;
@@ -22,7 +21,7 @@ namespace _Project.Scripts.GameLogic.Factories
         protected BaseFactory(
             ScreenSize screenSize,
             IAssetLoader assetLoader,
-            RemoteConfigService remoteConfigService)
+            IRemoteConfigService remoteConfigService)
         {
             ScreenSize = screenSize;
             AssetLoader = assetLoader;

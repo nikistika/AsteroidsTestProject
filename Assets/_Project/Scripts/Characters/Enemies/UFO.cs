@@ -1,9 +1,11 @@
 using System;
+using _Project.Scripts.AnimationControllers;
+using _Project.Scripts.Audio;
 using _Project.Scripts.Characters.Player;
+using _Project.Scripts.GameLogic;
 using _Project.Scripts.GameLogic.Services;
+using _Project.Scripts.GameLogic.Shootnig;
 using Cysharp.Threading.Tasks;
-using GameLogic;
-using Shooting;
 using UnityEngine;
 
 namespace _Project.Scripts.Characters.Enemies
@@ -17,6 +19,10 @@ namespace _Project.Scripts.Characters.Enemies
         private GameState _gameState;
         private IKillService _killService;
         private bool _flagGameOver;
+        private IAudioService _audioService;
+        private EnemyAnimationController _enemyAnimationController;
+        
+        private Collider2D _collider2D;
 
         [SerializeField] private int _speed = 1;
 
@@ -24,12 +30,16 @@ namespace _Project.Scripts.Characters.Enemies
             GameState gameState,
             ShipRepository shipRepository,
             ScreenSize screenSize,
-            IKillService killService)
+            IKillService killService,
+            IAudioService audioService,
+            EnemyAnimationController enemyAnimationController)
         {
             base.Construct(screenSize);
             _gameState = gameState;
             _shipRepository = shipRepository;
             _killService = killService;
+            _audioService = audioService;
+            _enemyAnimationController = enemyAnimationController;
         }
 
         private void Start()
@@ -49,6 +59,7 @@ namespace _Project.Scripts.Characters.Enemies
 
         public void Initialize()
         {
+            _collider2D = GetComponent<Collider2D>();
             Rigidbody = GetComponent<Rigidbody2D>();
         }
 
@@ -58,12 +69,17 @@ namespace _Project.Scripts.Characters.Enemies
             Rigidbody.velocity = direction * _speed;
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        private async void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.TryGetComponent<Missile>(out _) || collision.TryGetComponent<Laser>(out _))
             {
                 _killService.AddUFO(1);
-
+                _audioService.PlayExplosionAudio();
+                
+                _collider2D.enabled = false;
+                await _enemyAnimationController.ActivateExplosion();
+                _collider2D.enabled = true;
+                
                 OnReturnUFO?.Invoke(this);
             }
 

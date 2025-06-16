@@ -1,11 +1,11 @@
 using System;
 using System.Collections;
 using _Project.Scripts.Analytics;
+using _Project.Scripts.Audio;
 using _Project.Scripts.GameLogic.Services;
-using Service;
 using UnityEngine;
 
-namespace Shooting
+namespace _Project.Scripts.GameLogic.Shootnig
 {
     public class ShootingLaser : MonoBehaviour
     {
@@ -20,21 +20,24 @@ namespace Shooting
 
         private IAnalyticsService _analyticsService;
         private IKillService _killService;
+        private IAudioService _audioService;
 
         [SerializeField] private Laser _laserObject;
-        [SerializeField] private float _laserDuration = 1;
+        [SerializeField] private float _laserDuration = 0.3f;
         [SerializeField] private float _laserDelay = 1;
-        [SerializeField] private int _laserCooldown = 15;
+        [SerializeField] private int _laserCooldown = 5;
 
         [field: SerializeField] public int MaxLaserCount { get; private set; } = 3;
         [field: SerializeField] public int LaserCount { get; private set; }
 
         public void Construct(
             IAnalyticsService analyticsService,
-            IKillService killService)
+            IKillService killService,
+            IAudioService audioService)
         {
             _analyticsService = analyticsService;
             _killService = killService;
+            _audioService = audioService;
         }
 
         private void Awake()
@@ -55,6 +58,7 @@ namespace Shooting
                 StartCoroutine(ShotDuration());
 
                 UsingLaserEvent();
+                _audioService.PlayLaserShotAudio();
                 _killService.AddLaser(1);
             }
         }

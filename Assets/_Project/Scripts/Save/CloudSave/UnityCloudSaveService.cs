@@ -1,14 +1,13 @@
-﻿using _Project.Scripts.RemoteConfig;
+﻿using _Project.Scripts.Time;
 using Cysharp.Threading.Tasks;
-using GameLogic.SaveLogic.SaveData.Time;
 
 namespace _Project.Scripts.Save.CloudSave
 {
-    public class UnityCloudSaveService : ICloudSaveService
+    public class UnityCloudSaveService : ISave
     {
-        private IUnityCloudSave _cloudSave;
+        private ISave _cloudSave;
 
-        private ITimeService _timeService;
+        private readonly ITimeService _timeService;
 
         public UnityCloudSaveService(
             ITimeService timeService)
@@ -22,15 +21,15 @@ namespace _Project.Scripts.Save.CloudSave
             await _cloudSave.Initialize();
         }
 
-        public async UniTask SaveData(SaveConfig saveData)
+        public async UniTask SaveData(SaveData saveData)
         {
             saveData.SavingTime = _timeService.GetCurrentTime();
             await _cloudSave.SaveData(saveData);
         }
 
-        public async UniTask<SaveConfig> LoadData()
+        public async UniTask<SaveData> GetData()
         {
-            return await _cloudSave.LoadData();
+            return await _cloudSave.GetData();
         }
     }
 }

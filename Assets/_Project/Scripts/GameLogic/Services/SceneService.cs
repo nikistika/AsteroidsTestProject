@@ -1,4 +1,4 @@
-﻿using Service;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace _Project.Scripts.GameLogic.Services
@@ -14,10 +14,19 @@ namespace _Project.Scripts.GameLogic.Services
         {
             SceneManager.LoadScene(1);
         }
-        
+
         public void GoToGame()
         {
             SceneManager.LoadScene(2);
+        }
+
+        public void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+            Application.Quit();
+#endif
         }
     }
 }
